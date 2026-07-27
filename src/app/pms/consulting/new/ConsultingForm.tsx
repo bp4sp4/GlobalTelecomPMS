@@ -110,10 +110,10 @@ export function ConsultingForm({
     setSections((prev) => ({ ...prev, [fac]: prev[fac].filter((_, idx) => idx !== i) }));
   }
   function upSign(role: string, key: keyof Sign, val: string) {
-    setSigns((prev) => ({
-      ...prev,
-      [role]: { org: "", name: "", sign: "", ...prev[role], [key]: val },
-    }));
+    setSigns((prev) => {
+      const cur: Sign = prev[role] ?? { org: "", name: "", sign: "" };
+      return { ...prev, [role]: { ...cur, [key]: val } };
+    });
   }
 
   async function doSave(status: "DRAFT" | "DONE") {
