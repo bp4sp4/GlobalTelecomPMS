@@ -20,7 +20,16 @@ export async function POST(req: Request) {
     );
   }
 
-  const user = await prisma.user.findUnique({ where: { username } });
+  let user: Awaited<ReturnType<typeof prisma.user.findUnique>>;
+  try {
+    user = await prisma.user.findUnique({ where: { username } });
+  } catch (e) {
+    console.error("login DB error:", e);
+    return NextResponse.json(
+      { message: "서버 오류: 데이터베이스에 연결할 수 없습니다. (DATABASE_URL 확인)" },
+      { status: 500 }
+    );
+  }
   if (!user || !(await bcrypt.compare(password, user.password))) {
     return NextResponse.json(
       { message: "아이디 또는 비밀번호가 올바르지 않습니다." },
