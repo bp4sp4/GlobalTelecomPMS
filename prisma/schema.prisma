@@ -1,0 +1,125 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  ADMIN
+  GUEST
+}
+
+enum SchoolLevel {
+  ELEMENTARY
+  MIDDLE
+  HIGH
+  ETC
+}
+
+enum ReportType {
+  CONSULTING
+  EQUIPMENT
+  SPEAKERLINE
+  IMPROVEMENT
+  PHOTOS
+}
+
+enum ReportStatus {
+  DRAFT
+  DONE
+}
+
+enum CodeKind {
+  EQUIPMENT
+  FAULT
+  ACTION
+}
+
+model User {
+  id        String    @id @default(cuid())
+  username  String    @unique
+  password  String
+  name      String?
+  role      Role      @default(GUEST)
+  createdAt DateTime  @default(now())
+  reports   Report[]
+  messages  Message[]
+}
+
+model School {
+  id              String      @id @default(cuid())
+  name            String      @unique
+  educationOffice String? // 교육지원청(지청)
+  schoolLevel     SchoolLevel @default(ETC)
+  kind            String? // 원자료 학교종류(초등학교/특수학교 등)
+  district        String? // 소재지(구)
+  address         String?
+  foundation      String? // 공립/사립
+  neisCode        String?
+  isSuneungVenue  Boolean     @default(false)
+  reports         Report[]
+
+  @@index([educationOffice])
+  @@index([name])
+}
+
+model Report {
+  id          String       @id @default(cuid())
+  school      School       @relation(fields: [schoolId], references: [id])
+  schoolId    String
+  type        ReportType
+  round       Int? // 컨설팅 1차/2차
+  status      ReportStatus @default(DRAFT)
+  payload     Json
+  createdBy   User?        @relation(fields: [createdById], references: [id])
+  createdById String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  completedAt DateTime?
+
+  @@index([schoolId, type, status])
+}
+
+model Code {
+  id       String   @id @default(cuid())
+  code     String   @unique
+  kind     CodeKind
+  category String // PA/AU/VI/ETC 또는 AUD/VID/PWR...
+  name     String
+
+  @@index([kind, category])
+}
+
+// 방송장비 카탈로그 (장비 검색 자동완성용 마스터)
+model EquipmentCatalog {
+  id    Int    @id @default(autoincrement())
+  name  String // 장비명
+  code  String // 모델/규격
+  maker String // 제조사
+
+  @@index([name])
+  @@index([code])
+  @@index([maker])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model AccessLog {
+  id        String   @id @default(cuid())
+  userId    String
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}

@@ -1,0 +1,55 @@
+.tabs {
+  display: flex;
+  gap: var(--krds-space-4);
+  flex-wrap: wrap;
+}
+.tab {
+  padding: var(--krds-space-4) var(--krds-space-6);
+  border: 1px solid var(--krds-gray-30);
+  background: #fff;
+  border-radius: var(--krds-radius-medium);
+  font-size: var(--krds-fs-body-medium);
+  color: var(--krds-gray-70);
+  cursor: pointer;
+}
+.tabActive {
+  background: var(--krds-primary-5);
+  border-color: var(--krds-primary-50);
+  color: var(--krds-primary-60);
+  font-weight: var(--krds-font-weight-bold);
+}
+
+.rooms {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--krds-space-6);
+}
+.roomCard {
+  background: #fff;
+  border: 1px solid var(--krds-color-border-subtle);
+  border-radius: var(--krds-radius-large);
+  padding: var(--krds-space-7);
+}
+.roomHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--krds-space-4);
+  margin-bottom: var(--krds-space-5);
+}
+.thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--krds-space-4);
+}
+.empty {
+  color: var(--krds-color-text-caption);
+  font-size: var(--krds-fs-body-small);
+}
+.thumb {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: var(--krds-radius-medium);
+  border: 1px solid var(--krds-gray-20);
+}

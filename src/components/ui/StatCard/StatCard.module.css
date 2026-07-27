@@ -1,0 +1,40 @@
+.card {
+  background: var(--krds-gray-0);
+  border: 1px solid var(--krds-color-border-subtle);
+  border-radius: var(--krds-radius-large);
+  padding: var(--krds-space-7);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--krds-space-5);
+}
+
+.body {
+  min-width: 0;
+}
+.label {
+  font-size: var(--krds-fs-body-small);
+  color: var(--krds-color-text-caption);
+  margin: 0 0 var(--krds-space-3);
+}
+.value {
+  font-size: var(--krds-fs-heading-large);
+  font-weight: var(--krds-font-weight-bold);
+  color: var(--krds-gray-90);
+  line-height: 1;
+}
+.sub {
+  margin: var(--krds-space-4) 0 0;
+  font-size: var(--krds-fs-body-xsmall);
+  color: var(--krds-color-text-caption);
+  line-height: 1.4;
+}
+
+.donut {
+  flex-shrink: 0;
+}
+.donutText {
+  font-size: 1.3rem;
+  font-weight: var(--krds-font-weight-bold);
+  fill: var(--krds-primary-60);
+}

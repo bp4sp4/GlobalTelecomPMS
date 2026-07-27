@@ -1,0 +1,992 @@
+{
+  "equipment": {
+    "PA": [
+      {
+        "code": "PA-001",
+        "name": "MAIN CONTROLER"
+      },
+      {
+        "code": "PA-002",
+        "name": "EMERGENCY PANEL"
+      },
+      {
+        "code": "PA-003",
+        "name": "MAIN CONTROL"
+      },
+      {
+        "code": "PA-004",
+        "name": "PROGRAM EXCHANGER"
+      },
+      {
+        "code": "PA-005",
+        "name": "MATRIX CONTROL"
+      },
+      {
+        "code": "PA-006",
+        "name": "DIGITAL CONTROL EXCHANGER"
+      },
+      {
+        "code": "PA-007",
+        "name": "DIGITAL PROGRAM EXCHANGER"
+      },
+      {
+        "code": "PA-008",
+        "name": "PROGRAM MANUAL CONTROLLER"
+      },
+      {
+        "code": "PA-009",
+        "name": "PROGRAM TIMER"
+      },
+      {
+        "code": "PA-010",
+        "name": "TUNER"
+      },
+      {
+        "code": "PA-011",
+        "name": "CHIME & SIREN"
+      },
+      {
+        "code": "PA-012",
+        "name": "MONITOR PANEL"
+      },
+      {
+        "code": "PA-013",
+        "name": "EMERGENCY COMBINATION SYSTEM"
+      },
+      {
+        "code": "PA-014",
+        "name": "EMERGENCY SWITCHER"
+      },
+      {
+        "code": "PA-015",
+        "name": "REMOTE MIC INTERFACE"
+      },
+      {
+        "code": "PA-016",
+        "name": "AUDIO MATRIX"
+      },
+      {
+        "code": "PA-017",
+        "name": "AUDIO MATRIX UNIT"
+      },
+      {
+        "code": "PA-018",
+        "name": "CONTROL UNIT"
+      },
+      {
+        "code": "PA-019",
+        "name": "AUDIO DISTRIBUTOR"
+      },
+      {
+        "code": "PA-020",
+        "name": "SPEAKER CONTROLER"
+      },
+      {
+        "code": "PA-021",
+        "name": "SPEAKER LINE CHECKER"
+      },
+      {
+        "code": "PA-022",
+        "name": "SPEAKER SELECTOR"
+      },
+      {
+        "code": "PA-023",
+        "name": "LINE MONITOR"
+      },
+      {
+        "code": "PA-024",
+        "name": "MULTI VOICE FILE"
+      },
+      {
+        "code": "PA-025",
+        "name": "DIGILINK MULTI CONTROL"
+      },
+      {
+        "code": "PA-026",
+        "name": "DIGITAL TIME DELAY"
+      },
+      {
+        "code": "PA-027",
+        "name": "음성전송기/TCP/IP"
+      },
+      {
+        "code": "PA-028",
+        "name": "REMOTE AMP"
+      },
+      {
+        "code": "PA-029",
+        "name": "AMP BACKUP SYSTEM"
+      },
+      {
+        "code": "PA-030",
+        "name": "DIRECT BOX"
+      },
+      {
+        "code": "PA-031",
+        "name": "POWER AMPLIFIER"
+      },
+      {
+        "code": "PA-032",
+        "name": "DIGITAL POWER AMP"
+      },
+      {
+        "code": "PA-033",
+        "name": "FAULT DETECTOR"
+      },
+      {
+        "code": "PA-034",
+        "name": "FIRE INTERFACE"
+      },
+      {
+        "code": "PA-035",
+        "name": "DATA FIRE RECEIVER"
+      },
+      {
+        "code": "PA-036",
+        "name": "RS-232 DISTREBUTOR"
+      },
+      {
+        "code": "PA-037",
+        "name": "RELLAY GROUP"
+      },
+      {
+        "code": "PA-038",
+        "name": "TERMINAL BOARD"
+      },
+      {
+        "code": "PA-039",
+        "name": "하이 임피던스 스피커 3W"
+      },
+      {
+        "code": "PA-040",
+        "name": "하이 임피던스 스피커 5W"
+      },
+      {
+        "code": "PA-041",
+        "name": "하이 임피던스 스피커 10W"
+      },
+      {
+        "code": "PA-042",
+        "name": "하이 임피던스 스피커 20W"
+      }
+    ],
+    "AU": [
+      {
+        "code": "AU-001",
+        "name": "AUDIO MIXER — 음향믹서"
+      },
+      {
+        "code": "AU-002",
+        "name": "POWERED MIXER — 파워 믹서"
+      },
+      {
+        "code": "AU-003",
+        "name": "GRAPHIC EQUALIZER — 오디오 주파수 조절 장치"
+      },
+      {
+        "code": "AU-004",
+        "name": "SIGNAL PROCESSOR — 신호처리기"
+      },
+      {
+        "code": "AU-005",
+        "name": "DSP — 디지털신호처리기"
+      },
+      {
+        "code": "AU-006",
+        "name": "FEEDBACK DESTROYER& PROGRAMMABLE DELAY — 하울링 억제 및 음성 지연설정장치"
+      },
+      {
+        "code": "AU-007",
+        "name": "PRE AMPLIFIER — 오디오 신호 증폭기"
+      },
+      {
+        "code": "AU-008",
+        "name": "DYNAMIC MICROPHONE"
+      },
+      {
+        "code": "AU-009",
+        "name": "CONDERSER MICROPHONE"
+      },
+      {
+        "code": "AU-010",
+        "name": "WIRELESS MICROPHONE — 무선 마이크"
+      },
+      {
+        "code": "AU-011",
+        "name": "WIRELESS ANTENNA DISTRIBUTOR — 무선 안테나 분배기"
+      },
+      {
+        "code": "AU-012",
+        "name": "WIRELESS RECEIVER — 무선 마이크 수신기"
+      },
+      {
+        "code": "AU-013",
+        "name": "MULTI PLAYER — 멀티 플레이어"
+      },
+      {
+        "code": "AU-014",
+        "name": "MULTI SOURCE PLAYER — MULTI SOURCE 플레이어"
+      },
+      {
+        "code": "AU-015",
+        "name": "CD PLAYER — CD 플레이어"
+      },
+      {
+        "code": "AU-016",
+        "name": "MP3 PLAYER — MP3 플레이어"
+      },
+      {
+        "code": "AU-017",
+        "name": "DOUBLE CASSETTE DECK — 더블 카셋트 플레이어"
+      },
+      {
+        "code": "AU-018",
+        "name": "DOUBLE DECK — 더블 데크"
+      },
+      {
+        "code": "AU-019",
+        "name": "PROFESSIONAL POWER AMP — 전문(프로페셔널) 파워 앰프"
+      },
+      {
+        "code": "AU-020",
+        "name": "PORTABLE AMP — PORTABLE 앰프"
+      },
+      {
+        "code": "AU-021",
+        "name": "이동형앰프 — 이동형앰프"
+      },
+      {
+        "code": "AU-022",
+        "name": "LOW IMPEDANCE SPEAKER"
+      },
+      {
+        "code": "AU-023",
+        "name": "ACTIVE SPAKER"
+      },
+      {
+        "code": "AU-024",
+        "name": "PASSIVEE SPAKER"
+      },
+      {
+        "code": "AU-025",
+        "name": "기타 음향장비"
+      }
+    ],
+    "VI": [
+      {
+        "code": "VI-001",
+        "name": "A/V SWITCHER — A/V 스위처"
+      },
+      {
+        "code": "VI-002",
+        "name": "A/V ROUTING SELECTOR — A/V 경로 선택기"
+      },
+      {
+        "code": "VI-003",
+        "name": "HDMI SELECTOR — HDMI 선택기"
+      },
+      {
+        "code": "VI-004",
+        "name": "HDMI MATRIX — HDMI 라우팅 장치"
+      },
+      {
+        "code": "VI-005",
+        "name": "VIDEO SELECTOR — 영상 전환기"
+      },
+      {
+        "code": "VI-006",
+        "name": "HDMI MATRIX SWITCHER — HDMI 매트릭스 스위처"
+      },
+      {
+        "code": "VI-007",
+        "name": "HDMI SWITCHER — HDMI 신호 전환기"
+      },
+      {
+        "code": "VI-008",
+        "name": "VIDEO SWITCHER — 비디오 신호 전환기"
+      },
+      {
+        "code": "VI-009",
+        "name": "BROADCASTING CONTROLLER — 방송 송출 장치"
+      },
+      {
+        "code": "VI-010",
+        "name": "Blu-ray PLAYER — Blu-ray 플레이어"
+      },
+      {
+        "code": "VI-011",
+        "name": "CAMERA — 카메라"
+      },
+      {
+        "code": "VI-012",
+        "name": "CAMERA CONTROL — 카메라 제어 장치"
+      },
+      {
+        "code": "VI-013",
+        "name": "COMBINER — TV RF 신호 결합기"
+      },
+      {
+        "code": "VI-014",
+        "name": "HD DIGITAL ENCODER — HD TV 디지털 변조기"
+      },
+      {
+        "code": "VI-015",
+        "name": "REMODULATOR — TV RF 변조기"
+      },
+      {
+        "code": "VI-016",
+        "name": "AGILE MODULATOR — TV 가변형 변조기"
+      },
+      {
+        "code": "VI-017",
+        "name": "INTERNET STREAM SERVER — 인터넷 방송 송출장치"
+      },
+      {
+        "code": "VI-018",
+        "name": "IP TRANCEIVER — IP 영상 전송기"
+      },
+      {
+        "code": "VI-019",
+        "name": "NETWORK SERVER — 네트워크 SERVER"
+      },
+      {
+        "code": "VI-020",
+        "name": "NETWORK CONVERTER — 네트워크 컨버터"
+      },
+      {
+        "code": "VI-021",
+        "name": "SATTOP BOX — TV 방송 수신기"
+      },
+      {
+        "code": "VI-022",
+        "name": "LED TV — LED TV"
+      },
+      {
+        "code": "VI-023",
+        "name": "LED MONITOR — LED 모니터"
+      },
+      {
+        "code": "VI-024",
+        "name": "Electronic Whiteboard — 전자칠판"
+      },
+      {
+        "code": "VI-025",
+        "name": "PROJECTOR — 빔프로젝터"
+      },
+      {
+        "code": "VI-026",
+        "name": "LED 전광판 — LED 전광판"
+      },
+      {
+        "code": "VI-027",
+        "name": "PTZ CAMERA — 펜틸트 카메라"
+      },
+      {
+        "code": "VI-028",
+        "name": "PTZ CONTROL — 펜틸트 제어기"
+      },
+      {
+        "code": "VI-029",
+        "name": "PC — PC"
+      },
+      {
+        "code": "VI-030",
+        "name": "CONTROL PC — 제어용 PC"
+      },
+      {
+        "code": "VI-031",
+        "name": "MULTI MIDEA CONTROL — 멀티미디어 제어기"
+      },
+      {
+        "code": "VI-032",
+        "name": "A/V MIXER — 오디오 비디오 전환기"
+      },
+      {
+        "code": "VI-033",
+        "name": "VIDEO MATRIX — 비디오 매트릭스"
+      },
+      {
+        "code": "VI-034",
+        "name": "A/V ROUTING SWITCHER — 오디오 비디오 경로 선택기"
+      },
+      {
+        "code": "VI-035",
+        "name": "A/V MATRIX — A/V 매트릭스"
+      },
+      {
+        "code": "VI-036",
+        "name": "TV MODULATOR ENCODER — 아날로그 TV 변조기"
+      },
+      {
+        "code": "VI-037",
+        "name": "HD MODULATOR ENCODER — HD TV 변조기"
+      },
+      {
+        "code": "VI-038",
+        "name": "DVD PLAYER — DVD 플레이어"
+      },
+      {
+        "code": "VI-039",
+        "name": "기타영상장비"
+      }
+    ],
+    "ETC": [
+      {
+        "code": "ETC-001",
+        "name": "BATTERY CHARGER — 밧데리 충전기"
+      },
+      {
+        "code": "ETC-002",
+        "name": "POWER DISTRIBUTOR — 전원 공급기"
+      },
+      {
+        "code": "ETC-003",
+        "name": "SEQUENCE POWER SUPPLY — 순차 전원공급장치"
+      },
+      {
+        "code": "ETC-004",
+        "name": "U.P.S — 무정전공급장치"
+      },
+      {
+        "code": "ETC-005",
+        "name": "MAIN POWER SWITCHER — MAIN 파워 스위처"
+      },
+      {
+        "code": "ETC-006",
+        "name": "BATTERY — 밧데리"
+      },
+      {
+        "code": "ETC-007",
+        "name": "STAGE LIGHTING — 무대조명"
+      },
+      {
+        "code": "ETC-008",
+        "name": "DIMMING CONTROL — 조명 제어 장치"
+      },
+      {
+        "code": "ETC-009",
+        "name": "MOTER CONTROL — 모터 제어장치"
+      },
+      {
+        "code": "ETC-010",
+        "name": "DIGITAL PODIUM — 전자교탁"
+      },
+      {
+        "code": "ETC-011",
+        "name": "JACK PLATE — 무대 잭 판넬"
+      },
+      {
+        "code": "ETC-012",
+        "name": "BATTEN CONTROL — 바텐 제어장치"
+      },
+      {
+        "code": "ETC-013",
+        "name": "CONSOL RACK — 콘솔랙"
+      }
+    ]
+  },
+  "fault": {
+    "AUD": [
+      {
+        "code": "F-AUD-001",
+        "name": "음향 장비 운영 미숙 문제"
+      },
+      {
+        "code": "F-AUD-002",
+        "name": "오디오 입력 신호 문제"
+      },
+      {
+        "code": "F-AUD-003",
+        "name": "오디오 출력 문제"
+      },
+      {
+        "code": "F-AUD-004",
+        "name": "오디오 마이크 노이즈/험 발생"
+      },
+      {
+        "code": "F-AUD-005",
+        "name": "오디오 싱크 안 맞는 문제"
+      },
+      {
+        "code": "F-AUD-006",
+        "name": "무선 마이크 수신 상태 불량"
+      },
+      {
+        "code": "F-AUD-007",
+        "name": "무선 마이크 송신 상태 불량"
+      },
+      {
+        "code": "F-AUD-008",
+        "name": "음향 스피커 선로 단선/합선 추정"
+      },
+      {
+        "code": "F-AUD-009",
+        "name": "음량 레벨/왜곡 조정 잘못됨"
+      },
+      {
+        "code": "F-AUD-010",
+        "name": "음향 장비 과열/보호동작"
+      },
+      {
+        "code": "F-AUD-011",
+        "name": "음향 EQ/ DSP 설정 이상"
+      },
+      {
+        "code": "F-AUD-012",
+        "name": "음향 장비 고장"
+      },
+      {
+        "code": "F-AUD-013",
+        "name": "음향 장비 라벨 표시 미흡"
+      },
+      {
+        "code": "F-AUD-014",
+        "name": "기타(음향)"
+      },
+      {
+        "code": "F-AUD-015",
+        "name": "음향 스피커 라인체커 보호 회로동작"
+      },
+      {
+        "code": "F-AUD-016",
+        "name": "음향 스피커 지향각 조정 문제"
+      },
+      {
+        "code": "F-AUD-017",
+        "name": "음향 체육관 스피커 보호망 없음"
+      },
+      {
+        "code": "F-AUD-018",
+        "name": "음향 CONTOL PC 문제"
+      },
+      {
+        "code": "F-AUD-019",
+        "name": "음향 장비파손"
+      },
+      {
+        "code": "F-AUD-020",
+        "name": "음향 시보 송출 문제"
+      },
+      {
+        "code": "F-AUD-021",
+        "name": "음향 일부 교실 스피커 출력이 약함"
+      },
+      {
+        "code": "F-AUD-022",
+        "name": "음향 일부 교실 스피커 출력이 강함"
+      },
+      {
+        "code": "F-AUD-023",
+        "name": "음향 메인 스피커 출력 이상"
+      },
+      {
+        "code": "F-AUD-024",
+        "name": "음향 서브 스피커 출력 이상"
+      },
+      {
+        "code": "F-AUD-025",
+        "name": "음향 PC AUDIO 장비 출력시 NOISE 발생"
+      },
+      {
+        "code": "F-AUD-026",
+        "name": "음향 장비 노후화 심각"
+      },
+      {
+        "code": "F-AUD-027",
+        "name": "음향 교내 스피커 선로 문제"
+      },
+      {
+        "code": "F-AUD-028",
+        "name": "음향 장비 설치 위치 부적합"
+      },
+      {
+        "code": "F-AUD-029",
+        "name": "음향 필요 한 장비가 없음 구성이 잘못 되었음"
+      },
+      {
+        "code": "F-AUD-030",
+        "name": "음향 장비 고장으로 동작안함"
+      }
+    ],
+    "CTR": [
+      {
+        "code": "F-CTR-001",
+        "name": "장비 제어 부 통신 연결 오류"
+      },
+      {
+        "code": "F-CTR-002",
+        "name": "장비 설정값 잘못됨"
+      },
+      {
+        "code": "F-CTR-003",
+        "name": "장비 패널/버튼 불량"
+      },
+      {
+        "code": "F-CTR-004",
+        "name": "PC 부팅/OS 오류"
+      },
+      {
+        "code": "F-CTR-005",
+        "name": "주변기기 인식 불가"
+      },
+      {
+        "code": "F-CTR-006",
+        "name": "펌웨어 업테이트 문제"
+      },
+      {
+        "code": "F-CTR-007",
+        "name": "프로그램 오류"
+      },
+      {
+        "code": "F-CTR-008",
+        "name": "컨텐츠 PC 문제"
+      }
+    ],
+    "ENV": [
+      {
+        "code": "F-ENV-001",
+        "name": "장비 과열/환기 불량"
+      },
+      {
+        "code": "F-ENV-002",
+        "name": "장비 습기/부식 심함"
+      }
+    ],
+    "SLT": [
+      {
+        "code": "F-SLT-001",
+        "name": "조명 제어 장치 동작안함"
+      },
+      {
+        "code": "F-SLT-002",
+        "name": "모터 제어 장치 동작 이상"
+      },
+      {
+        "code": "F-SLT-003",
+        "name": "바텐 제어장치 동작 이상"
+      },
+      {
+        "code": "F-SLT-004",
+        "name": "조명 램프 문제"
+      }
+    ],
+    "NET": [
+      {
+        "code": "F-NET-001",
+        "name": "IP/네트워크 설정 오류"
+      },
+      {
+        "code": "F-NET-002",
+        "name": "네트워크 케이블 단선"
+      },
+      {
+        "code": "F-NET-003",
+        "name": "스위치 포트 불량"
+      },
+      {
+        "code": "F-NET-004",
+        "name": "네트워크 끊김/지연"
+      },
+      {
+        "code": "F-NET-005",
+        "name": "인증/접속 불가"
+      }
+    ],
+    "PWR": [
+      {
+        "code": "F-PWR-001",
+        "name": "장비 전원 공급 장치 고장"
+      },
+      {
+        "code": "F-PWR-002",
+        "name": "UPS 설치 되어 있지 않음"
+      },
+      {
+        "code": "F-PWR-003",
+        "name": "UPS 장비 고장"
+      },
+      {
+        "code": "F-PWR-004",
+        "name": "UPS 배터리 문제"
+      },
+      {
+        "code": "F-PWR-005",
+        "name": "순차전원공급기 전원 출력 순서 안 맞음"
+      },
+      {
+        "code": "F-PWR-006",
+        "name": "과전류/퓨즈 단선"
+      },
+      {
+        "code": "F-PWR-007",
+        "name": "전원 노이즈 유입"
+      },
+      {
+        "code": "F-PWR-008",
+        "name": "기타(전원)"
+      },
+      {
+        "code": "F-PWR-009",
+        "name": "전원 장비파손"
+      }
+    ],
+    "SAF": [
+      {
+        "code": "F-SAF-001",
+        "name": "케이블 정리 미흡"
+      },
+      {
+        "code": "F-SAF-002",
+        "name": "음향 잭판넬 고장 및 파손"
+      },
+      {
+        "code": "F-SAF-003",
+        "name": "음향 장비 표기/라벨 미흡"
+      }
+    ],
+    "VID": [
+      {
+        "code": "F-VID-001",
+        "name": "영상 화면 출력 문제"
+      },
+      {
+        "code": "F-VID-002",
+        "name": "영상 신호 약함/끊김 문제"
+      },
+      {
+        "code": "F-VID-003",
+        "name": "영상 해상도/영상 표출 문제"
+      },
+      {
+        "code": "F-VID-004",
+        "name": "영상 전환/스위칭 문제"
+      },
+      {
+        "code": "F-VID-005",
+        "name": "교실 셋톱박스 수신 문제"
+      },
+      {
+        "code": "F-VID-006",
+        "name": "교내 증폭기/분배기 문제"
+      },
+      {
+        "code": "F-VID-007",
+        "name": "영상 카메라 제어 문제"
+      },
+      {
+        "code": "F-VID-008",
+        "name": "영상 기타 문제(영상)"
+      },
+      {
+        "code": "F-VID-009",
+        "name": "영상 장비 노후화 심각"
+      },
+      {
+        "code": "F-VID-010",
+        "name": "영상 잭 판넬 접속 불량 문제"
+      },
+      {
+        "code": "F-VID-011",
+        "name": "영상 교내 catv 선로 문제"
+      }
+    ]
+  },
+  "action": {
+    "AUD": [
+      {
+        "code": "A-AUD-001",
+        "name": "음향 장비 교체 및 추가 설치 필요"
+      },
+      {
+        "code": "A-AUD-002",
+        "name": "음향 케이블 교체 필요"
+      },
+      {
+        "code": "A-AUD-003",
+        "name": "음향 입/출력 설정/레벨 조정 완료"
+      },
+      {
+        "code": "A-AUD-004",
+        "name": "음향장비 (설치/이전/추가/교체/점검) 업체 의뢰 필요"
+      },
+      {
+        "code": "A-AUD-005",
+        "name": "음향 스피커 보호망 설치 업체 의뢰 필요"
+      },
+      {
+        "code": "A-AUD-006",
+        "name": "음향 장비/케이블 교체 및 추가 설치 테스트 완료"
+      }
+    ],
+    "CAB": [
+      {
+        "code": "A-CAB-001",
+        "name": "음향 장비 라벨링 필요"
+      },
+      {
+        "code": "A-CAB-002",
+        "name": "음향 장비 라벨링 현장 조치 완료"
+      },
+      {
+        "code": "A-CAB-003",
+        "name": "콘솔, 랙 배선 정리 정돈 청소 필요"
+      },
+      {
+        "code": "A-CAB-004",
+        "name": "음향 커넥터 접촉불량 압착/재시공 필요"
+      },
+      {
+        "code": "A-CAB-005",
+        "name": "음향 교내 스피커 선로 점검 필요"
+      },
+      {
+        "code": "A-CAB-006",
+        "name": "음향 교내 스피커 선로 점검 및 측정 완료"
+      }
+    ],
+    "MNT": [
+      {
+        "code": "A-MNT-001",
+        "name": "컨트롤 PC 펌웨어/드라이버 업데이트 필요"
+      },
+      {
+        "code": "A-MNT-002",
+        "name": "제어 소프트웨어 재설치/복구 필요"
+      },
+      {
+        "code": "A-MNT-003",
+        "name": "장비 교육 완료"
+      },
+      {
+        "code": "A-MNT-004",
+        "name": "장비실 청소/환기/ 개선 필요"
+      },
+      {
+        "code": "A-MNT-005",
+        "name": "기타 장비 추가 필요"
+      }
+    ],
+    "NET": [
+      {
+        "code": "A-NET-001",
+        "name": "PC교체 권고"
+      },
+      {
+        "code": "A-NET-002",
+        "name": "스위치 재부팅/포트 점검"
+      },
+      {
+        "code": "A-NET-003",
+        "name": "네트워크 케이블 교체"
+      },
+      {
+        "code": "A-NET-004",
+        "name": "포트/VLAN 설정 조정"
+      },
+      {
+        "code": "A-NET-005",
+        "name": "네트워크 장비 점검"
+      }
+    ],
+    "SLT": [
+      {
+        "code": "A-SLT-001",
+        "name": "조명 제어 장비 점검 필요"
+      },
+      {
+        "code": "A-SLT-002",
+        "name": "모터 제어 장비 점검 필요"
+      },
+      {
+        "code": "A-SLT-003",
+        "name": "바텐 제어 장비 점검 필요"
+      },
+      {
+        "code": "A-SLT-004",
+        "name": "조명 램프 교체 필요"
+      }
+    ],
+    "PWR": [
+      {
+        "code": "A-PWR-001",
+        "name": "전원 공급기 업체 점검 필요"
+      },
+      {
+        "code": "A-PWR-002",
+        "name": "전원 UPS 구매 설치 필요"
+      },
+      {
+        "code": "A-PWR-003",
+        "name": "전원 UPS 교체 필요"
+      },
+      {
+        "code": "A-PWR-004",
+        "name": "전원 UPS / 배터리 교체 필요"
+      },
+      {
+        "code": "A-PWR-005",
+        "name": "전원 순차전원 공급순서 변경 완료"
+      },
+      {
+        "code": "A-PWR-006",
+        "name": "전원 공급기 교체 필요"
+      },
+      {
+        "code": "A-PWR-007",
+        "name": "전원 순차전원 공급기 순서 변경 필요"
+      }
+    ],
+    "SET": [
+      {
+        "code": "A-SET-001",
+        "name": "장비 시스템 셋업 재구성 조치완료"
+      },
+      {
+        "code": "A-SET-002",
+        "name": "장비 사용자 교육 완료"
+      },
+      {
+        "code": "A-SET-003",
+        "name": "장비 라벨 부착 조치 완료"
+      },
+      {
+        "code": "A-SET-004",
+        "name": "장비테스트/시운전 조치완료"
+      }
+    ],
+    "VID": [
+      {
+        "code": "A-VID-001",
+        "name": "영상 CATV 선로 신호레벨 점검 필요"
+      },
+      {
+        "code": "A-VID-002",
+        "name": "영상 장비 /케이블 점검 필요"
+      },
+      {
+        "code": "A-VID-003",
+        "name": "영상 스위처/매트릭스 설정 조정 필요"
+      },
+      {
+        "code": "A-VID-004",
+        "name": "교실 TV 셋탑 박스 교체 필요"
+      },
+      {
+        "code": "A-VID-005",
+        "name": "영상 (설치/이전/추가/교체/점검) 업체 의뢰 필요"
+      },
+      {
+        "code": "A-VID-006",
+        "name": "영상 장비 교체 및 추가 설치 현장 조치 완료"
+      },
+      {
+        "code": "A-VID-007",
+        "name": "영상 케이블 교체 필요"
+      },
+      {
+        "code": "A-VID-008",
+        "name": "영상 케이블 교체/재연결 조치완료(HDMI 등)"
+      }
+    ]
+  }
+}

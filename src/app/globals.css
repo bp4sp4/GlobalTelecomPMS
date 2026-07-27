@@ -1,0 +1,50 @@
+@import "../styles/krds-tokens.css";
+
+/* Pretendard Variable — 전체 굵기(45~920) 단일 가변 폰트 */
+@font-face {
+  font-family: "Pretendard Variable";
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/PretendardVariable.woff2") format("woff2-variations");
+}
+
+/* 앱 전역 기본 (토큰 위에 최소한만) */
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+img,
+picture,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 인쇄(PDF 출력): 사이드바/액션바 숨기고 본문만 */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+  }
+  main {
+    padding: 0 !important;
+  }
+}

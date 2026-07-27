@@ -1,0 +1,164 @@
+/* =============================================================
+   THEME TOKENS — Toss(TDS) 스타일
+   (변수명은 --krds-* 유지하되 값은 Toss 디자인 시스템 기준)
+   primary #3182f6 · Toss grey scale · weak #e8f3ff
+   ============================================================= */
+
+:root {
+  font-size: 62.5%; /* 1rem = 10px */
+
+  /* ===== Primary (Toss Blue) ===== */
+  --krds-primary-5:  #e8f3ff; /* weak bg */
+  --krds-primary-10: #c9e2ff;
+  --krds-primary-20: #96c2ff;
+  --krds-primary-30: #64a4ff;
+  --krds-primary-40: #4593fc;
+  --krds-primary-50: #3182f6; /* 액션 기본 */
+  --krds-primary-60: #2272eb; /* hover */
+  --krds-primary-70: #1b64da; /* pressed / weak-fg */
+  --krds-primary-80: #1957b8;
+  --krds-primary-90: #12408a;
+
+  /* ===== Secondary (동일 계열) ===== */
+  --krds-secondary-5:  #eef2f7;
+  --krds-secondary-50: #1b64da;
+  --krds-secondary-60: #1957b8;
+  --krds-secondary-70: #12408a;
+  --krds-secondary-80: #0d2f66;
+
+  /* ===== Gray (Toss grey scale) ===== */
+  --krds-gray-0:   #ffffff;
+  --krds-gray-5:   #f9fafb;
+  --krds-gray-10:  #f2f4f6; /* surface */
+  --krds-gray-20:  #e5e8eb; /* border / disabled bg */
+  --krds-gray-30:  #d1d6db; /* border */
+  --krds-gray-40:  #b0b8c1;
+  --krds-gray-50:  #8b95a1; /* muted / caption */
+  --krds-gray-60:  #6b7684; /* strong border */
+  --krds-gray-70:  #4e5968; /* body */
+  --krds-gray-80:  #333d4b;
+  --krds-gray-90:  #191f28; /* foreground */
+  --krds-gray-95:  #0f1115;
+  --krds-gray-100: #000000;
+
+  /* ===== System Colors ===== */
+  --krds-danger-5:   #ffeff0;
+  --krds-danger-50:  #e42939;
+  --krds-danger-60:  #d32030;
+  --krds-danger-70:  #c9202f;
+
+  --krds-warning-5:  #fff6e0;
+  --krds-warning-30: #ffb020;
+  --krds-warning-50: #a8710a;
+  --krds-warning-70: #6b4700;
+
+  --krds-success-5:  #e6f9f1;
+  --krds-success-50: #12b886;
+  --krds-success-70: #0b8a66;
+
+  --krds-information-5:  #e8f3ff;
+  --krds-information-50: #3182f6;
+  --krds-information-70: #1b64da;
+
+  --krds-point-5:   #ffeff0;
+  --krds-point-50:  #e42939;
+  --krds-point-60:  #d32030;
+  --krds-point-70:  #b71c2b;
+
+  /* ===== Semantic aliases ===== */
+  --krds-color-bg:            var(--krds-gray-0);
+  --krds-color-surface:       var(--krds-gray-10);
+  --krds-color-surface-primary: var(--krds-primary-5);
+  --krds-color-text:          var(--krds-gray-90);
+  --krds-color-text-subtle:   var(--krds-gray-70);
+  --krds-color-text-caption:  var(--krds-gray-50);
+  --krds-color-border:        var(--krds-gray-30);
+  --krds-color-border-subtle: var(--krds-gray-20);
+  --krds-color-link:          var(--krds-primary-50);
+
+  /* ===== Typography (Toss: body 16, Pretendard) ===== */
+  --krds-font-family-base: "Pretendard Variable", "Pretendard", -apple-system,
+    BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --krds-font-weight-regular: 400;
+  --krds-font-weight-bold: 700;
+  --krds-line-height: 1.5;
+
+  --krds-fs-display-large: 5.6rem;
+  --krds-fs-display-small: 3.6rem;
+  --krds-fs-heading-xlarge: 3.6rem;
+  --krds-fs-heading-large: 3.0rem;
+  --krds-fs-heading-medium: 2.4rem;
+  --krds-fs-heading-small: 1.9rem;
+  --krds-fs-heading-xsmall: 1.7rem;
+  --krds-fs-body-large: 1.8rem;
+  --krds-fs-body-medium: 1.6rem; /* 본문 기본 */
+  --krds-fs-body-small: 1.4rem;
+  --krds-fs-body-xsmall: 1.3rem;
+
+  /* ===== Spacing ===== */
+  --krds-space-1: 0.2rem;
+  --krds-space-2: 0.4rem;
+  --krds-space-3: 0.8rem;
+  --krds-space-4: 1.0rem;
+  --krds-space-5: 1.2rem;
+  --krds-space-6: 1.6rem;
+  --krds-space-7: 2.0rem;
+  --krds-space-8: 2.4rem;
+  --krds-space-9: 3.2rem;
+  --krds-space-10: 4.0rem;
+
+  /* ===== Radius (Toss: 라운드 큼) ===== */
+  --krds-radius-xsmall: 0.4rem;
+  --krds-radius-small: 0.6rem;
+  --krds-radius-medium: 0.8rem;
+  --krds-radius-large: 1.2rem;
+  --krds-radius-xlarge: 1.4rem;
+  --krds-radius-xxlarge: 2.0rem;
+  --krds-radius-max: 9999px;
+
+  /* ===== Component heights ===== */
+  --krds-size-xsmall: 3.2rem;
+  --krds-size-small: 4.0rem;
+  --krds-size-medium: 4.8rem;
+  --krds-size-large: 5.2rem;
+  --krds-size-xlarge: 5.6rem;
+
+  /* ===== Shadows (Toss: 부드러운 그림자 사용) ===== */
+  --krds-shadow-outline: 0 0 0 0.3rem rgba(49, 130, 246, 0.4);
+  --krds-shadow-drop: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.08);
+  --krds-shadow-modal: 0 0.8rem 2.8rem rgba(0, 0, 0, 0.16);
+  --krds-shadow-card: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.06);
+
+  /* ===== Layout ===== */
+  --krds-container: 100%;
+
+  /* ===== Motion ===== */
+  --krds-transition-base: 0.2s ease;
+  --krds-transition-fade: opacity 0.2s ease;
+  --krds-transition-collapse: max-height 0.3s ease;
+}
+
+/* ===== Global base ===== */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--krds-font-family-base);
+  font-size: var(--krds-fs-body-medium);
+  font-weight: var(--krds-font-weight-regular);
+  line-height: var(--krds-line-height);
+  color: var(--krds-color-text);
+  background: var(--krds-color-bg);
+  letter-spacing: -0.01em; /* Toss 특유의 약간 좁은 자간 */
+}
+
+a { color: var(--krds-color-link); }
+
+:where(button, a, input, select, textarea, [tabindex]):focus-visible {
+  outline: none;
+  box-shadow: var(--krds-shadow-outline);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0ms !important; animation-duration: 0ms !important; }
+}

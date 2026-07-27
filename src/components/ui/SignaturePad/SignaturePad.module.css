@@ -1,0 +1,20 @@
+.pad {
+  border: 1px solid var(--krds-gray-30);
+  border-radius: var(--krds-radius-small);
+  background: #fff;
+  touch-action: none;
+  width: 100%;
+  height: 100px;
+  display: block;
+  cursor: crosshair;
+}
+.clear {
+  margin-top: var(--krds-space-3);
+  padding: var(--krds-space-2) var(--krds-space-4);
+  border: 1px solid var(--krds-danger-50);
+  color: var(--krds-danger-50);
+  background: #fff;
+  border-radius: var(--krds-radius-small);
+  font-size: var(--krds-fs-body-xsmall);
+  cursor: pointer;
+}

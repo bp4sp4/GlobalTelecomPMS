@@ -1,0 +1,23 @@
+.card {
+  background: var(--krds-gray-0);
+  border: 1px solid var(--krds-color-border-subtle);
+  border-radius: var(--krds-radius-large);
+  padding: var(--krds-space-8);
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--krds-space-6);
+}
+.title {
+  font-size: var(--krds-fs-heading-small);
+  font-weight: var(--krds-font-weight-bold);
+  color: var(--krds-gray-90);
+  margin: 0;
+}
+.meta {
+  font-size: var(--krds-fs-body-xsmall);
+  color: var(--krds-color-text-caption);
+}

@@ -1,0 +1,37 @@
+.head { margin-bottom: var(--krds-space-8); }
+.title { font-size: var(--krds-fs-heading-large); font-weight: 700; margin: 0; }
+.desc { margin: var(--krds-space-3) 0 0; font-size: var(--krds-fs-body-small); color: var(--krds-color-text-caption); }
+
+.kpiRow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--krds-space-5);
+  margin-bottom: var(--krds-space-6);
+}
+.kpi {
+  background: #fff;
+  border: 1px solid var(--krds-color-border-subtle);
+  border-left: 4px solid var(--krds-primary-50);
+  border-radius: var(--krds-radius-large);
+  padding: var(--krds-space-6);
+}
+.kpiLabel { font-size: var(--krds-fs-body-small); color: var(--krds-color-text-caption); margin: 0 0 var(--krds-space-3); }
+.kpiValue { font-size: var(--krds-fs-heading-large); font-weight: 700; margin: 0; }
+.kpiSub { font-size: var(--krds-fs-body-xsmall); color: var(--krds-color-text-caption); margin: var(--krds-space-3) 0 0; }
+
+.panel {
+  background: #fff; border: 1px solid var(--krds-color-border-subtle);
+  border-radius: var(--krds-radius-large); padding: var(--krds-space-8); margin-bottom: var(--krds-space-6);
+}
+.panelTitle { font-size: var(--krds-fs-heading-small); font-weight: 700; margin: 0 0 var(--krds-space-6); }
+
+.bars { display: flex; align-items: flex-end; gap: var(--krds-space-5); height: 220px; padding-top: var(--krds-space-6); overflow-x: auto; }
+.barCol { display: flex; flex-direction: column; align-items: center; gap: var(--krds-space-3); min-width: 60px; flex: 1; }
+.barVal { font-size: var(--krds-fs-body-xsmall); color: var(--krds-gray-70); }
+.bar { width: 60%; min-height: 2px; background: var(--krds-primary-50); border-radius: var(--krds-radius-small) var(--krds-radius-small) 0 0; }
+.barLabel { font-size: var(--krds-fs-body-xsmall); color: var(--krds-color-text-caption); white-space: nowrap; }
+
+.table { width: 100%; border-collapse: collapse; font-size: var(--krds-fs-body-small); }
+.table th { background: var(--krds-gray-5); text-align: left; padding: var(--krds-space-4); border-bottom: 1px solid var(--krds-gray-20); white-space: nowrap; }
+.table td { padding: var(--krds-space-4); border-bottom: 1px solid var(--krds-gray-10); }
+.table tbody tr:hover { background: var(--krds-primary-5); }

@@ -1,0 +1,167 @@
+/* =============================================================
+   KRDS Design Tokens — 대한민국 정부 디자인 시스템
+   방송장비 컨설팅 문서자동화 시스템 클론용 파운데이션
+   globals.css 상단에 import 하거나 이 파일 내용을 그대로 사용.
+   Tailwind 미사용 · CSS Modules에서 var(--krds-*)로 참조.
+   ============================================================= */
+
+:root {
+  /* --- Base sizing: 1rem = 10px --- */
+  font-size: 62.5%;
+
+  /* ===== Colors — Primary (Government Blue) ===== */
+  --krds-primary-5:  #ecf2fe;
+  --krds-primary-10: #d8e5fd;
+  --krds-primary-20: #b1cefb;
+  --krds-primary-30: #86aff9;
+  --krds-primary-40: #4c87f6;
+  --krds-primary-50: #256ef4; /* 액션 기본 */
+  --krds-primary-60: #0b50d0; /* 텍스트/pressed */
+  --krds-primary-70: #083891;
+  --krds-primary-80: #052561;
+  --krds-primary-90: #03163a;
+
+  /* ===== Colors — Secondary (Navy) ===== */
+  --krds-secondary-5:  #eef2f7;
+  --krds-secondary-50: #346fb2;
+  --krds-secondary-60: #1c589c;
+  --krds-secondary-70: #063a74;
+  --krds-secondary-80: #052b57;
+
+  /* ===== Colors — Gray ===== */
+  --krds-gray-0:   #ffffff;
+  --krds-gray-5:   #f4f5f6;
+  --krds-gray-10:  #e6e8ea;
+  --krds-gray-20:  #cdd1d5; /* disabled 표면 */
+  --krds-gray-30:  #b1b8be; /* 보더 약 */
+  --krds-gray-40:  #8a949e;
+  --krds-gray-50:  #6d7882; /* caption/meta */
+  --krds-gray-60:  #58616a; /* 표준 보더 */
+  --krds-gray-70:  #464c53; /* 보조 텍스트/placeholder */
+  --krds-gray-80:  #33363d;
+  --krds-gray-90:  #1e2124; /* 본문/H1 */
+  --krds-gray-95:  #131416;
+  --krds-gray-100: #000000;
+
+  /* ===== System Colors ===== */
+  --krds-danger-5:   #fdefec;
+  --krds-danger-50:  #de3412;
+  --krds-danger-60:  #bd2c0f;
+  --krds-danger-70:  #8a240f;
+
+  --krds-warning-5:  #fff3db;
+  --krds-warning-30: #ffb114; /* bg */
+  --krds-warning-50: #9e6a00; /* text-on-light */
+  --krds-warning-70: #614100;
+
+  --krds-success-5:  #eaf6ec;
+  --krds-success-50: #228738;
+  --krds-success-70: #285d33;
+
+  --krds-information-5:  #e7f4fe;
+  --krds-information-50: #0b78cb;
+  --krds-information-70: #085691;
+
+  --krds-point-5:   #fbeff0;
+  --krds-point-50:  #d63d4a;
+  --krds-point-60:  #ab2b36; /* select error border */
+  --krds-point-70:  #7a1f26;
+
+  /* ===== Semantic aliases ===== */
+  --krds-color-bg:            var(--krds-gray-0);
+  --krds-color-surface:       var(--krds-gray-5);
+  --krds-color-surface-primary: var(--krds-primary-5);
+  --krds-color-text:          var(--krds-gray-90);
+  --krds-color-text-subtle:   var(--krds-gray-70);
+  --krds-color-text-caption:  var(--krds-gray-50);
+  --krds-color-border:        var(--krds-gray-60);
+  --krds-color-border-subtle: var(--krds-gray-30);
+  --krds-color-link:          var(--krds-primary-50);
+
+  /* ===== Typography ===== */
+  --krds-font-family-base: "Pretendard GOV", "Pretendard", -apple-system,
+    BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --krds-font-weight-regular: 400;
+  --krds-font-weight-bold: 700;
+  --krds-line-height: 1.5;
+
+  /* Font sizes (rem) */
+  --krds-fs-display-large: 6.0rem;
+  --krds-fs-display-small: 3.6rem;
+  --krds-fs-heading-xlarge: 4.0rem; /* H1 (PC) */
+  --krds-fs-heading-large: 3.2rem;
+  --krds-fs-heading-medium: 2.4rem;
+  --krds-fs-heading-small: 1.9rem;
+  --krds-fs-heading-xsmall: 1.7rem;
+  --krds-fs-body-large: 1.9rem;
+  --krds-fs-body-medium: 1.7rem; /* 본문 기본 */
+  --krds-fs-body-small: 1.5rem;
+  --krds-fs-body-xsmall: 1.3rem;
+
+  /* ===== Spacing (8pt grid) ===== */
+  --krds-space-1: 0.2rem;
+  --krds-space-2: 0.4rem;
+  --krds-space-3: 0.8rem;
+  --krds-space-4: 1.0rem;
+  --krds-space-5: 1.2rem;
+  --krds-space-6: 1.6rem;
+  --krds-space-7: 2.0rem;
+  --krds-space-8: 2.4rem; /* 표준 gutter */
+  --krds-space-9: 3.2rem;
+  --krds-space-10: 4.0rem; /* 모달 padding */
+
+  /* ===== Radius ===== */
+  --krds-radius-xsmall: 0.2rem;
+  --krds-radius-small: 0.4rem;
+  --krds-radius-medium: 0.6rem;
+  --krds-radius-large: 0.8rem; /* 표준 카드/패널 */
+  --krds-radius-xlarge: 1.0rem;
+  --krds-radius-xxlarge: 1.2rem; /* 모달 */
+  --krds-radius-max: 1000px;
+
+  /* ===== Component heights (5-step) ===== */
+  --krds-size-xsmall: 3.2rem;
+  --krds-size-small: 4.0rem;
+  --krds-size-medium: 4.8rem;
+  --krds-size-large: 5.6rem;
+  --krds-size-xlarge: 6.4rem;
+
+  /* ===== Shadows / Elevation ===== */
+  --krds-shadow-outline: 0 0 0 0.4rem var(--krds-primary-50); /* focus ring */
+  --krds-shadow-drop: 0 0.2rem 0 0 rgba(0,0,0,0.1), 0 0.4rem 0.8rem 0 rgba(0,0,0,0.1);
+  --krds-shadow-modal: 0 0.2rem 0 0 rgba(0,0,0,0.1), 0 0.4rem 0.8rem 0 rgba(0,0,0,0.1);
+
+  /* ===== Layout ===== */
+  --krds-container: 1200px;
+
+  /* ===== Motion ===== */
+  --krds-transition-base: 0.4s ease-in-out;
+  --krds-transition-fade: opacity 0.4s linear;
+  --krds-transition-collapse: max-height 0.4s ease;
+}
+
+/* ===== Global base ===== */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--krds-font-family-base);
+  font-size: var(--krds-fs-body-medium);
+  font-weight: var(--krds-font-weight-regular);
+  line-height: var(--krds-line-height);
+  color: var(--krds-color-text);
+  background: var(--krds-color-bg);
+  letter-spacing: 0;
+}
+
+a { color: var(--krds-color-link); }
+
+/* 모든 인터랙티브 요소 공통 focus ring */
+:where(button, a, input, select, textarea, [tabindex]):focus-visible {
+  outline: none;
+  box-shadow: var(--krds-shadow-outline);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0ms !important; animation-duration: 0ms !important; }
+}
