@@ -12,10 +12,12 @@ export default async function CsvPage() {
   if (!session) redirect("/login");
   if (session.role !== "ADMIN") redirect("/dashboard");
 
-  const [schoolCount, byOffice] = await Promise.all([
-    prisma.school.count(),
-    prisma.school.groupBy({ by: ["educationOffice"], _count: true }),
-  ]);
+  // 총계는 groupBy 합산으로 계산해 count 쿼리 제거 (DB 왕복 2회 → 1회)
+  const byOffice = await prisma.school.groupBy({
+    by: ["educationOffice"],
+    _count: true,
+  });
+  const schoolCount = byOffice.reduce((s, g) => s + g._count, 0);
 
   return (
     <AppShell brand={{ title: "시스템", subtitle: "학교 데이터 관리" }} sections={dashboardNav(true)}>

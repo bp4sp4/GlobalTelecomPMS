@@ -22,14 +22,15 @@ export default async function StatsPage() {
   const session = await getSession();
   if (!session) redirect("/login");
 
-  const [schoolAgg, totalSchools, reports, totalReports] = await Promise.all([
+  // 학교 총계는 groupBy 결과를 합산해 별도 count 쿼리를 제거 (DB 왕복 3회 → 2회)
+  const [schoolAgg, reports] = await Promise.all([
     prisma.school.groupBy({ by: ["educationOffice", "schoolLevel"], _count: true }),
-    prisma.school.count(),
     prisma.report.findMany({
       select: { type: true, status: true, school: { select: { educationOffice: true } } },
     }),
-    prisma.report.count(),
   ]);
+  const totalSchools = schoolAgg.reduce((s, g) => s + g._count, 0);
+  const totalReports = reports.length;
 
   const stats: Record<string, OfficeStat> = {};
   for (const o of OFFICES) stats[o] = { office: o, total: 0, e: 0, m: 0, h: 0, etc: 0, consultingDone: 0, improvement: 0 };

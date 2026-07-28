@@ -1,0 +1,45 @@
+.wrap {
+  padding: var(--krds-space-9);
+  display: flex;
+  flex-direction: column;
+  gap: var(--krds-space-6);
+}
+.bar {
+  background: linear-gradient(
+    90deg,
+    var(--krds-gray-10) 25%,
+    var(--krds-gray-5) 37%,
+    var(--krds-gray-10) 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.2s ease-in-out infinite;
+  border-radius: var(--krds-radius-medium);
+}
+.title {
+  height: 34px;
+  width: 220px;
+}
+.card {
+  height: 120px;
+  border-radius: var(--krds-radius-xlarge);
+}
+.row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--krds-space-6);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar {
+    animation: none;
+  }
+}

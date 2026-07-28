@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { createSessionToken, SESSION_COOKIE } from "@/lib/auth";
@@ -43,12 +43,15 @@ export async function POST(req: Request) {
     maxAge
   );
 
-  // 접속 로그 (원격 접속 목록용)
+  // 접속 로그(원격 접속 목록용)는 응답 이후에 기록해 로그인 대기 시간에서 제외한다.
   const ip =
     req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
     req.headers.get("x-real-ip") ??
     null;
-  await prisma.accessLog.create({ data: { userId: user.id, ip } }).catch(() => null);
+  const userId = user.id;
+  after(async () => {
+    await prisma.accessLog.create({ data: { userId, ip } }).catch(() => null);
+  });
 
   const res = NextResponse.json({
     ok: true,

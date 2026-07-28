@@ -23,9 +23,9 @@ export default async function DashboardPage() {
   const isAdmin = session.role === "ADMIN";
 
   const tenMinAgo = new Date(Date.now() - 10 * 60 * 1000);
-  const [consultingDone, totalReports, messages, accessLogs] = await Promise.all([
-    prisma.report.count({ where: { type: "CONSULTING", status: "DONE" } }),
-    prisma.report.count(),
+  // 쿼리 수 최소화: 보고서 집계는 groupBy 1회로 처리, 접속자 이름은 같은 배치에서 조회
+  const [reportGroups, messages, accessLogs, users] = await Promise.all([
+    prisma.report.groupBy({ by: ["type", "status"], _count: true }),
     prisma.message.findMany({
       include: { author: { select: { username: true } } },
       orderBy: { createdAt: "desc" },
@@ -38,18 +38,20 @@ export default async function DashboardPage() {
           take: 30,
         })
       : Promise.resolve([]),
+    isAdmin
+      ? prisma.user.findMany({ select: { id: true, username: true } })
+      : Promise.resolve([]),
   ]);
+
+  const consultingDone = reportGroups
+    .filter((g) => g.type === "CONSULTING" && g.status === "DONE")
+    .reduce((s, g) => s + g._count, 0);
+  const totalReports = reportGroups.reduce((s, g) => s + g._count, 0);
   const pct = Math.round((consultingDone / CONSULTING_TARGET) * 1000) / 10;
 
   // 접속 로그 사용자명 매핑
   const userMap = new Map<string, string>();
-  if (accessLogs.length) {
-    const users = await prisma.user.findMany({
-      where: { id: { in: [...new Set(accessLogs.map((l) => l.userId))] } },
-      select: { id: true, username: true },
-    });
-    users.forEach((u) => userMap.set(u.id, u.username));
-  }
+  users.forEach((u) => userMap.set(u.id, u.username));
 
   const initialMessages = messages.map((m) => ({
     id: m.id,
