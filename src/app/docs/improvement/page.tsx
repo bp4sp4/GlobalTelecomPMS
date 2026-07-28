@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { AppShell } from "@/components/layout/AppShell";
 import { docsNav } from "@/lib/nav";
 import { loadReportContext } from "@/lib/reportServer";

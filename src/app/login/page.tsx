@@ -1,12 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Button, Input } from "@/components/ui";
 import styles from "./page.module.css";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
@@ -28,8 +26,8 @@ export default function LoginPage() {
         setError(data.message ?? "아이디 또는 비밀번호가 올바르지 않습니다.");
         return;
       }
-      router.push("/dashboard");
-      router.refresh();
+      // 하드 내비게이션: 로그아웃 상태에서 캐시된 라우터 페이로드를 완전히 초기화
+      window.location.href = "/dashboard";
     } catch {
       setError("로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
     } finally {
