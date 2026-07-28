@@ -6,6 +6,7 @@ import { saveReport } from "@/lib/reportClient";
 import { DatePicker, Select } from "@/components/ui";
 import { SignaturePad } from "@/components/ui/SignaturePad/SignaturePad";
 import { CellInput } from "@/components/report/CellInput";
+import { PrintInfoTable } from "@/components/report/PrintInfoTable";
 import {
   buildConsultingResult,
   buildImprovement,
@@ -376,7 +377,17 @@ export function ConsultingForm({
               </div>
             </div>
 
-            <div className={f.infoGrid}>
+            <PrintInfoTable
+              pairs={[
+                { label: "교육지원청", value: office ?? "" },
+                { label: "학교명", value: school },
+                { label: "소재지", value: district ?? "" },
+                { label: "컨설팅 방문일", value: visitDate },
+                { label: "유지관리 현황", value: maintenance },
+                { label: "수능시험장 여부", value: suneung },
+              ]}
+            />
+            <div className={`${f.infoGrid} no-print`}>
               <label className={f.field}>
                 <span className={f.label}>교육지원청</span>
                 <input readOnly value={office ?? ""} className={f.readonly} />
@@ -440,13 +451,14 @@ export function ConsultingForm({
 
             {/* 화면에서는 선택한 시설만, 인쇄에서는 전체 시설 출력 */}
             {activeFacilities.map((fac) => (
-              <div key={fac} className={fac === tab ? undefined : "print-only"}>
-                <div className="print-only" style={{ fontWeight: 700, margin: "3mm 0 2mm" }}>
-                  {fac}
-                </div>
+              <div
+                key={fac}
+                className={`print-group ${fac === tab ? "" : "print-only"}`}
+              >
+                <div className="print-only print-subtitle">{fac}</div>
                 <div className={f.tableBox}>
                   <div className={f.tableScroll}>
-                    <div className={f.grid}>
+                    <div className={`${f.grid} print-wide-first`}>
                       <div className={`${f.gridRow} ${f.gridHead}`}>
                         <span>점검항목</span>
                         <span>장비</span>

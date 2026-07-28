@@ -124,10 +124,13 @@
   align-items: center;
 }
 .searchIcon {
+  display: flex;
+  align-items: center;
+  top: 50%;
+  transform: translateY(-50%);
   position: absolute;
   left: 16px;
   color: var(--gt-faint);
-  font-size: 14px;
   pointer-events: none;
 }
 .search {

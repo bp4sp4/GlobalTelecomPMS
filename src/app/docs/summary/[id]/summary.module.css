@@ -1,0 +1,226 @@
+/* 보고서 요약본 (읽기 전용 문서 뷰) */
+
+.page {
+  padding: 24px 28px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 상단 액션바 */
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+.actionsRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn {
+  border: 1px solid var(--gt-line);
+  background: #fff;
+  color: var(--gt-sub);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.btn:hover {
+  background: var(--gt-bg);
+}
+.btnPrimary {
+  border: none;
+  background: var(--gt-blue);
+  color: #fff;
+  font-weight: 700;
+}
+.btnPrimary:hover {
+  background: var(--gt-blue-dark);
+}
+
+/* 문서 종이 */
+.paper {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+/* 상단 초록 표제 밴드 (원본 보고서 형식) */
+.band {
+  background: #63b08e;
+  color: #fff;
+  text-align: center;
+  padding: 18px 24px 16px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.bandSub {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+.bandTitle {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-top: 4px;
+}
+.bandMeta {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.9;
+  margin-top: 4px;
+}
+
+/* 섹션 */
+.section {
+  padding: 22px 28px 4px;
+}
+.section:last-child {
+  padding-bottom: 28px;
+}
+.h2 {
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  border-left: 4px solid var(--gt-blue);
+  padding-left: 10px;
+}
+.h3 {
+  margin: 18px 0 8px;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--gt-sub);
+  border-left: 3px solid #b9d4f8;
+  padding-left: 8px;
+}
+
+/* 기본 정보 표 */
+.info {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.info th {
+  width: 110px;
+  background: #f7f8fa;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--gt-sub);
+  text-align: left;
+}
+.info th,
+.info td {
+  border: 1px solid var(--gt-line);
+  padding: 9px 12px;
+  font-size: 13.5px;
+}
+.strong {
+  font-weight: 800;
+}
+
+/* 서술 블록 */
+.pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 13.5px;
+  line-height: 1.9;
+  color: var(--gt-text);
+  background: #fafbfc;
+  border: 1px solid var(--gt-line-soft);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+/* 서명란 */
+.signHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.signCount {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gt-blue);
+}
+.signScroll {
+  overflow-x: auto;
+}
+.sign {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.sign th,
+.sign td {
+  border: 1px solid var(--gt-line);
+  padding: 8px 10px;
+  font-size: 12.5px;
+  text-align: center;
+  vertical-align: middle;
+}
+.sign th {
+  background: #f7f8fa;
+  font-weight: 700;
+  color: var(--gt-sub);
+}
+.signLabel {
+  width: 64px;
+}
+.signCell {
+  height: 56px;
+}
+.signImg {
+  max-height: 48px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* 인쇄: 종이 프레임 없이 내용만 */
+@media print {
+  .page {
+    padding: 0;
+  }
+  .paper {
+    max-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .section {
+    padding: 0 0 4mm;
+  }
+  .band {
+    border-radius: 0;
+  }
+  .pre {
+    background: #fff;
+    border: none;
+    padding: 0;
+    font-size: 9pt;
+  }
+  .signScroll {
+    overflow: visible;
+  }
+  .sign {
+    min-width: 0;
+  }
+}

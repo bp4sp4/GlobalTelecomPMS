@@ -128,11 +128,33 @@ ol {
     gap: 0 !important;
   }
 
-  /* 기본 정보 그리드: A4 폭(약 180mm)에 맞춰 자동 배치 */
-  [class*="infoGrid"] {
-    grid-template-columns: repeat(auto-fit, minmax(28mm, 1fr)) !important;
-    gap: 2mm !important;
-    overflow: visible !important;
+  /* 기본 정보: 화면 카드는 숨기고 인쇄 전용 표(PrintInfoTable)가 대신 출력된다 */
+  .print-info {
+    display: table !important;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 5mm;
+    table-layout: fixed;
+  }
+  .print-info th {
+    width: 24mm;
+    background: #f0f0f0 !important;
+    font-weight: 700;
+    text-align: left;
+    white-space: nowrap;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .print-info th,
+  .print-info td {
+    border: 0.4pt solid #444 !important;
+    padding: 1.6mm 2mm !important;
+    font-size: 8pt !important;
+    vertical-align: middle;
+  }
+  .print-info th:empty,
+  .print-info td:empty {
+    background: #fff !important;
   }
 
   /* 카드/패널을 문서 블록처럼 */
@@ -223,10 +245,20 @@ ol {
   [class*="gridRow"] > * {
     flex: 1 1 0;
     min-width: 0 !important;
+    min-height: 6.5mm;
+    box-sizing: border-box;
     border: 0.4pt solid #444 !important;
+    /* 이웃 칸과 테두리가 겹쳐 두 줄로 보이지 않게 겹쳐 그린다 */
+    margin: -0.2pt 0 0 -0.2pt;
     padding: 1.2mm !important;
     font-size: 7.5pt !important;
     word-break: break-word;
+  }
+  /* 첫 열이 서술형인 표(컨설팅 점검항목)는 컨테이너에 print-wide-first 를 달아
+     헤더·본문 첫 칸을 함께 넓힌다 */
+  .print-wide-first [class*="gridRow"] > span:first-of-type,
+  .print-wide-first [class*="gridRow"] > .print-cell:first-of-type {
+    flex: 2 1 0 !important;
   }
   [class*="gridHead"] > * {
     background: #f0f0f0 !important;
@@ -244,9 +276,22 @@ ol {
     display: block;
     white-space: pre-wrap;
     word-break: break-word;
-    font-size: 8pt;
-    line-height: 1.35;
+    font-size: 7.5pt;
+    line-height: 1.3;
     min-height: 1em;
+  }
+
+  /* 시설별 소제목 — 제목만 페이지 끝에 남지 않게 */
+  .print-subtitle {
+    font-size: 9.5pt;
+    font-weight: 700;
+    margin: 4mm 0 1.5mm;
+    break-after: avoid;
+    break-inside: avoid;
+  }
+  /* 소제목 + 표를 한 덩어리로 (가능하면 페이지를 넘기지 않는다) */
+  .print-group {
+    break-inside: avoid;
   }
   thead th {
     background: #f0f0f0 !important;
@@ -304,6 +349,19 @@ ol {
     text-overflow: clip !important;
     white-space: normal !important;
     word-break: break-word;
+  }
+
+  /* 그리드형 표 안의 셀렉트/입력칸은 다른 셀과 똑같이 테두리를 유지한다.
+     (위 리셋이 border:none 으로 지워버려 표에 구멍이 나는 것을 방지 — 반드시 리셋 뒤에 위치) */
+  [class*="gridRow"] > button[class*="trigger"],
+  [class*="gridRow"] > input,
+  [class*="gridRow"] > textarea {
+    border: 0.4pt solid #444 !important;
+    min-height: 6.5mm;
+    box-sizing: border-box;
+    margin: -0.2pt 0 0 -0.2pt;
+    padding: 1.2mm !important;
+    font-size: 7.5pt !important;
   }
 
   /* 긴 서술형(요구사항/결과/개선/총평)은 잘리지 않도록 텍스트로 출력 */

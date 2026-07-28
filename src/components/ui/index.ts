@@ -7,5 +7,6 @@ export type { CardProps } from "./Card/Card";
 export { StatCard } from "./StatCard/StatCard";
 export type { StatCardProps } from "./StatCard/StatCard";
 export { DatePicker } from "./DatePicker/DatePicker";
+export { SearchIcon } from "./SearchIcon";
 export { Select } from "./Select/Select";
 export type { Option } from "./Select/Select";

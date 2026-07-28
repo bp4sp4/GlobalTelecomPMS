@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { SearchIcon } from "@/components/ui";
 import styles from "./page.module.css";
 
 type SchoolHit = { name: string; educationOffice: string | null; district: string | null };
@@ -146,7 +147,9 @@ export function DocsClient() {
 
           <div className={styles.searchRow} ref={boxRef}>
             <div className={styles.searchWrap}>
-              <span className={styles.searchIcon}>⌕</span>
+              <span className={styles.searchIcon}>
+                <SearchIcon size={19} />
+              </span>
               <input
                 className={styles.searchInput}
                 placeholder="학교명을 입력하세요 (초성 가능)"

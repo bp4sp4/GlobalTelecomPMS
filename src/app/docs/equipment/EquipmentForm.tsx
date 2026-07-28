@@ -5,6 +5,7 @@ import { BackButton } from "@/components/report/BackButton";
 import { saveReport } from "@/lib/reportClient";
 import { DatePicker, Select } from "@/components/ui";
 import { CellInput } from "@/components/report/CellInput";
+import { PrintInfoTable } from "@/components/report/PrintInfoTable";
 import e from "@/components/report/editor.module.css";
 
 type Row = {
@@ -213,7 +214,16 @@ export function EquipmentForm({
         {/* 기본 정보 */}
         <section className={e.card}>
           <h2 className={e.h2}>기본 정보</h2>
-          <div className={e.infoGrid}>
+          <PrintInfoTable
+            pairs={[
+              { label: "학교명", value: school },
+              { label: "지청", value: office ?? "" },
+              { label: "주소", value: district ?? "" },
+              { label: "점검일자", value: inspectDate },
+              { label: "취급자 성명", value: handler },
+            ]}
+          />
+          <div className={`${e.infoGrid} no-print`}>
             <div className={e.field}>
               <span className={e.label}>점검일자</span>
               <DatePicker value={inspectDate} onChange={setInspectDate} />

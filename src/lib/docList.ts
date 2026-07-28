@@ -19,7 +19,7 @@ const TYPE_LABEL: Record<ReportType, string> = {
   PHOTOS: "방송사진",
 };
 
-const TYPE_TITLE: Record<ReportType, string> = {
+export const TYPE_TITLE: Record<ReportType, string> = {
   CONSULTING: "방송장비 컨설팅 보고서",
   EQUIPMENT: "방송 장비 목록",
   SPEAKERLINE: "스피커 선로 점검 보고서",
@@ -27,7 +27,7 @@ const TYPE_TITLE: Record<ReportType, string> = {
   PHOTOS: "방송사진",
 };
 
-const TYPE_PATH: Record<ReportType, string> = {
+export const TYPE_PATH: Record<ReportType, string> = {
   CONSULTING: "/pms/consulting/new",
   EQUIPMENT: "/docs/equipment",
   SPEAKERLINE: "/docs/speakerline",
@@ -73,7 +73,7 @@ function metaOf(type: ReportType, payload: any): string | undefined {
 }
 
 /** 목록에서 펼쳐 볼 요약 — 컨설팅은 저장된 총평(자동요약)을 그대로 보여준다 */
-function summaryOf(type: ReportType, payload: any): string | undefined {
+export function summaryOf(type: ReportType, payload: any): string | undefined {
   try {
     if (type === "CONSULTING") {
       const saved = String(payload?.analysis?.summary ?? "").trim();

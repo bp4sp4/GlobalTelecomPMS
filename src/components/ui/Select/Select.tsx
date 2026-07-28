@@ -2,6 +2,7 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { SearchIcon } from "../SearchIcon";
 import styles from "./Select.module.css";
 
 export type Option = { value: string; label: string; category?: string };
@@ -161,6 +162,9 @@ export function Select({
             )}
             {showSearch && (
               <div className={styles.searchBox}>
+                <span className={styles.searchIcon}>
+                  <SearchIcon size={15} />
+                </span>
                 <input
                   className={styles.searchInput}
                   placeholder="검색"

@@ -87,10 +87,13 @@
   align-items: center;
 }
 .searchIcon {
+  display: flex;
+  align-items: center;
+  top: 50%;
+  transform: translateY(-50%);
   position: absolute;
   left: 16px;
   color: var(--gt-faint);
-  font-size: 14px;
   pointer-events: none;
 }
 .search {
@@ -191,24 +194,11 @@
   color: var(--gt-faint);
 }
 
-/* 요약 펼치기 토글 */
-.metaToggle {
-  border: none;
-  background: transparent;
-  padding: 0;
-  font-family: inherit;
-  text-align: left;
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.metaToggle:hover {
+/* 요약 펼치기 버튼 (완료된 문서 전용) — 열림 상태 */
+.smallGhostOn {
+  border-color: var(--gt-blue);
   color: var(--gt-blue);
-}
-.metaToggleOn {
-  color: var(--gt-blue);
-  font-weight: 600;
+  background: var(--gt-blue-bg);
 }
 
 /* 펼쳐진 요약 패널 */
@@ -286,6 +276,7 @@
   border-radius: 9px;
   cursor: pointer;
   text-decoration: none;
+  white-space: nowrap;
 }
 .smallGhost:hover {
   background: var(--gt-bg);
@@ -301,6 +292,7 @@
   border-radius: 9px;
   cursor: pointer;
   text-decoration: none;
+  white-space: nowrap;
 }
 .smallPrimary:hover {
   background: var(--gt-blue-dark);

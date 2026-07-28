@@ -1,7 +1,8 @@
 "use client";
 
-import { Fragment, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
+import { SearchIcon } from "@/components/ui";
 import s from "./DocumentList.module.css";
 
 export type DocRow = {
@@ -31,7 +32,6 @@ export function DocumentList({
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("전체");
   const [page, setPage] = useState(1);
-  const [openId, setOpenId] = useState<string | null>(null);
 
   const counts = useMemo(() => {
     const m: Record<string, number> = { 전체: docs.length };
@@ -57,7 +57,11 @@ export function DocumentList({
 
   function downloadCsv() {
     const rows = [
-      ["문서명", "유형", "학교", "지역", "회차", isSaved ? "최종 저장" : "완료일", "상태", "요약"],
+      [
+        "문서명", "유형", "학교", "지역", "회차",
+        isSaved ? "최종 저장" : "완료일", "상태",
+        ...(isSaved ? [] : ["요약"]),
+      ],
       ...visible.map((d) => [
         d.title,
         d.type,
@@ -66,7 +70,7 @@ export function DocumentList({
         d.round ?? "",
         d.savedAt,
         statusLabel,
-        d.summary ?? "",
+        ...(isSaved ? [] : [d.summary ?? ""]),
       ]),
     ];
     const csv =
@@ -115,7 +119,9 @@ export function DocumentList({
       <div className={s.body}>
         <div className={s.toolbar}>
           <div className={s.searchWrap}>
-            <span className={s.searchIcon}>⌕</span>
+            <span className={s.searchIcon}>
+              <SearchIcon />
+            </span>
             <input
               className={s.search}
               placeholder="학교명 · 문서명으로 검색"
@@ -156,25 +162,11 @@ export function DocumentList({
                 <span style={{ justifySelf: "end" }}>작업</span>
               </div>
 
-              {paged.map((d) => {
-                const open = openId === d.id;
-                return (
-                <Fragment key={d.id}>
-                <div className={s.row}>
+              {paged.map((d) => (
+                <div key={d.id} className={s.row}>
                   <div className={s.cellStack}>
                     <span className={s.docTitle}>{d.title}</span>
-                    {d.summary ? (
-                      <button
-                        type="button"
-                        className={`${s.docMeta} ${s.metaToggle} ${open ? s.metaToggleOn : ""}`}
-                        onClick={() => setOpenId(open ? null : d.id)}
-                        aria-expanded={open}
-                      >
-                        {d.meta ?? "요약"} · 요약 {open ? "닫기 ▴" : "보기 ▾"}
-                      </button>
-                    ) : (
-                      d.meta && <span className={s.docMeta}>{d.meta}</span>
-                    )}
+                    {d.meta && <span className={s.docMeta}>{d.meta}</span>}
                   </div>
                   <div className={s.cellStack}>
                     <span className={s.school}>{d.school}</span>
@@ -188,24 +180,17 @@ export function DocumentList({
                     {statusLabel}
                   </span>
                   <div className={s.rowActions}>
-                    <Link href={d.href} className={s.smallGhost}>
-                      PDF
-                    </Link>
+                    {!isSaved && (
+                      <Link href={`/docs/summary/${d.id}`} className={s.smallGhost}>
+                        요약
+                      </Link>
+                    )}
                     <Link href={d.href} className={s.smallPrimary}>
                       열기
                     </Link>
                   </div>
                 </div>
-
-                {open && d.summary && (
-                  <div className={s.summaryPanel}>
-                    <div className={s.summaryTitle}>총평 / 요약</div>
-                    <p className={s.summaryText}>{d.summary}</p>
-                  </div>
-                )}
-                </Fragment>
-                );
-              })}
+              ))}
             </div>
           </div>
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { SearchIcon } from "@/components/ui";
 import s from "./logs.module.css";
 
 export type AccessRow = { id: string; user: string; role: string; ip: string; at: string };
@@ -267,7 +268,9 @@ export function LogView({
 
           <div className={s.toolbar}>
             <div className={s.searchWrap}>
-              <span className={s.searchIcon}>⌕</span>
+              <span className={s.searchIcon}>
+                <SearchIcon />
+              </span>
               <input
                 className={s.search}
                 placeholder={isActivity ? "사용자 · 대상 · 내용 · IP 검색" : "사용자 · IP 검색"}

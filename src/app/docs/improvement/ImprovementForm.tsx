@@ -5,6 +5,7 @@ import { BackButton } from "@/components/report/BackButton";
 import { saveReport } from "@/lib/reportClient";
 import { DatePicker, Select } from "@/components/ui";
 import { CellInput } from "@/components/report/CellInput";
+import { PrintInfoTable } from "@/components/report/PrintInfoTable";
 import e from "@/components/report/editor.module.css";
 
 type Row = {
@@ -182,7 +183,16 @@ export function ImprovementForm({
           {/* 기본 정보 */}
           <section className={e.card}>
             <h2 className={e.h2}>기본 정보</h2>
-            <div className={e.infoGrid}>
+            <PrintInfoTable
+              pairs={[
+                { label: "학교명", value: school },
+                { label: "교육지원청", value: office ?? "" },
+                { label: "주소", value: district ?? "" },
+                { label: "개선일자", value: improveDate },
+                { label: "취급자 성명", value: handler },
+              ]}
+            />
+            <div className={`${e.infoGrid} no-print`}>
               <label className={e.field}>
                 <span className={e.label}>학교명</span>
                 <input readOnly value={school} className={`${e.readonly} ${e.readonlyStrong}`} />
