@@ -8,6 +8,7 @@ import { AppShell } from "@/components/layout/AppShell";
 import { Card, StatCard } from "@/components/ui";
 import { dashboardNav } from "@/lib/nav";
 import { MessageComposer } from "./MessageComposer";
+import { LogoutButton } from "@/components/layout/LogoutButton";
 import styles from "./page.module.css";
 
 const CONSULTING_TARGET = 300;
@@ -70,9 +71,7 @@ export default async function DashboardPage() {
             {isAdmin ? "admin" : "guest"})
           </p>
         </div>
-        <Link href="/api/auth/logout" className={styles.logoutBtn}>
-          로그아웃
-        </Link>
+        <LogoutButton className={styles.logoutBtn} />
       </div>
 
       <div className={styles.statGrid}>

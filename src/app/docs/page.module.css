@@ -15,6 +15,20 @@
   color: var(--krds-color-text-caption);
 }
 
+.logoutLink {
+  border: 1px solid var(--krds-gray-30);
+  background: #fff;
+  border-radius: var(--krds-radius-medium);
+  padding: var(--krds-space-3) var(--krds-space-5);
+  font-family: inherit;
+  font-size: var(--krds-fs-body-small);
+  color: var(--krds-gray-70);
+  cursor: pointer;
+}
+.logoutLink:hover {
+  background: var(--krds-gray-10);
+}
+
 .searchBar {
   display: flex;
   align-items: center;

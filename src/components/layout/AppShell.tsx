@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LogoutButton } from "./LogoutButton";
 import styles from "./AppShell.module.css";
 
 export type NavItem = { label: string; href: string; icon?: string };
@@ -92,6 +93,15 @@ export function AppShell({ brand, sections, children }: AppShellProps) {
                 <p className={styles.sectionTitle}>{sec.title}</p>
                 {sec.items.map((it) => {
                   const active = it.href === activeHref;
+                  // 로그아웃 등 API 라우트는 Link(프리페치) 금지 → POST 버튼으로 처리
+                  if (it.href.startsWith("/api/auth/logout")) {
+                    return (
+                      <LogoutButton
+                        key={it.href + it.label}
+                        className={styles.navItem}
+                      />
+                    );
+                  }
                   return (
                     <Link
                       key={it.href + it.label}

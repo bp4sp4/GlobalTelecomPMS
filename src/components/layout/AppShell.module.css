@@ -132,6 +132,12 @@
 }
 .navItem {
   display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
   padding: var(--krds-space-4) var(--krds-space-5);
   border-radius: var(--krds-radius-medium);
   color: var(--krds-gray-70);
