@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
 import { AppShell } from "@/components/layout/AppShell";
 import { LogoutButton } from "@/components/layout/LogoutButton";
-import { docsNav } from "@/lib/nav";
+import { mainNav } from "@/lib/nav";
 import { DocsClient } from "./DocsClient";
 import styles from "./page.module.css";
 
@@ -14,16 +14,17 @@ export default async function DocsPage() {
 
   return (
     <AppShell
-      brand={{ title: "문서관리", subtitle: "보고서/목록 관리" }}
-      sections={docsNav()}
+      brand={{ title: "GlobalTelecom", subtitle: "BROADCAST CONSOLE" }}
+      sections={mainNav(session.role === "ADMIN")}
+      user={{ name: session.username, org: "서울특별시교육청" }}
     >
-      <div className={styles.header}>
+      <header className={styles.header}>
         <div>
-          <h1 className={styles.headTitle}>문서 자동화 시스템</h1>
-          <p className={styles.headDesc}>학교를 검색하여 보고서를 작성합니다.</p>
+          <div className={styles.crumb}>문서 관리 / 문서 작성</div>
+          <h1 className={styles.h1}>보고서 작성</h1>
         </div>
-        <LogoutButton className={styles.logoutLink} />
-      </div>
+        <LogoutButton className={styles.logout} />
+      </header>
       <DocsClient />
     </AppShell>
   );

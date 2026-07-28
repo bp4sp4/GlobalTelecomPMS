@@ -16,6 +16,7 @@ ALTER TABLE "public"."Report" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "public"."Code" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "public"."Message" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "public"."AccessLog" ENABLE ROW LEVEL SECURITY;
+ALTER TABLE "public"."ActivityLog" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "public"."EquipmentCatalog" ENABLE ROW LEVEL SECURITY;
 
 REVOKE ALL ON "public"."User" FROM anon, authenticated;
@@ -24,6 +25,7 @@ REVOKE ALL ON "public"."Report" FROM anon, authenticated;
 REVOKE ALL ON "public"."Code" FROM anon, authenticated;
 REVOKE ALL ON "public"."Message" FROM anon, authenticated;
 REVOKE ALL ON "public"."AccessLog" FROM anon, authenticated;
+REVOKE ALL ON "public"."ActivityLog" FROM anon, authenticated;
 REVOKE ALL ON "public"."EquipmentCatalog" FROM anon, authenticated;
 
 -- 참고: 향후 supabase-js(anon 키)로 특정 테이블을 직접 읽어야 하면

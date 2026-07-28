@@ -123,3 +123,29 @@ model AccessLog {
 
   @@index([createdAt])
 }
+
+enum LogAction {
+  CREATE
+  UPDATE
+  DELETE
+  COMPLETE
+  UPLOAD
+}
+
+/** 데이터 변경 이력 (추가/수정/삭제/완료/업로드) — 관리자만 조회 */
+model ActivityLog {
+  id        String    @id @default(cuid())
+  userId    String
+  username  String // 조회 시 조인 없이 보여주기 위한 스냅샷
+  action    LogAction
+  entity    String // REPORT | MESSAGE | PHOTO
+  entityId  String?
+  target    String? // 표시용 대상 (예: 서울국제고등학교 · 컨설팅 1차)
+  detail    String? // 부가 설명
+  ip        String?
+  createdAt DateTime  @default(now())
+
+  @@index([createdAt])
+  @@index([userId])
+  @@index([action])
+}

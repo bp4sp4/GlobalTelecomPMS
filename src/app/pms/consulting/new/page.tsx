@@ -1,7 +1,5 @@
 export const dynamic = "force-dynamic";
 
-import { AppShell } from "@/components/layout/AppShell";
-import { docsNav } from "@/lib/nav";
 import { loadReportContext } from "@/lib/reportServer";
 import { ConsultingForm } from "./ConsultingForm";
 import { NoSchool } from "@/components/report/NoSchool";
@@ -15,20 +13,23 @@ export default async function ConsultingNewPage({
   const round = roundRaw === "2" ? 2 : 1;
   const { school, existing } = await loadReportContext(schoolName, "CONSULTING", round);
 
-  return (
-    <AppShell brand={{ title: "문서관리", subtitle: "보고서/목록 관리" }} sections={docsNav()}>
-      {!school ? (
+  // 작성 화면은 문서 편집에 집중하도록 앱 사이드바 없이 단독 레이아웃으로 표시한다.
+  if (!school) {
+    return (
+      <div style={{ minHeight: "100vh", background: "var(--gt-bg)", padding: 32 }}>
         <NoSchool />
-      ) : (
-        <ConsultingForm
-          school={school.name}
-          office={school.officeFull}
-          district={school.district}
-          round={round}
-          initial={(existing?.payload as never) ?? null}
-          initialStatus={existing?.status ?? null}
-        />
-      )}
-    </AppShell>
+      </div>
+    );
+  }
+
+  return (
+    <ConsultingForm
+      school={school.name}
+      office={school.officeFull}
+      district={school.district}
+      round={round}
+      initial={(existing?.payload as never) ?? null}
+      initialStatus={existing?.status ?? null}
+    />
   );
 }

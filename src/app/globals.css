@@ -9,11 +9,13 @@
   src: url("/fonts/PretendardVariable.woff2") format("woff2-variations");
 }
 
-/* 앱 전역 기본 (토큰 위에 최소한만) */
+/* 앱 전역 기본 (토큰 위에 최소한만)
+   주의: html/body 에 overflow-x: hidden 을 주면 body 가 스크롤 컨테이너가 되어
+   position: sticky (상단 헤더, 좌측 사이드바)가 동작하지 않는다.
+   가로 스크롤은 표 등 개별 컨테이너에서 처리한다. */
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  max-width: 100%;
 }
 
 img,
@@ -36,15 +38,324 @@ ol {
   padding: 0;
 }
 
-/* 인쇄(PDF 출력): 사이드바/액션바 숨기고 본문만 */
+/* GlobalTelecom 관제 콘솔 팔레트 */
+:root {
+  --gt-bg: #f2f4f6;
+  --gt-card: #fff;
+  --gt-line: #e5e8eb;
+  --gt-line-soft: #f2f4f6;
+  --gt-text: #191f28;
+  --gt-sub: #4e5968;
+  --gt-mute: #8b95a1;
+  --gt-faint: #b0b8c1;
+  --gt-blue: #3182f6;
+  --gt-blue-dark: #1b64da;
+  --gt-blue-bg: #e8f3ff;
+  --gt-green: #00a83c;
+  --gt-green-dot: #00b843;
+  --gt-green-bg: #e8f8ee;
+  --gt-amber: #f59e0b;
+  --gt-amber-bg: #fff8e6;
+  --gt-mono: ui-monospace, Menlo, monospace;
+}
+
+@keyframes gtPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* 화면에서는 인쇄 전용 요소를 숨긴다 */
+.print-only {
+  display: none;
+}
+
+/* =========================================================
+   인쇄(PDF 출력) — 보고서 형식
+   ========================================================= */
+@page {
+  size: A4 portrait;
+  margin: 12mm 10mm;
+}
+
 @media print {
   .no-print {
     display: none !important;
   }
+  .print-only {
+    display: block !important;
+  }
+
+  html,
   body {
     background: #fff !important;
+    font-size: 9pt;
+    /* 화면용 overflow-x:hidden 이 인쇄에서 내용을 잘라내지 않도록 */
+    overflow: visible !important;
+    width: auto !important;
   }
   main {
     padding: 0 !important;
+    overflow: visible !important;
+  }
+  /* 레이아웃 컨테이너의 폭 제한 해제 */
+  [class*="container"],
+  [class*="shell"],
+  [class*="body"] {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* 목차/요약 2단 레이아웃 해제.
+     좌측 목차(.toc)는 no-print 로 사라지는데, 그리드 트랙은 그대로 남아
+     본문이 212px 컬럼에 끼여 출력되던 문제를 막는다. */
+  [class*="layout"],
+  [class*="content"] {
+    display: block !important;
+    grid-template-columns: none !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 0 !important;
+  }
+
+  /* 기본 정보 그리드: A4 폭(약 180mm)에 맞춰 자동 배치 */
+  [class*="infoGrid"] {
+    grid-template-columns: repeat(auto-fit, minmax(28mm, 1fr)) !important;
+    gap: 2mm !important;
+    overflow: visible !important;
+  }
+
+  /* 카드/패널을 문서 블록처럼 */
+  [class*="panel"],
+  [class*="card"] {
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 0 6mm !important;
+    break-inside: auto;
+  }
+
+  /* 섹션 제목 (h2 로 통일 — CSS Module 해시에 의존하지 않는다) */
+  [class*="panelTitle"],
+  h2 {
+    font-size: 11pt !important;
+    font-weight: 700;
+    border-left: 3px solid #000;
+    padding-left: 3mm !important;
+    margin: 0 0 2mm !important;
+    break-after: avoid;
+  }
+
+  /* 표: 테두리 있는 보고서 표 */
+  /* 가로 스크롤 컨테이너 해제 — 인쇄에서는 스크롤이 없으므로 잘려버린다 */
+  [class*="tableWrap"],
+  [class*="tableWrap"] > * {
+    overflow: visible !important;
+    max-width: 100% !important;
+  }
+
+  /* 화면용 최소 너비(min-width)를 모두 해제해 A4 폭 안에 들어오게 한다 */
+  [style*="min-width"],
+  [class*="cellInput"],
+  [class*="cellSelect"],
+  [class*="itemCell"],
+  button[class*="trigger"],
+  table,
+  th,
+  td {
+    min-width: 0 !important;
+  }
+
+  table {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-collapse: collapse !important;
+    /* 내용 길이에 맞춰 열 너비가 잡히도록 (고정폭이면 긴 항목이 잘림) */
+    table-layout: auto;
+    font-size: 7.5pt;
+  }
+  th,
+  td {
+    border: 0.4pt solid #444 !important;
+    padding: 1.2mm !important;
+    vertical-align: top;
+    word-break: break-all;
+    background: #fff !important;
+    /* 셀 안에서 줄바꿈되도록 (자르지 않음) */
+    overflow: visible;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  /* 그리드형 표(장비목록/스피커선로/개선보고서)를 인쇄에서 표처럼 */
+  /* 표의 가로 스크롤용 최소 폭(1200px 등) 해제 — A4 폭 안으로 접는다.
+     각 표의 폭 지정 래퍼는 항상 tableScroll 의 직계 자식이다. */
+  [class*="gridMin"],
+  [class*="tableScroll"] > * {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+  [class*="tableScroll"],
+  [class*="tableBox"] {
+    overflow: visible !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+  [class*="gridRow"] {
+    display: flex !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    align-items: stretch !important;
+    break-inside: avoid;
+  }
+  [class*="gridRow"] > * {
+    flex: 1 1 0;
+    min-width: 0 !important;
+    border: 0.4pt solid #444 !important;
+    padding: 1.2mm !important;
+    font-size: 7.5pt !important;
+    word-break: break-word;
+  }
+  [class*="gridHead"] > * {
+    background: #f0f0f0 !important;
+    font-weight: 700;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  [class*="rowNo"] {
+    flex: 0 0 8mm !important;
+    color: #000 !important;
+  }
+
+  /* 표 셀의 인쇄용 텍스트 (입력칸 대체) */
+  .print-cell {
+    display: block;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 8pt;
+    line-height: 1.35;
+    min-height: 1em;
+  }
+  thead th {
+    background: #f0f0f0 !important;
+    font-weight: 700;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  thead {
+    display: table-header-group;
+  }
+  tr {
+    break-inside: avoid;
+  }
+
+  /* 버튼은 모두 숨기되, 값이 표시되는 커스텀 셀렉트 트리거는 남긴다 */
+  button {
+    display: none !important;
+  }
+  button[class*="trigger"] {
+    display: block !important;
+  }
+
+  /* 입력 컨트롤을 종이에 맞게 (값은 그대로 보이게) */
+  input,
+  select,
+  textarea,
+  button[class*="trigger"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    font-size: 8pt !important;
+    color: #000 !important;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  /* 커스텀 셀렉트의 화살표 아이콘 제거 */
+  button[class*="trigger"] svg {
+    display: none !important;
+  }
+  /* 셀렉트 선택값이 길어도 잘리지 않고 줄바꿈되도록 */
+  button[class*="trigger"] {
+    height: auto !important;
+    white-space: normal !important;
+    text-align: left;
+    line-height: 1.35;
+  }
+  button[class*="trigger"] span {
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
+    word-break: break-word;
+  }
+
+  /* 긴 서술형(요구사항/결과/개선/총평)은 잘리지 않도록 텍스트로 출력 */
+  .print-text {
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 8.5pt;
+    line-height: 1.5;
+    border: 0.4pt solid #444;
+    padding: 2mm;
+    min-height: 8mm;
+  }
+
+  /* 빈 칸의 안내문구(placeholder)는 종이에 남기지 않는다 */
+  input::placeholder,
+  textarea::placeholder {
+    color: transparent !important;
+    opacity: 0 !important;
+  }
+  /* 커스텀 셀렉트의 "선택" / "장비 검색" 안내문구도 동일 */
+  button[class*="trigger"] [class*="placeholder"] {
+    display: none !important;
+  }
+
+  /* 확인 서명란: 화면용 2~3단 카드 대신 6칸 표로 */
+  [class*="signGrid"] {
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    gap: 0 !important;
+    break-inside: avoid;
+  }
+  [class*="signCard"] {
+    border: 0.4pt solid #444 !important;
+    border-radius: 0 !important;
+    padding: 1.5mm !important;
+    margin: 0 !important;
+    gap: 1mm !important;
+    break-inside: avoid;
+  }
+  [class*="signRole"] {
+    font-size: 8pt !important;
+    text-align: center;
+  }
+
+  /* 서명 이미지 유지 */
+  canvas {
+    border: none !important;
+    max-height: 14mm;
+    width: 100% !important;
+  }
+
+  a {
+    text-decoration: none !important;
+    color: #000 !important;
   }
 }

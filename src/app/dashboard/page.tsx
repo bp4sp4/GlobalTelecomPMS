@@ -1,17 +1,22 @@
 export const dynamic = "force-dynamic";
 
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { AppShell } from "@/components/layout/AppShell";
-import { Card, StatCard } from "@/components/ui";
-import { dashboardNav } from "@/lib/nav";
-import { MessageComposer } from "./MessageComposer";
-import { LogoutButton } from "@/components/layout/LogoutButton";
-import styles from "./page.module.css";
+import { mainNav } from "@/lib/nav";
+import { DashboardView, type SchoolRow } from "./DashboardView";
+import type { ReportType } from "@prisma/client";
 
 const CONSULTING_TARGET = 300;
+
+const TYPE_LABEL: Record<ReportType, string> = {
+  CONSULTING: "컨설팅",
+  EQUIPMENT: "장비목록",
+  SPEAKERLINE: "스피커선로",
+  IMPROVEMENT: "개선",
+  PHOTOS: "방송사진",
+};
 
 function fmt(d: Date) {
   return new Date(d).toISOString().slice(0, 19).replace("T", " ");
@@ -23,8 +28,7 @@ export default async function DashboardPage() {
   const isAdmin = session.role === "ADMIN";
 
   const tenMinAgo = new Date(Date.now() - 10 * 60 * 1000);
-  // 쿼리 수 최소화: 보고서 집계는 groupBy 1회로 처리, 접속자 이름은 같은 배치에서 조회
-  const [reportGroups, messages, accessLogs, users] = await Promise.all([
+  const [reportGroups, messages, accessLogs, users, recent] = await Promise.all([
     prisma.report.groupBy({ by: ["type", "status"], _count: true }),
     prisma.message.findMany({
       include: { author: { select: { username: true } } },
@@ -41,103 +45,57 @@ export default async function DashboardPage() {
     isAdmin
       ? prisma.user.findMany({ select: { id: true, username: true } })
       : Promise.resolve([]),
+    prisma.report.findMany({
+      include: { school: { select: { name: true, district: true } } },
+      orderBy: { updatedAt: "desc" },
+      take: 6,
+    }),
   ]);
 
   const consultingDone = reportGroups
     .filter((g) => g.type === "CONSULTING" && g.status === "DONE")
     .reduce((s, g) => s + g._count, 0);
   const totalReports = reportGroups.reduce((s, g) => s + g._count, 0);
-  const pct = Math.round((consultingDone / CONSULTING_TARGET) * 1000) / 10;
+  const inProgress = reportGroups
+    .filter((g) => g.status === "DRAFT")
+    .reduce((s, g) => s + g._count, 0);
 
-  // 접속 로그 사용자명 매핑
-  const userMap = new Map<string, string>();
-  users.forEach((u) => userMap.set(u.id, u.username));
+  const userMap = new Map(users.map((u) => [u.id, u.username]));
 
-  const initialMessages = messages.map((m) => ({
-    id: m.id,
-    content: m.content,
-    createdAt: m.createdAt.toISOString(),
-    author: { username: m.author.username },
+  const schools: SchoolRow[] = recent.map((r) => ({
+    name: r.school.name,
+    district: r.school.district ?? "—",
+    type: TYPE_LABEL[r.type],
+    status: r.status === "DONE" ? "완료" : "진행 중",
+    updatedAt: fmt(r.updatedAt).slice(0, 10),
   }));
 
   return (
     <AppShell
-      brand={{ title: "문서 자동화", subtitle: "현장 작업 문서 생성 시스템" }}
-      sections={dashboardNav(isAdmin)}
+      brand={{ title: "GlobalTelecom", subtitle: "BROADCAST CONSOLE" }}
+      sections={mainNav(isAdmin)}
+      user={{ name: session.username, org: "서울특별시교육청" }}
     >
-      <div className={styles.header}>
-        <div>
-          <h1 className={styles.headTitle}>대시보드</h1>
-          <p className={styles.headDesc}>
-            학교 검색은 문서관리에서 진행합니다. ({session.name ?? session.username} /{" "}
-            {isAdmin ? "admin" : "guest"})
-          </p>
-        </div>
-        <LogoutButton className={styles.logoutBtn} />
-      </div>
-
-      <div className={styles.statGrid}>
-        <StatCard
-          label="컨설팅 진행"
-          value={`${consultingDone} / ${CONSULTING_TARGET}`}
-          sub="완료기준: 컨설팅 DONE=1 / 스피커선로 DONE=4"
-          percent={pct}
-        />
-        <StatCard
-          label="문서 자동합계"
-          value={totalReports}
-          sub="reports 테이블 자동 집계"
-          percent={100}
-        />
-        <StatCard
-          label="완료"
-          value={consultingDone}
-          sub="완료기준: 컨설팅 DONE=1 / 스피커선로 DONE=4"
-          percent={pct}
-        />
-        <StatCard
-          label="진행률"
-          value={`${pct}%`}
-          sub="자동계산 완료 / 컨설팅대상"
-          percent={pct}
-        />
-      </div>
-
-      <div className={styles.twoCol}>
-        <Card title="원격 접속(최근 10분)" meta="admin 전용">
-          {!isAdmin ? (
-            <p className={styles.placeholder}>admin 계정에서만 접속자 목록을 볼 수 있습니다.</p>
-          ) : accessLogs.length === 0 ? (
-            <p className={styles.placeholder}>최근 10분간 접속 기록이 없습니다.</p>
-          ) : (
-            <div>
-              {accessLogs.map((l) => (
-                <div key={l.id} className={styles.accessItem}>
-                  <span className={styles.accessUser}>{userMap.get(l.userId) ?? "사용자"}</span>
-                  <span>{l.ip ?? "-"}</span>
-                  <span className={styles.accessTime}>{fmt(l.createdAt)}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </Card>
-
-        <Card title="메시지" meta={`${session.username} (${isAdmin ? "admin" : "guest"})`}>
-          <MessageComposer initial={initialMessages} />
-        </Card>
-      </div>
-
-      <Card>
-        <div className={styles.banner}>
-          <h2 className={styles.bannerTitle}>진행상태 표시 영역</h2>
-          <p className={styles.bannerDesc}>
-            문서/보고서 연동 후 진행현황과 통계를 자동 표시합니다.
-          </p>
-          <Link href="/docs" className={styles.ctaBtn}>
-            문서관리로 이동
-          </Link>
-        </div>
-      </Card>
+      <DashboardView
+        user={session.username}
+        total={CONSULTING_TARGET}
+        done={consultingDone}
+        inProgress={inProgress}
+        documents={totalReports}
+        isAdmin={isAdmin}
+        sessions={accessLogs.map((l) => ({
+          user: userMap.get(l.userId) ?? "사용자",
+          ip: l.ip ?? "-",
+          at: fmt(l.createdAt),
+        }))}
+        schools={schools}
+        messages={messages.map((m) => ({
+          id: m.id,
+          author: m.author.username,
+          at: fmt(m.createdAt),
+          body: m.content,
+        }))}
+      />
     </AppShell>
   );
 }

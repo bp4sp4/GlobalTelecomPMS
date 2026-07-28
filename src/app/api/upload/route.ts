@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
+import { logActivity } from "@/lib/activityLog";
 import { supabaseAdmin, ensurePhotoBucket, PHOTO_BUCKET } from "@/lib/supabase";
 
 // POST multipart: files[], school, category, room
@@ -35,6 +36,15 @@ export async function POST(req: Request) {
     const { data } = sb.storage.from(PHOTO_BUCKET).getPublicUrl(path);
     urls.push({ url: data.publicUrl, name: f.name });
   }
+
+  logActivity({
+    session,
+    req,
+    action: "UPLOAD",
+    entity: "PHOTO",
+    target: `${school} · ${category} · ${room}`,
+    detail: `사진 ${urls.length}장 업로드`,
+  });
 
   return NextResponse.json({ ok: true, files: urls });
 }

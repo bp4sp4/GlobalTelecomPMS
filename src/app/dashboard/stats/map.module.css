@@ -1,0 +1,285 @@
+/* 서울 교육지원청 진행률 지도 */
+
+.wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  gap: 18px;
+  align-items: start;
+}
+.mapArea {
+  min-width: 0;
+}
+.svg {
+  width: 100%;
+  max-width: 620px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* 자치구 */
+.district {
+  cursor: pointer;
+  stroke: #fff;
+  stroke-width: 1.2;
+  transition: fill 0.15s, filter 0.18s, stroke 0.18s;
+}
+/* 호버: 같은 지청 전체가 살짝 밝아지고 파란 외곽선 */
+.hv {
+  filter: brightness(1.06);
+  stroke: #7fb3fb;
+  stroke-width: 1.6;
+}
+.hvRisk {
+  filter: brightness(1.06);
+  stroke: #f8a0a8;
+  stroke-width: 1.6;
+}
+/* 선택: 파란 외곽선 + 은은한 글로우 (확대·검은 테두리 없음) */
+.on {
+  stroke: var(--gt-blue);
+  stroke-width: 2.2;
+  filter: drop-shadow(0 4px 10px rgba(49, 130, 246, 0.35));
+}
+.onRisk {
+  stroke: #f04452;
+  stroke-width: 2.2;
+  filter: drop-shadow(0 4px 10px rgba(240, 68, 82, 0.35));
+}
+.blank {
+  cursor: default;
+}
+.label {
+  font-size: 10px;
+  font-weight: 600;
+  pointer-events: none;
+  text-anchor: middle;
+  dominant-baseline: central;
+  font-family: inherit;
+}
+.labelOn {
+  font-weight: 800;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 2px 0;
+  flex-wrap: wrap;
+}
+.legendBar {
+  flex: 1;
+  max-width: 180px;
+  height: 8px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #eef4fe, #3182f6);
+}
+.legendBarRisk {
+  background: linear-gradient(90deg, #fef0f0, #f04452);
+}
+.legendText {
+  font-size: 11px;
+  color: var(--gt-faint);
+}
+.legendNote {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--gt-faint);
+}
+
+/* 우측 고정 패널 */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+/* 지표 토글 (진행률 / 시급성) */
+.modeTabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: #f4f5f7;
+  border-radius: 11px;
+}
+.modeTab {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gt-mute);
+  padding: 8px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.modeOn {
+  background: #fff;
+  color: var(--gt-blue);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+.modeOnRisk {
+  background: #fff;
+  color: #f04452;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.selCard {
+  background: #f8fbff;
+  border: 1px solid #d8e8fd;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.selCardRisk {
+  background: #fff8f8;
+  border-color: #fad7da;
+}
+.selName {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+.selGu {
+  font-size: 11px;
+  color: var(--gt-mute);
+}
+.selRate {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-top: 8px;
+}
+.selRate b {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -1.2px;
+  color: var(--gt-blue);
+}
+.selRate span {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gt-mute);
+}
+.selFoot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--gt-mute);
+  margin-top: 6px;
+}
+.selFoot b {
+  color: var(--gt-text);
+}
+.doneVal {
+  color: var(--gt-green) !important;
+}
+.riskNum {
+  color: #f04452 !important;
+}
+.riskVal {
+  color: #f04452 !important;
+}
+
+/* 지청 순위 리스트 */
+.rankTitle {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gt-faint);
+  letter-spacing: 0.4px;
+  padding: 2px 4px 0;
+}
+.rankList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.rankRow {
+  display: grid;
+  grid-template-columns: 18px 62px minmax(0, 1fr) 44px;
+  gap: 8px;
+  align-items: center;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  padding: 7px 8px;
+  border-radius: 9px;
+  cursor: pointer;
+  text-align: left;
+}
+.rankRow:hover {
+  background: var(--gt-bg);
+}
+.rankOn {
+  background: var(--gt-blue-bg);
+}
+.rankOnRisk {
+  background: #fff0f0;
+}
+.rankOnRisk .rankName {
+  font-weight: 800;
+  color: var(--gt-text);
+}
+.rankOnRisk .rankVal {
+  color: #f04452;
+}
+.rankNo {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gt-faint);
+}
+.rankName {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gt-sub);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rankOn .rankName {
+  font-weight: 800;
+  color: var(--gt-text);
+}
+.rankBar {
+  height: 6px;
+  border-radius: 99px;
+  background: var(--gt-line-soft);
+  overflow: hidden;
+  display: flex;
+}
+.rankFill {
+  background: var(--gt-blue);
+  border-radius: 99px;
+  display: block;
+}
+.rankFillRisk {
+  background: #f04452;
+}
+.rankVal {
+  font-size: 11px;
+  font-weight: 800;
+  text-align: right;
+  color: var(--gt-sub);
+  font-variant-numeric: tabular-nums;
+}
+.rankOn .rankVal {
+  color: var(--gt-blue);
+}
+
+.fallback {
+  padding: 60px 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--gt-faint);
+}
+
+@media (max-width: 1100px) {
+  .wrap {
+    grid-template-columns: 1fr;
+  }
+}

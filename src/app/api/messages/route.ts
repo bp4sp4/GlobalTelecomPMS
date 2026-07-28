@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
+import { logActivity } from "@/lib/activityLog";
 
 export async function GET() {
   const session = await getSession();
@@ -25,5 +26,15 @@ export async function POST(req: Request) {
     data: { authorId: session.sub, content },
     include: { author: { select: { username: true } } },
   });
+  logActivity({
+    session,
+    req,
+    action: "CREATE",
+    entity: "MESSAGE",
+    entityId: msg.id,
+    target: "공지/메모",
+    detail: content.length > 60 ? `${content.slice(0, 60)}…` : content,
+  });
+
   return NextResponse.json({ ok: true, message: msg });
 }

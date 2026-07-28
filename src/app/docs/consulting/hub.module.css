@@ -1,0 +1,409 @@
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px 32px 20px;
+  flex-wrap: wrap;
+}
+.crumb {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gt-faint);
+  letter-spacing: 0.4px;
+  margin-bottom: 8px;
+}
+.h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+.schoolLine {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.schoolName {
+  font-size: 14px;
+  font-weight: 700;
+}
+.vbar {
+  width: 1px;
+  height: 11px;
+  background: var(--gt-line);
+}
+.schoolMeta {
+  font-size: 13px;
+  color: var(--gt-mute);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 20px;
+  padding: 0 32px 32px;
+  align-items: start;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+.card {
+  background: var(--gt-card);
+  border-radius: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.h2 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+}
+.headBetween {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.muted {
+  font-size: 12px;
+  color: var(--gt-mute);
+}
+
+/* 버튼 */
+.btn {
+  border: none;
+  background: var(--gt-blue);
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 22px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn:hover {
+  background: var(--gt-blue-dark);
+}
+.btnGhost {
+  border: 1px solid var(--gt-line);
+  background: var(--gt-card);
+  color: var(--gt-sub);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 11px 16px;
+}
+.btnGhost:hover {
+  background: var(--gt-bg);
+}
+.btnFull {
+  width: 100%;
+  height: 48px;
+  padding: 0;
+}
+.btn:disabled {
+  background: #d1d6db;
+  color: var(--gt-mute);
+  cursor: not-allowed;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 스텝 */
+.steps {
+  display: flex;
+  align-items: center;
+}
+.stepNode {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+}
+.stepCircle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 99px;
+  background: var(--gt-line-soft);
+  color: var(--gt-faint);
+  font-size: 13px;
+  font-weight: 800;
+}
+.stepCircleOn {
+  background: var(--gt-blue);
+  color: #fff;
+}
+.stepLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gt-faint);
+}
+.stepLabelOn {
+  color: var(--gt-text);
+}
+.stepLine {
+  flex: 1;
+  height: 3px;
+  margin: 0 16px;
+  border-radius: 99px;
+  background: var(--gt-line);
+}
+.stepLineOn {
+  background: var(--gt-blue);
+}
+.stepLineHalf {
+  background: linear-gradient(90deg, #3182f6, #e5e8eb);
+}
+
+/* 회차 카드 */
+.roundTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+}
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 99px;
+}
+.saveMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--gt-mute);
+  margin-top: 8px;
+}
+.mono {
+  font-family: var(--gt-mono);
+  color: var(--gt-sub);
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px;
+  background: var(--gt-line);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.metric {
+  background: #fff;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.metricLabel {
+  font-size: 12px;
+  color: var(--gt-mute);
+}
+.metricValue {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+}
+.metricValue span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gt-faint);
+  margin-left: 3px;
+}
+
+/* 1차 지적 목록 */
+.issues {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--gt-line-soft);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.issue {
+  background: #f9fafb;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+}
+.issueDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--gt-amber);
+  flex: none;
+}
+.issueTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gt-sub);
+}
+.issueSrc {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--gt-faint);
+}
+
+/* 우측 */
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 24px;
+}
+.sideCard {
+  background: var(--gt-card);
+  border-radius: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.sideLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gt-mute);
+}
+.pctRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 6px;
+}
+.pct {
+  font-size: 44px;
+  line-height: 0.9;
+  font-weight: 800;
+  letter-spacing: -2px;
+}
+.pct span {
+  font-size: 22px;
+  letter-spacing: -1px;
+}
+.pctSub {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gt-mute);
+}
+.bar {
+  height: 10px;
+  border-radius: 99px;
+  background: var(--gt-line-soft);
+  overflow: hidden;
+  display: flex;
+}
+.barFill {
+  background: linear-gradient(90deg, #3182f6, #4d9bff);
+  border-radius: 99px;
+}
+.checkList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.checkRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.checkMark {
+  width: 16px;
+  height: 16px;
+  border-radius: 99px;
+  background: var(--gt-line-soft);
+  color: var(--gt-faint);
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.checkMarkOn {
+  background: var(--gt-blue-bg);
+  color: var(--gt-blue);
+}
+.checkText {
+  font-size: 13px;
+  color: var(--gt-faint);
+}
+.checkTextOn {
+  color: var(--gt-sub);
+}
+.hint {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--gt-faint);
+}
+.h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.historyItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.historyTitle {
+  font-size: 13px;
+  font-weight: 700;
+}
+.historyAt {
+  font-size: 11px;
+  font-family: var(--gt-mono);
+  color: var(--gt-faint);
+}
+.empty {
+  font-size: 13px;
+  color: var(--gt-mute);
+  text-align: center;
+  padding: 16px 0;
+}
+.okMsg {
+  font-size: 13px;
+  color: var(--gt-green);
+  font-weight: 600;
+}
+
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .side {
+    position: static;
+  }
+}

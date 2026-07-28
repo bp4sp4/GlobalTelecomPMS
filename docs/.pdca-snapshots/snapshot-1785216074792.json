@@ -1,0 +1,1889 @@
+{
+  "timestamp": "2026-07-28T05:21:14.791Z",
+  "reason": "compaction",
+  "status": {
+    "version": "2.0",
+    "lastUpdated": "2026-07-28T05:05:00.553Z",
+    "activeFeatures": [
+      "CRM",
+      "prisma",
+      "Button",
+      "Input",
+      "ui",
+      "login",
+      "logout",
+      "layout",
+      "Card",
+      "StatCard",
+      "dashboard",
+      "schools",
+      "school-info",
+      "docs",
+      "reports",
+      "[id]",
+      "codes",
+      "equipment",
+      "report",
+      "speakerline",
+      "improvement",
+      "upload",
+      "photos",
+      "consulting",
+      "new",
+      "saved",
+      "completed",
+      "list",
+      "stats",
+      "csv",
+      "messages",
+      "export",
+      "SignaturePad",
+      "DatePicker",
+      "Select",
+      "search",
+      "school-status",
+      "complete"
+    ],
+    "primaryFeature": "CRM",
+    "features": {
+      "CRM": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T06:54:35.124Z",
+          "lastUpdated": "2026-07-28T04:52:28.206Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\lib\\docList.ts"
+      },
+      "prisma": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T06:55:27.067Z",
+          "lastUpdated": "2026-07-27T09:07:02.349Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\prisma\\seed.ts"
+      },
+      "Button": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:15:35.760Z",
+          "lastUpdated": "2026-07-27T08:27:13.796Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\ui\\Button\\Button.tsx"
+      },
+      "Input": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:15:55.818Z",
+          "lastUpdated": "2026-07-27T08:27:56.552Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\ui\\Input\\Input.tsx"
+      },
+      "ui": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:16:12.063Z",
+          "lastUpdated": "2026-07-27T08:43:12.882Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\ui\\index.ts"
+      },
+      "login": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:16:42.230Z",
+          "lastUpdated": "2026-07-28T04:23:09.769Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\login\\page.tsx"
+      },
+      "logout": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:25:33.629Z",
+          "lastUpdated": "2026-07-28T01:07:31.187Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\auth\\logout\\route.ts"
+      },
+      "layout": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:26:59.266Z",
+          "lastUpdated": "2026-07-28T04:19:03.693Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\layout\\AppShell.tsx"
+      },
+      "Card": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:27:21.787Z",
+          "lastUpdated": "2026-07-27T07:27:21.787Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\ui\\Card\\Card.tsx"
+      },
+      "StatCard": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:27:39.843Z",
+          "lastUpdated": "2026-07-27T07:27:39.843Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\ui\\StatCard\\StatCard.tsx"
+      },
+      "dashboard": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:28:39.861Z",
+          "lastUpdated": "2026-07-28T04:13:31.600Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\dashboard\\page.tsx"
+      },
+      "schools": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:30:26.223Z",
+          "lastUpdated": "2026-07-27T07:30:26.223Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\schools\\route.ts"
+      },
+      "school-info": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:30:36.706Z",
+          "lastUpdated": "2026-07-27T07:30:36.706Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\school-info\\route.ts"
+      },
+      "docs": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:31:18.979Z",
+          "lastUpdated": "2026-07-28T04:52:08.033Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\docs\\DocumentList.tsx"
+      },
+      "reports": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:33:55.291Z",
+          "lastUpdated": "2026-07-27T07:33:55.291Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\reports\\route.ts"
+      },
+      "[id]": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:34:03.154Z",
+          "lastUpdated": "2026-07-27T07:34:03.154Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\reports\\[id]\\route.ts"
+      },
+      "codes": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:36:12.179Z",
+          "lastUpdated": "2026-07-27T07:36:12.179Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\codes\\route.ts"
+      },
+      "equipment": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:36:56.098Z",
+          "lastUpdated": "2026-07-28T05:00:24.351Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\docs\\equipment\\page.tsx"
+      },
+      "report": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:37:11.898Z",
+          "lastUpdated": "2026-07-28T03:52:37.800Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\report\\CellInput.tsx"
+      },
+      "speakerline": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:38:29.762Z",
+          "lastUpdated": "2026-07-28T05:05:00.552Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\docs\\speakerline\\page.tsx"
+      },
+      "improvement": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:39:23.003Z",
+          "lastUpdated": "2026-07-27T08:51:33.050Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\docs\\improvement\\ImprovementForm.tsx"
+      },
+      "upload": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:40:03.446Z",
+          "lastUpdated": "2026-07-27T07:40:03.446Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\upload\\route.ts"
+      },
+      "photos": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:40:35.590Z",
+          "lastUpdated": "2026-07-27T08:38:56.438Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\docs\\photos\\PhotosForm.tsx"
+      },
+      "consulting": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:41:27.625Z",
+          "lastUpdated": "2026-07-28T04:27:56.169Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\docs\\consulting\\page.tsx"
+      },
+      "new": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:42:16.174Z",
+          "lastUpdated": "2026-07-28T04:44:44.784Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\pms\\consulting\\new\\ConsultingForm.tsx"
+      },
+      "saved": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:43:14.346Z",
+          "lastUpdated": "2026-07-28T04:52:37.719Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\docs\\saved\\page.tsx"
+      },
+      "completed": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:43:26.964Z",
+          "lastUpdated": "2026-07-28T04:52:46.243Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\docs\\completed\\page.tsx"
+      },
+      "list": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:43:41.359Z",
+          "lastUpdated": "2026-07-27T07:43:41.359Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\docs\\list\\page.tsx"
+      },
+      "stats": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:44:33.852Z",
+          "lastUpdated": "2026-07-28T01:25:03.643Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\dashboard\\stats\\page.tsx"
+      },
+      "csv": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:44:53.806Z",
+          "lastUpdated": "2026-07-28T01:25:10.832Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\system\\csv\\page.tsx"
+      },
+      "messages": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:48:35.920Z",
+          "lastUpdated": "2026-07-27T07:48:35.920Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\messages\\route.ts"
+      },
+      "export": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:53:46.928Z",
+          "lastUpdated": "2026-07-27T07:53:46.928Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\reports\\export\\route.ts"
+      },
+      "SignaturePad": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T07:54:35.156Z",
+          "lastUpdated": "2026-07-27T08:56:40.262Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\ui\\SignaturePad\\SignaturePad.tsx"
+      },
+      "DatePicker": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T08:35:59.654Z",
+          "lastUpdated": "2026-07-27T08:35:59.654Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\ui\\DatePicker\\DatePicker.tsx"
+      },
+      "Select": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T08:42:46.154Z",
+          "lastUpdated": "2026-07-27T09:39:27.374Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\ui\\Select\\Select.tsx"
+      },
+      "search": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-27T09:07:27.796Z",
+          "lastUpdated": "2026-07-28T03:23:22.225Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\equipment\\search\\route.ts"
+      },
+      "school-status": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-28T04:23:29.689Z",
+          "lastUpdated": "2026-07-28T04:23:29.689Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\school-status\\route.ts"
+      },
+      "complete": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-07-28T04:26:22.473Z",
+          "lastUpdated": "2026-07-28T04:26:22.473Z"
+        },
+        "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\reports\\complete\\route.ts"
+      }
+    },
+    "pipeline": {
+      "currentPhase": 1,
+      "level": "Dynamic",
+      "phaseHistory": []
+    },
+    "session": {
+      "startedAt": "2026-07-27T05:53:43.220Z",
+      "onboardingCompleted": false,
+      "lastActivity": "2026-07-28T05:05:00.553Z"
+    },
+    "history": [
+      {
+        "timestamp": "2026-07-27T06:54:35.124Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T06:54:42.338Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T06:55:07.247Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T06:55:27.067Z",
+        "feature": "prisma",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:15:35.760Z",
+        "feature": "Button",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:15:55.818Z",
+        "feature": "Input",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:16:12.063Z",
+        "feature": "ui",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:16:42.230Z",
+        "feature": "login",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:25:14.995Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:25:25.111Z",
+        "feature": "login",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:25:33.629Z",
+        "feature": "logout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:26:31.171Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:26:59.266Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:27:21.787Z",
+        "feature": "Card",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:27:39.843Z",
+        "feature": "StatCard",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:27:49.173Z",
+        "feature": "ui",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:27:59.560Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:28:39.861Z",
+        "feature": "dashboard",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:28:56.234Z",
+        "feature": "dashboard",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:29:01.304Z",
+        "feature": "dashboard",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:29:06.419Z",
+        "feature": "dashboard",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:30:26.223Z",
+        "feature": "schools",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:30:36.706Z",
+        "feature": "school-info",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:31:18.979Z",
+        "feature": "docs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:31:28.461Z",
+        "feature": "docs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:33:55.291Z",
+        "feature": "reports",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:34:03.154Z",
+        "feature": "[id]",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:35:07.532Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:36:04.497Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:36:12.179Z",
+        "feature": "codes",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:36:56.098Z",
+        "feature": "equipment",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:37:05.256Z",
+        "feature": "equipment",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:37:11.898Z",
+        "feature": "report",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:38:29.762Z",
+        "feature": "speakerline",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:38:40.293Z",
+        "feature": "speakerline",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:39:23.003Z",
+        "feature": "improvement",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:39:33.186Z",
+        "feature": "improvement",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:39:47.652Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:40:03.446Z",
+        "feature": "upload",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:40:35.590Z",
+        "feature": "photos",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:40:57.015Z",
+        "feature": "photos",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:41:27.625Z",
+        "feature": "consulting",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:42:16.174Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:42:26.108Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:43:03.816Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:43:14.346Z",
+        "feature": "saved",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:43:26.964Z",
+        "feature": "completed",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:43:41.359Z",
+        "feature": "list",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:44:33.852Z",
+        "feature": "stats",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:44:53.806Z",
+        "feature": "csv",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:48:35.920Z",
+        "feature": "messages",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:48:46.431Z",
+        "feature": "login",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:49:03.187Z",
+        "feature": "dashboard",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:49:19.617Z",
+        "feature": "docs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:49:27.594Z",
+        "feature": "docs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:49:38.365Z",
+        "feature": "docs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:51:37.549Z",
+        "feature": "docs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:51:46.231Z",
+        "feature": "docs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:51:53.413Z",
+        "feature": "docs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:52:02.359Z",
+        "feature": "docs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:52:45.762Z",
+        "feature": "dashboard",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:52:59.383Z",
+        "feature": "dashboard",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:53:12.880Z",
+        "feature": "dashboard",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:53:46.928Z",
+        "feature": "export",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:54:35.156Z",
+        "feature": "SignaturePad",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:54:51.546Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:55:01.406Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:55:09.990Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:55:17.619Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:55:25.153Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:55:34.399Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:55:43.603Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:56:11.998Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:56:23.874Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:58:11.709Z",
+        "feature": "equipment",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:58:25.867Z",
+        "feature": "speakerline",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:58:35.850Z",
+        "feature": "improvement",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T07:58:43.093Z",
+        "feature": "photos",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:07:28.102Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:08:27.170Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:17:09.614Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:18:41.969Z",
+        "feature": "Button",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:18:57.013Z",
+        "feature": "Input",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:19:11.564Z",
+        "feature": "login",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:19:26.490Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:27:01.725Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:27:13.796Z",
+        "feature": "Button",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:27:56.552Z",
+        "feature": "Input",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:28:13.312Z",
+        "feature": "login",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:28:30.729Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:29:59.950Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:34:08.204Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:35:59.654Z",
+        "feature": "DatePicker",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:36:13.720Z",
+        "feature": "ui",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:36:52.535Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:37:21.025Z",
+        "feature": "equipment",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:37:30.666Z",
+        "feature": "equipment",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:37:40.092Z",
+        "feature": "speakerline",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:37:55.438Z",
+        "feature": "speakerline",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:38:08.530Z",
+        "feature": "improvement",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:38:24.570Z",
+        "feature": "improvement",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:38:38.912Z",
+        "feature": "photos",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:38:56.438Z",
+        "feature": "photos",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:39:13.025Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:39:21.698Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:41:47.517Z",
+        "feature": "docs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:42:46.154Z",
+        "feature": "Select",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:43:12.882Z",
+        "feature": "ui",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:43:38.684Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:43:53.404Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:45:12.481Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:45:50.101Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:47:14.317Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:47:27.526Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:47:36.837Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:49:18.836Z",
+        "feature": "equipment",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:49:53.217Z",
+        "feature": "Select",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:50:09.036Z",
+        "feature": "equipment",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:50:29.503Z",
+        "feature": "equipment",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:50:36.923Z",
+        "feature": "equipment",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:50:48.695Z",
+        "feature": "equipment",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:51:04.861Z",
+        "feature": "improvement",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:51:12.776Z",
+        "feature": "improvement",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:51:20.112Z",
+        "feature": "improvement",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:51:33.050Z",
+        "feature": "improvement",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:52:30.248Z",
+        "feature": "speakerline",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:52:43.027Z",
+        "feature": "speakerline",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:53:05.104Z",
+        "feature": "speakerline",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:53:12.218Z",
+        "feature": "speakerline",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:56:24.602Z",
+        "feature": "SignaturePad",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:56:40.262Z",
+        "feature": "SignaturePad",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:56:50.564Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T08:57:08.301Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T09:06:54.443Z",
+        "feature": "prisma",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T09:07:02.349Z",
+        "feature": "prisma",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T09:07:27.796Z",
+        "feature": "search",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T09:07:48.326Z",
+        "feature": "equipment",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T09:08:01.177Z",
+        "feature": "equipment",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T09:08:21.438Z",
+        "feature": "equipment",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T09:33:30.426Z",
+        "feature": "search",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T09:34:00.895Z",
+        "feature": "equipment",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T09:34:12.992Z",
+        "feature": "equipment",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T09:39:27.374Z",
+        "feature": "Select",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T09:39:58.147Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T09:40:09.092Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T09:40:18.958Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T09:47:48.100Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-27T10:24:57.041Z",
+        "feature": "login",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T00:58:35.806Z",
+        "feature": "login",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T00:58:54.793Z",
+        "feature": "login",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:06:08.791Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:06:24.390Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:06:30.827Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:06:44.496Z",
+        "feature": "dashboard",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:06:50.105Z",
+        "feature": "dashboard",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:06:58.330Z",
+        "feature": "docs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:07:12.603Z",
+        "feature": "docs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:07:31.187Z",
+        "feature": "logout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:16:58.299Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:19:59.114Z",
+        "feature": "dashboard",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:20:09.854Z",
+        "feature": "stats",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:20:22.037Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:22:12.221Z",
+        "feature": "login",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:22:24.887Z",
+        "feature": "login",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:24:20.576Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:24:42.504Z",
+        "feature": "consulting",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:25:03.643Z",
+        "feature": "stats",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:25:10.832Z",
+        "feature": "csv",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T01:40:01.720Z",
+        "feature": "login",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:23:22.225Z",
+        "feature": "search",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:28:13.362Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:28:43.821Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:28:51.593Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:29:01.930Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:29:11.438Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:29:18.183Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:29:27.503Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:37:52.768Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:38:00.108Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:38:11.816Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:38:22.706Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:38:32.758Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:38:40.482Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:39:11.630Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:48:17.604Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:48:25.424Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:48:32.677Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T03:52:37.800Z",
+        "feature": "report",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:11:40.404Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:11:49.620Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:13:14.322Z",
+        "feature": "dashboard",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:13:31.600Z",
+        "feature": "dashboard",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:14:40.797Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:15:16.911Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:17:09.086Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:17:22.892Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:17:34.375Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:17:43.004Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:17:54.843Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:18:12.965Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:18:43.721Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:19:03.693Z",
+        "feature": "layout",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:23:09.769Z",
+        "feature": "login",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:23:29.689Z",
+        "feature": "school-status",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:24:42.687Z",
+        "feature": "docs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:24:51.751Z",
+        "feature": "docs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:26:22.473Z",
+        "feature": "complete",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:27:27.315Z",
+        "feature": "consulting",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:27:56.169Z",
+        "feature": "consulting",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:40:06.514Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:40:24.272Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:44:17.798Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:44:34.078Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:44:44.784Z",
+        "feature": "new",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:52:08.033Z",
+        "feature": "docs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:52:28.206Z",
+        "feature": "CRM",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:52:37.719Z",
+        "feature": "saved",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T04:52:46.243Z",
+        "feature": "completed",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T05:00:13.606Z",
+        "feature": "equipment",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T05:00:24.351Z",
+        "feature": "equipment",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T05:04:46.072Z",
+        "feature": "speakerline",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-07-28T05:05:00.553Z",
+        "feature": "speakerline",
+        "phase": "do",
+        "action": "updated"
+      }
+    ]
+  }
+}

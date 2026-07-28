@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
+import { logActivity, REPORT_TYPE_LABEL } from "@/lib/activityLog";
 import type { ReportType, ReportStatus } from "@prisma/client";
 
 const TYPES = ["CONSULTING", "EQUIPMENT", "SPEAKERLINE", "IMPROVEMENT", "PHOTOS"];
@@ -76,6 +77,16 @@ export async function POST(req: Request) {
     : await prisma.report.create({
         data: { schoolId: s.id, type, round: roundVal, ...data },
       });
+
+  logActivity({
+    session,
+    req,
+    action: nextStatus === "DONE" ? "COMPLETE" : existing ? "UPDATE" : "CREATE",
+    entity: "REPORT",
+    entityId: report.id,
+    target: `${school} · ${REPORT_TYPE_LABEL[type] ?? type}${roundVal ? ` ${roundVal}차` : ""}`,
+    detail: nextStatus === "DONE" ? "완료 처리" : existing ? "저장(초안) 수정" : "새로 작성",
+  });
 
   return NextResponse.json({ ok: true, report });
 }

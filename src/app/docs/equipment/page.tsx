@@ -1,10 +1,9 @@
 export const dynamic = "force-dynamic";
 
-import { AppShell } from "@/components/layout/AppShell";
-import { docsNav } from "@/lib/nav";
 import { loadReportContext } from "@/lib/reportServer";
 import { EquipmentForm } from "./EquipmentForm";
 import { NoSchool } from "@/components/report/NoSchool";
+import { ReportShell } from "@/components/report/ReportShell";
 
 export default async function EquipmentPage({
   searchParams,
@@ -12,12 +11,14 @@ export default async function EquipmentPage({
   searchParams: Promise<{ school?: string }>;
 }) {
   const { school: schoolName } = await searchParams;
-  const { school, existing } = await loadReportContext(schoolName, "EQUIPMENT");
+  const { session, school, existing } = await loadReportContext(schoolName, "EQUIPMENT");
 
   return (
-    <AppShell brand={{ title: "문서관리", subtitle: "보고서/목록 관리" }} sections={docsNav()}>
+    <ReportShell session={session}>
       {!school ? (
-        <NoSchool />
+        <div style={{ padding: 32 }}>
+          <NoSchool />
+        </div>
       ) : (
         <EquipmentForm
           school={school.name}
@@ -27,6 +28,6 @@ export default async function EquipmentPage({
           initialStatus={existing?.status ?? null}
         />
       )}
-    </AppShell>
+    </ReportShell>
   );
 }

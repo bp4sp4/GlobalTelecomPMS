@@ -1,0 +1,696 @@
+/* 보고서 작성 화면 공통 스타일 (장비목록/스피커선로/개선/방송사진) */
+
+.page {
+  min-height: 100vh;
+  background: var(--gt-bg);
+  color: var(--gt-text);
+}
+
+/* 상단 고정 액션바 */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--gt-line);
+}
+.topInner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 28px;
+  flex-wrap: wrap;
+}
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+}
+.badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gt-blue);
+  background: var(--gt-blue-bg);
+  padding: 4px 9px;
+  border-radius: 99px;
+}
+.topMeta {
+  font-size: 12px;
+  color: var(--gt-mute);
+  margin-top: 4px;
+}
+.topActions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vbar {
+  width: 1px;
+  height: 20px;
+  background: var(--gt-line);
+  margin: 0 4px;
+}
+
+.btn {
+  border: 1px solid var(--gt-line);
+  background: #fff;
+  color: var(--gt-sub);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+.btn:hover {
+  background: var(--gt-bg);
+}
+.btnMuted {
+  color: var(--gt-mute);
+}
+.btnOutline {
+  border-color: var(--gt-blue);
+  color: var(--gt-blue);
+  font-weight: 700;
+}
+.btnOutline:hover {
+  background: var(--gt-blue-bg);
+}
+.btnPrimary {
+  border: none;
+  background: var(--gt-blue);
+  color: #fff;
+  font-weight: 700;
+  padding: 11px 20px;
+}
+.btnPrimary:hover {
+  background: var(--gt-blue-dark);
+}
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* 본문 */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px 28px 60px;
+  max-width: 1680px;
+  margin: 0 auto;
+}
+
+/* 목차 + 본문 2단 레이아웃 */
+.layout {
+  display: grid;
+  grid-template-columns: 212px minmax(0, 1fr);
+  gap: 24px;
+  padding: 24px 28px 60px;
+  align-items: start;
+  max-width: 1680px;
+  margin: 0 auto;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+.toc {
+  position: sticky;
+  top: 92px;
+  align-self: start;
+  max-height: calc(100vh - 112px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.tocList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: #fff;
+  border: 1px solid var(--gt-line);
+  border-radius: 16px;
+  padding: 14px 10px;
+}
+.tocTitle {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gt-faint);
+  letter-spacing: 0.8px;
+  padding: 0 10px 10px;
+}
+.tocItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7684;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.tocItem:hover {
+  background: var(--gt-bg);
+}
+.tocItemOn {
+  background: var(--gt-blue-bg);
+  color: var(--gt-text);
+  font-weight: 700;
+}
+.tocDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 99px;
+  background: #d7dbe0;
+  flex: none;
+}
+.tocItemOn .tocDot {
+  background: var(--gt-blue);
+  box-shadow: 0 0 0 3px rgba(49, 130, 246, 0.15);
+}
+.tocCount {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gt-faint);
+}
+
+/* 그리드형 표의 최소 폭 (가로 스크롤 기준) */
+.gridMin {
+  min-width: 1180px;
+}
+
+/* 사이드 요약 카드 */
+.sideCard {
+  background: #fff;
+  border: 1px solid var(--gt-line);
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sideTitle {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gt-mute);
+}
+.sideRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+.sideKey {
+  color: var(--gt-mute);
+}
+.sideVal {
+  font-weight: 800;
+}
+.sideDesc {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--gt-faint);
+}
+.divider {
+  height: 1px;
+  background: var(--gt-line-soft);
+}
+
+/* 컨설팅 지적사항 → 개선 항목 불러오기 */
+.issueBtn {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  text-align: left;
+  border: 1px solid var(--gt-line);
+  background: #fff;
+  border-radius: 11px;
+  padding: 11px 12px;
+  font-family: inherit;
+  cursor: pointer;
+  width: 100%;
+}
+.issueBtn:hover {
+  border-color: var(--gt-blue);
+  background: var(--gt-blue-bg);
+}
+.issueDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--gt-amber);
+  flex: none;
+}
+.issueText {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gt-sub);
+  min-width: 0;
+  word-break: keep-all;
+}
+.issuePlus {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--gt-blue);
+  flex: none;
+}
+
+/* 단계 번호 */
+.step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 99px;
+  background: var(--gt-blue);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  flex: none;
+}
+.stepHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.countText {
+  font-size: 12px;
+  color: var(--gt-mute);
+}
+.rowNo {
+  font-size: 12px;
+  font-weight: 800;
+  color: #c3c9d0;
+}
+
+/* 판정 세그먼트 (양호/불량) */
+.verdict {
+  display: flex;
+  gap: 4px;
+}
+.verdictBtn {
+  flex: 1;
+  height: 40px;
+  border: 1px solid var(--gt-line);
+  background: #fff;
+  color: var(--gt-faint);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 9px;
+  cursor: pointer;
+  padding: 0;
+  min-width: 0;
+}
+.card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 26px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+.h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+}
+.cardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gt-mute);
+}
+
+/* 기본 정보 */
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(140px, 1fr));
+  gap: 12px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+.input {
+  height: 46px;
+  box-sizing: border-box;
+  border: 1px solid var(--gt-line);
+  border-radius: 12px;
+  padding: 0 14px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--gt-text);
+  background: #fff;
+  outline: none;
+  width: 100%;
+}
+.input:focus {
+  border-color: var(--gt-blue);
+}
+.readonly {
+  height: 46px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 12px;
+  padding: 0 14px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--gt-sub);
+  background: #f4f5f7;
+  outline: none;
+  width: 100%;
+}
+.readonlyStrong {
+  font-weight: 700;
+  color: var(--gt-text);
+}
+
+/* 통계 */
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--gt-mute);
+}
+.stats b {
+  color: var(--gt-text);
+}
+.statDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 99px;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* 검색 콤보 */
+.combo {
+  position: relative;
+  max-width: 520px;
+}
+.comboRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.comboInput {
+  flex: 1;
+  height: 50px;
+  box-sizing: border-box;
+  border: 1px solid var(--gt-line);
+  border-radius: 14px;
+  padding: 0 16px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--gt-text);
+  background: #fff;
+  outline: none;
+}
+.comboInputOn {
+  border-color: var(--gt-blue);
+}
+.comboBtn {
+  height: 50px;
+  border: none;
+  background: var(--gt-blue);
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 0 20px;
+  border-radius: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.comboBtn:hover {
+  background: var(--gt-blue-dark);
+}
+.comboPanel {
+  position: absolute;
+  z-index: 20;
+  top: 58px;
+  left: 0;
+  right: 74px;
+  background: #fff;
+  border: 1px solid var(--gt-line);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+.comboChips {
+  display: flex;
+  gap: 6px;
+  padding: 12px;
+  border-bottom: 1px solid var(--gt-line-soft);
+  overflow-x: auto;
+}
+.comboChip {
+  border: none;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 13px;
+  border-radius: 99px;
+  cursor: pointer;
+  white-space: nowrap;
+  color: var(--gt-mute);
+  background: #f4f5f7;
+}
+.comboChipOn {
+  color: var(--gt-blue);
+  background: var(--gt-blue-bg);
+}
+.comboList {
+  max-height: 280px;
+  overflow-y: auto;
+}
+.comboItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f9fafb;
+  width: 100%;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  background: #fff;
+  font-family: inherit;
+  text-align: left;
+}
+.comboItem:hover {
+  background: #f9fafb;
+}
+.comboCode {
+  font-size: 11px;
+  font-family: var(--gt-mono);
+  color: var(--gt-faint);
+  flex: none;
+}
+.comboName {
+  font-size: 13px;
+  font-weight: 700;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.comboMaker {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--gt-mute);
+  flex: none;
+}
+.comboEmpty {
+  padding: 24px 16px;
+  font-size: 13px;
+  color: var(--gt-faint);
+  text-align: center;
+}
+
+/* 표 */
+.tableBox {
+  border: 1px solid var(--gt-line-soft);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.tableScroll {
+  overflow-x: auto;
+}
+.gridRow {
+  display: grid;
+  gap: 10px;
+  align-items: center;
+  padding: 9px 16px;
+  border-top: 1px solid var(--gt-line-soft);
+}
+.gridHead {
+  padding: 12px 16px;
+  background: #fafbfc;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gt-mute);
+  letter-spacing: 0.3px;
+  border-top: none;
+}
+.cell {
+  height: 40px;
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid var(--gt-line);
+  border-radius: 9px;
+  padding: 0 10px;
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--gt-text);
+  background: #fff;
+  outline: none;
+  min-width: 0;
+}
+.cell:focus {
+  border-color: var(--gt-blue);
+}
+.nameCell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.nameInput {
+  height: 22px;
+  box-sizing: border-box;
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gt-text);
+  outline: none;
+  min-width: 0;
+}
+.codeText {
+  font-size: 11px;
+  font-family: var(--gt-mono);
+  color: var(--gt-faint);
+}
+.delBtn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #c3c9d0;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  justify-self: center;
+}
+.delBtn:hover {
+  background: var(--gt-line-soft);
+  color: var(--gt-sub);
+}
+.addRow {
+  align-self: flex-start;
+  border: 1px dashed #c3c9d0;
+  background: #fff;
+  color: var(--gt-sub);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 11px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.addRow:hover {
+  background: var(--gt-bg);
+}
+.tableEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 56px 24px;
+  border-top: 1px solid var(--gt-line-soft);
+}
+.emptyTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gt-sub);
+}
+.emptyDesc {
+  font-size: 13px;
+  color: var(--gt-faint);
+}
+
+.msg {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.msgOk {
+  background: var(--gt-green-bg);
+  color: var(--gt-green);
+}
+.msgErr {
+  background: #fff0f0;
+  color: #f04452;
+}
+
+.textarea {
+  resize: vertical;
+  border: 1px solid var(--gt-line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--gt-text);
+  background: #fff;
+  outline: none;
+  box-sizing: border-box;
+  width: 100%;
+}
+.textarea:focus {
+  border-color: var(--gt-blue);
+}
+
+@media (max-width: 1100px) {
+  .infoGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

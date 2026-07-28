@@ -1,13 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { BackButton } from "@/components/report/BackButton";
 import { saveReport } from "@/lib/reportClient";
 import { DatePicker, Select } from "@/components/ui";
-import s from "@/components/report/report.module.css";
+import { CellInput } from "@/components/report/CellInput";
+import e from "@/components/report/editor.module.css";
 
-const JUDGE_OPTS = [{ value: "양호", label: "양호" }, { value: "불량", label: "불량" }];
-const IMPROVE_OPTS = [{ value: "필요", label: "필요" }, { value: "불필요", label: "불필요" }];
+const IMPROVE_OPTS = [
+  { value: "필요", label: "필요" },
+  { value: "불필요", label: "불필요" },
+];
 
 const FIXED = [
   { item: "앰프 랙 인입 스피커 선로 점검", purpose: "앰프 출력단 정상 작동 여부 확인", method: "앰프 출력단에서 직접 측정" },
@@ -15,11 +18,52 @@ const FIXED = [
   { item: "스피커 선로 절체 장치 점검", purpose: "비상/일반 방송 절체 정상 여부 확인", method: "절체장치에서 직접 측정" },
   { item: "방송 장비 보호 장치 점검", purpose: "스피커 선로 보호장치 정상 여부 확인", method: "보호장치 출력단에서 직접 측정" },
 ];
-const JUDGE = ["양호", "불량"];
+
+/** 판정: 우리 입력값(양호/불량) 유지 */
+const VERDICTS = [
+  { key: "양호", fg: "var(--gt-green)", bg: "var(--gt-green-bg)", line: "var(--gt-green-dot)" },
+  { key: "불량", fg: "#f04452", bg: "#fff0f0", line: "#f04452" },
+];
+
+const SECTIONS = [
+  { id: "s0", label: "기본 정보" },
+  { id: "s1", label: "송출부 점검" },
+  { id: "s2", label: "출력/음압" },
+  { id: "s3", label: "임피던스" },
+  { id: "s4", label: "메모" },
+];
+
+const SEND_GRID = "28px minmax(200px,1.3fr) minmax(180px,1.2fr) minmax(180px,1.2fr) 170px minmax(160px,1fr)";
+const OUT_GRID = "36px 90px minmax(140px,1.2fr) 110px 120px 120px 80px 170px 130px minmax(140px,1fr) 40px";
+const IMP_GRID = "36px 90px minmax(140px,1.2fr) minmax(150px,1.1fr) 130px 170px 130px minmax(140px,1fr) 40px";
 
 type S1 = { judge: string; note: string };
 type OutRow = { floor: string; loc: string; db: string; out: string; watt: string; qty: string; judge: string; improve: string; note: string };
 type ImpRow = { floor: string; loc: string; terminal: string; ohm: string; judge: string; improve: string; note: string };
+
+const newOut = (): OutRow => ({ floor: "", loc: "", db: "", out: "", watt: "", qty: "1", judge: "", improve: "", note: "" });
+const newImp = (): ImpRow => ({ floor: "", loc: "", terminal: "", ohm: "", judge: "", improve: "", note: "" });
+
+function Verdict({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  return (
+    <div className={e.verdict}>
+      {VERDICTS.map((v) => {
+        const on = value === v.key;
+        return (
+          <button
+            key={v.key}
+            type="button"
+            className={e.verdictBtn}
+            style={on ? { color: v.fg, background: v.bg, borderColor: v.line } : undefined}
+            onClick={() => onChange(on ? "" : v.key)}
+          >
+            {v.key}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
 export function SpeakerlineForm({
   school, office, district, initial, initialStatus,
@@ -34,138 +78,335 @@ export function SpeakerlineForm({
   const [s2, setS2] = useState<OutRow[]>(initial?.section2 ?? []);
   const [s3, setS3] = useState<ImpRow[]>(initial?.section3 ?? []);
   const [memo, setMemo] = useState(initial?.memo ?? "");
-  const [msg, setMsg] = useState<{ t: string; kind: string } | null>(null);
+  const [msg, setMsg] = useState<{ t: string; ok: boolean } | null>(null);
   const [busy, setBusy] = useState(false);
+  const [active, setActive] = useState("s0");
+
+  useEffect(() => {
+    const els = SECTIONS.map((x) => document.getElementById(x.id)).filter(
+      (el): el is HTMLElement => Boolean(el)
+    );
+    if (!els.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((x) => x.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+        if (visible) setActive(visible.target.id);
+      },
+      { rootMargin: "-100px 0px -60% 0px", threshold: 0 }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  const verdicts = useMemo(
+    () => [...s1.map((x) => x.judge), ...s2.map((x) => x.judge), ...s3.map((x) => x.judge)],
+    [s1, s2, s3]
+  );
+  const good = verdicts.filter((v) => v === "양호").length;
+  const bad = verdicts.filter((v) => v === "불량").length;
+  const todo = verdicts.filter((v) => !v).length;
+
+  const counts: Record<string, number | undefined> = {
+    s1: FIXED.length,
+    s2: s2.length,
+    s3: s3.length,
+  };
 
   async function doSave(status: "DRAFT" | "DONE") {
-    setBusy(true); setMsg(null);
+    setBusy(true);
+    setMsg(null);
     try {
-      await saveReport({ school, type: "SPEAKERLINE", payload: { inspectDate, handler, section1: s1, section2: s2, section3: s3, memo }, status });
-      setMsg({ t: status === "DONE" ? "완료 처리되었습니다." : "저장(초안)되었습니다.", kind: "statusOk" });
-    } catch (e) { setMsg({ t: (e as Error).message, kind: "statusErr" }); }
-    finally { setBusy(false); }
+      await saveReport({
+        school, type: "SPEAKERLINE",
+        payload: { inspectDate, handler, section1: s1, section2: s2, section3: s3, memo },
+        status,
+      });
+      setMsg({ t: status === "DONE" ? "완료 처리되었습니다." : "저장(초안)되었습니다.", ok: true });
+    } catch (err) {
+      setMsg({ t: (err as Error).message, ok: false });
+    } finally {
+      setBusy(false);
+    }
   }
 
+  const statusLabel =
+    initialStatus === "DONE" ? "저장 완료" : initialStatus === "DRAFT" ? "저장(초안)" : "미작성";
+
   return (
-    <>
-      <div className={s.head}>
-        <div>
-          <h1 className={s.title}>스피커 선로 점검 보고서</h1>
-          <p className={s.subtitle}>송출부 점검 · 실별 출력/음압 · 임피던스 측정</p>
+    <div className={e.page}>
+      <header className={`${e.topbar} no-print`}>
+        <div className={e.topInner}>
+          <div>
+            <div className={e.titleRow}>
+              <h1 className={e.h1}>스피커 선로 점검 보고서</h1>
+              <span className={e.badge}>{statusLabel}</span>
+            </div>
+            <div className={e.topMeta}>
+              {school} · 송출부 점검 · 실별 출력/음압 · 임피던스 측정
+            </div>
+          </div>
+
+          <div className={e.topActions}>
+            <BackButton className={`${e.btn} ${e.btnMuted}`} />
+            <a className={e.btn} href={`/api/reports/export?school=${encodeURIComponent(school)}&type=SPEAKERLINE`}>CSV</a>
+            <button type="button" className={e.btn} onClick={() => window.print()}>PDF</button>
+            <span className={e.vbar} />
+            <button type="button" className={`${e.btn} ${e.btnOutline}`} disabled={busy} onClick={() => doSave("DRAFT")}>저장</button>
+            <button type="button" className={`${e.btn} ${e.btnPrimary}`} disabled={busy} onClick={() => doSave("DONE")}>완료 처리</button>
+          </div>
         </div>
-        <div className={`${s.actions} no-print`}>
-          <Link href="/docs" className={s.btn}>문서관리 홈</Link>
-          <a className={s.btn} href={`/api/reports/export?school=${encodeURIComponent(school)}&type=SPEAKERLINE`}>CSV 출력</a>
-          <button className={s.btn} onClick={() => window.print()}>PDF 출력</button>
-          <button className={s.btn} disabled={busy} onClick={() => doSave("DRAFT")}>저장</button>
-          <button className={`${s.btn} ${s.btnSuccess}`} disabled={busy} onClick={() => doSave("DONE")}>완료</button>
-        </div>
+      </header>
+
+      {/* 인쇄용 표제 */}
+      <div className="print-only" style={{ textAlign: "center", marginBottom: "6mm" }}>
+        <div style={{ fontSize: "15pt", fontWeight: 700 }}>스피커 선로 점검 보고서</div>
+        <div style={{ fontSize: "9pt", marginTop: "2mm" }}>{school} · {office ?? ""}</div>
       </div>
 
-      {initialStatus && (
-        <div className={`${s.statusMsg} ${s.statusInfo}`}>현재 상태: <span className={`${s.badge} ${initialStatus === "DONE" ? s.badgeDone : s.badgeDraft}`}>{initialStatus === "DONE" ? "완료" : "저장(초안)"}</span></div>
-      )}
-      {msg && <div className={`${s.statusMsg} ${s[msg.kind]}`}>{msg.t}</div>}
+      <div className={e.layout}>
+        {/* 목차 */}
+        <nav className={`${e.toc} no-print`}>
+          <div className={e.tocList}>
+            <div className={e.tocTitle}>문서 구성</div>
+            {SECTIONS.map((x) => (
+              <a
+                key={x.id}
+                href={`#${x.id}`}
+                className={`${e.tocItem} ${active === x.id ? e.tocItemOn : ""}`}
+                onClick={() => setActive(x.id)}
+              >
+                <span className={e.tocDot} />
+                {x.label}
+                {counts[x.id] !== undefined && <span className={e.tocCount}>{counts[x.id]}</span>}
+              </a>
+            ))}
+          </div>
 
-      <div className={s.panel}>
-        <h2 className={s.panelTitle}>기본 정보</h2>
-        <div className={s.grid}>
-          <div className={s.field}><label className={s.label}>학교명</label><input className={`${s.input} ${s.readonly}`} value={school} readOnly /></div>
-          <div className={s.field}><label className={s.label}>점검일</label><DatePicker value={inspectDate} onChange={setInspectDate} /></div>
-          <div className={s.field}><label className={s.label}>교육지원청</label><input className={`${s.input} ${s.readonly}`} value={office ?? ""} readOnly /></div>
-          <div className={s.field}><label className={s.label}>취급자 성명</label><input className={s.input} value={handler} onChange={(e) => setHandler(e.target.value)} placeholder="성명" /></div>
-          <div className={s.field}><label className={s.label}>주소</label><input className={`${s.input} ${s.readonly}`} value={district ?? ""} readOnly /></div>
+          <div className={e.sideCard}>
+            <div className={e.sideTitle}>판정 요약</div>
+            <div className={e.sideRow}>
+              <span className={e.sideKey}>양호</span>
+              <span className={e.sideVal} style={{ color: "var(--gt-green)" }}>{good}</span>
+            </div>
+            <div className={e.sideRow}>
+              <span className={e.sideKey}>불량</span>
+              <span className={e.sideVal} style={{ color: "#f04452" }}>{bad}</span>
+            </div>
+            <div className={e.sideRow}>
+              <span className={e.sideKey}>미판정</span>
+              <span className={e.sideVal} style={{ color: "var(--gt-faint)" }}>{todo}</span>
+            </div>
+          </div>
+        </nav>
+
+        <div className={e.content}>
+          {msg && <div className={`${e.msg} ${msg.ok ? e.msgOk : e.msgErr}`}>{msg.t}</div>}
+
+          {/* 기본 정보 */}
+          <section id="s0" className={e.card}>
+            <h2 className={e.h2}>기본 정보</h2>
+            <div className={e.infoGrid}>
+              <label className={e.field}>
+                <span className={e.label}>학교명</span>
+                <input readOnly value={school} className={`${e.readonly} ${e.readonlyStrong}`} />
+              </label>
+              <div className={e.field}>
+                <span className={e.label}>점검일</span>
+                <DatePicker value={inspectDate} onChange={setInspectDate} />
+              </div>
+              <label className={e.field}>
+                <span className={e.label}>교육지원청</span>
+                <input readOnly value={office ?? ""} className={e.readonly} />
+              </label>
+              <label className={e.field}>
+                <span className={e.label}>취급자 성명</span>
+                <input
+                  className={e.input}
+                  placeholder="성명"
+                  value={handler}
+                  onChange={(ev) => setHandler(ev.target.value)}
+                />
+              </label>
+              <label className={e.field}>
+                <span className={e.label}>주소</span>
+                <input readOnly value={district ?? ""} className={e.readonly} />
+              </label>
+            </div>
+          </section>
+
+          {/* 1. 송출부 */}
+          <section id="s1" className={e.card}>
+            <div className={e.stepHead}>
+              <span className={e.step}>1</span>
+              <h2 className={e.h2}>송출부 스피커 선로 점검</h2>
+            </div>
+
+            <div className={e.tableBox}>
+              <div className={e.tableScroll}>
+                <div style={{ minWidth: 1010 }}>
+                  <div className={`${e.gridRow} ${e.gridHead}`} style={{ gridTemplateColumns: SEND_GRID }}>
+                    <span>No</span>
+                    <span>점검항목</span>
+                    <span>목적</span>
+                    <span>방법</span>
+                    <span>판정</span>
+                    <span>비고</span>
+                  </div>
+                  {FIXED.map((item, i) => (
+                    <div key={item.item} className={e.gridRow} style={{ gridTemplateColumns: SEND_GRID }}>
+                      <span className={e.rowNo}>{i + 1}</span>
+                      <span style={{ fontSize: 13, fontWeight: 700 }}>{item.item}</span>
+                      <span style={{ fontSize: 12, color: "var(--gt-mute)" }}>{item.purpose}</span>
+                      <span style={{ fontSize: 12, color: "var(--gt-mute)" }}>{item.method}</span>
+                      <Verdict
+                        value={s1[i]?.judge ?? ""}
+                        onChange={(v) => setS1((a) => a.map((r, idx) => (idx === i ? { ...r, judge: v } : r)))}
+                      />
+                      <CellInput
+                        className={e.cell}
+                        placeholder="비고"
+                        value={s1[i]?.note ?? ""}
+                        onChange={(ev) =>
+                          setS1((a) => a.map((r, idx) => (idx === i ? { ...r, note: ev.target.value } : r)))
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 2. 출력/음압 */}
+          <section id="s2" className={e.card}>
+            <div className={e.cardHead}>
+              <div className={e.stepHead}>
+                <span className={e.step}>2</span>
+                <h2 className={e.h2}>교실(실) 스피커 출력/음압 점검</h2>
+              </div>
+              <span className={e.countText}>{s2.length}개 실 측정</span>
+            </div>
+
+            <div className={e.tableBox}>
+              <div className={e.tableScroll}>
+                <div style={{ minWidth: 1180 }}>
+                  <div className={`${e.gridRow} ${e.gridHead}`} style={{ gridTemplateColumns: OUT_GRID }}>
+                    <span>No</span><span>층</span><span>위치</span><span>음압(dB)</span><span>출력상태</span>
+                    <span>정격출력(W)</span><span>수량</span><span>판정</span><span>개선여부</span><span>비고</span>
+                    <span className="no-print" />
+                  </div>
+                  {s2.map((r, i) => {
+                    const up = (k: keyof OutRow, v: string) =>
+                      setS2((a) => a.map((x, idx) => (idx === i ? { ...x, [k]: v } : x)));
+                    return (
+                      <div key={i} className={e.gridRow} style={{ gridTemplateColumns: OUT_GRID }}>
+                        <span className={e.rowNo}>{i + 1}</span>
+                        <CellInput className={e.cell} placeholder="1F" value={r.floor} onChange={(ev) => up("floor", ev.target.value)} />
+                        <CellInput className={e.cell} placeholder="교실명 / 위치" value={r.loc} onChange={(ev) => up("loc", ev.target.value)} />
+                        <CellInput className={e.cell} placeholder="dB" value={r.db} onChange={(ev) => up("db", ev.target.value)} />
+                        <CellInput className={e.cell} placeholder="출력상태" value={r.out} onChange={(ev) => up("out", ev.target.value)} />
+                        <CellInput className={e.cell} placeholder="W" value={r.watt} onChange={(ev) => up("watt", ev.target.value)} />
+                        <CellInput className={e.cell} value={r.qty} onChange={(ev) => up("qty", ev.target.value)} />
+                        <Verdict value={r.judge} onChange={(v) => up("judge", v)} />
+                        <Select size="sm" value={r.improve} options={IMPROVE_OPTS} placeholder="선택" onChange={(v) => up("improve", v)} />
+                        <CellInput className={e.cell} placeholder="비고" value={r.note} onChange={(ev) => up("note", ev.target.value)} />
+                        <button
+                          type="button"
+                          className={`${e.delBtn} no-print`}
+                          onClick={() => setS2((a) => a.filter((_, idx) => idx !== i))}
+                          aria-label="행 삭제"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              {s2.length === 0 && (
+                <div className={e.tableEmpty}>
+                  <div className={e.emptyDesc}>행 추가로 입력하세요</div>
+                </div>
+              )}
+            </div>
+
+            <button type="button" className={`${e.addRow} no-print`} onClick={() => setS2((a) => [...a, newOut()])}>
+              + 행 추가
+            </button>
+          </section>
+
+          {/* 3. 임피던스 */}
+          <section id="s3" className={e.card}>
+            <div className={e.cardHead}>
+              <div className={e.stepHead}>
+                <span className={e.step}>3</span>
+                <h2 className={e.h2}>스피커 선로 임피던스 측정</h2>
+              </div>
+              <span className={e.countText}>{s3.length}개 선로 측정</span>
+            </div>
+
+            <div className={e.tableBox}>
+              <div className={e.tableScroll}>
+                <div style={{ minWidth: 1060 }}>
+                  <div className={`${e.gridRow} ${e.gridHead}`} style={{ gridTemplateColumns: IMP_GRID }}>
+                    <span>No</span><span>층</span><span>위치</span><span>방송실 출력단자</span><span>측정저항(Ω)</span>
+                    <span>판정</span><span>개선여부</span><span>비고</span>
+                    <span className="no-print" />
+                  </div>
+                  {s3.map((r, i) => {
+                    const up = (k: keyof ImpRow, v: string) =>
+                      setS3((a) => a.map((x, idx) => (idx === i ? { ...x, [k]: v } : x)));
+                    return (
+                      <div key={i} className={e.gridRow} style={{ gridTemplateColumns: IMP_GRID }}>
+                        <span className={e.rowNo}>{i + 1}</span>
+                        <CellInput className={e.cell} placeholder="1F" value={r.floor} onChange={(ev) => up("floor", ev.target.value)} />
+                        <CellInput className={e.cell} placeholder="위치" value={r.loc} onChange={(ev) => up("loc", ev.target.value)} />
+                        <CellInput className={e.cell} placeholder="출력단자" value={r.terminal} onChange={(ev) => up("terminal", ev.target.value)} />
+                        <CellInput className={e.cell} placeholder="Ω" value={r.ohm} onChange={(ev) => up("ohm", ev.target.value)} />
+                        <Verdict value={r.judge} onChange={(v) => up("judge", v)} />
+                        <Select size="sm" value={r.improve} options={IMPROVE_OPTS} placeholder="선택" onChange={(v) => up("improve", v)} />
+                        <CellInput className={e.cell} placeholder="비고" value={r.note} onChange={(ev) => up("note", ev.target.value)} />
+                        <button
+                          type="button"
+                          className={`${e.delBtn} no-print`}
+                          onClick={() => setS3((a) => a.filter((_, idx) => idx !== i))}
+                          aria-label="행 삭제"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              {s3.length === 0 && (
+                <div className={e.tableEmpty}>
+                  <div className={e.emptyDesc}>행 추가로 입력하세요</div>
+                </div>
+              )}
+            </div>
+
+            <button type="button" className={`${e.addRow} no-print`} onClick={() => setS3((a) => [...a, newImp()])}>
+              + 행 추가
+            </button>
+          </section>
+
+          {/* 메모 */}
+          <section id="s4" className={e.card}>
+            <h2 className={e.h2}>메모</h2>
+            <textarea
+              className={`${e.textarea} no-print`}
+              style={{ minHeight: 120 }}
+              placeholder="현장 특이사항, 재점검 필요 구역 등을 기록하세요"
+              value={memo}
+              onChange={(ev) => setMemo(ev.target.value)}
+            />
+            <div className="print-only print-text">{memo}</div>
+          </section>
         </div>
       </div>
-
-      <div className={s.panel}>
-        <h2 className={s.panelTitle}>1. 송출부 스피커 선로 점검</h2>
-        <div className={s.tableWrap}>
-          <table className={s.table}>
-            <thead><tr><th>No</th><th>점검항목</th><th>목적</th><th>방법</th><th>판정</th><th>비고</th></tr></thead>
-            <tbody>
-              {FIXED.map((f, i) => (
-                <tr key={i}>
-                  <td>{i + 1}</td><td>{f.item}</td><td>{f.purpose}</td><td>{f.method}</td>
-                  <td style={{ minWidth: 100 }}>
-                    <Select size="sm" value={s1[i]?.judge ?? ""} options={JUDGE_OPTS} placeholder="선택" onChange={(v) => setS1((a) => a.map((r, idx) => idx === i ? { ...r, judge: v } : r))} />
-                  </td>
-                  <td><input className={s.cellInput} value={s1[i]?.note ?? ""} onChange={(e) => setS1((a) => a.map((r, idx) => idx === i ? { ...r, note: e.target.value } : r))} /></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div className={s.panel}>
-        <h2 className={s.panelTitle}>2. 교실(실) 스피커 출력/음압 점검</h2>
-        <div className={s.tableWrap}>
-          <table className={s.table}>
-            <thead><tr><th>No</th><th>층</th><th>위치</th><th>음압(dB)</th><th>출력상태</th><th>정격출력(W)</th><th>수량</th><th>판정</th><th>개선여부</th><th>비고</th><th>삭제</th></tr></thead>
-            <tbody>
-              {s2.length === 0 && <tr><td colSpan={11} style={{ textAlign: "center", color: "#6d7882" }}>행 추가로 입력하세요.</td></tr>}
-              {s2.map((r, i) => {
-                const up = (k: keyof OutRow, v: string) => setS2((a) => a.map((x, idx) => idx === i ? { ...x, [k]: v } : x));
-                return (
-                  <tr key={i}>
-                    <td>{i + 1}</td>
-                    <td><input className={s.cellInput} style={{ minWidth: 50 }} value={r.floor} onChange={(e) => up("floor", e.target.value)} /></td>
-                    <td><input className={s.cellInput} value={r.loc} onChange={(e) => up("loc", e.target.value)} /></td>
-                    <td><input className={s.cellInput} style={{ minWidth: 60 }} value={r.db} onChange={(e) => up("db", e.target.value)} /></td>
-                    <td><input className={s.cellInput} value={r.out} onChange={(e) => up("out", e.target.value)} /></td>
-                    <td><input className={s.cellInput} style={{ minWidth: 70 }} value={r.watt} onChange={(e) => up("watt", e.target.value)} /></td>
-                    <td><input className={s.cellInput} style={{ minWidth: 50 }} value={r.qty} onChange={(e) => up("qty", e.target.value)} /></td>
-                    <td>
-                      <Select size="sm" value={r.judge} options={JUDGE_OPTS} placeholder="선택" onChange={(v) => up("judge", v)} />
-                    </td>
-                    <td>
-                      <Select size="sm" value={r.improve} options={IMPROVE_OPTS} placeholder="선택" onChange={(v) => up("improve", v)} />
-                    </td>
-                    <td><input className={s.cellInput} value={r.note} onChange={(e) => up("note", e.target.value)} /></td>
-                    <td><button className={s.delBtn} onClick={() => setS2((a) => a.filter((_, idx) => idx !== i))}>삭제</button></td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-        <div className={s.rowBtns}><button className={`${s.btn} ${s.btnPrimary}`} onClick={() => setS2((a) => [...a, { floor: "", loc: "", db: "", out: "", watt: "", qty: "", judge: "", improve: "", note: "" }])}>+ 행 추가</button></div>
-      </div>
-
-      <div className={s.panel}>
-        <h2 className={s.panelTitle}>3. 스피커 선로 임피던스 측정</h2>
-        <div className={s.tableWrap}>
-          <table className={s.table}>
-            <thead><tr><th>No</th><th>층</th><th>위치</th><th>방송실 출력단자</th><th>측정저항(Ω)</th><th>판정</th><th>개선여부</th><th>비고</th><th>삭제</th></tr></thead>
-            <tbody>
-              {s3.length === 0 && <tr><td colSpan={9} style={{ textAlign: "center", color: "#6d7882" }}>행 추가로 입력하세요.</td></tr>}
-              {s3.map((r, i) => {
-                const up = (k: keyof ImpRow, v: string) => setS3((a) => a.map((x, idx) => idx === i ? { ...x, [k]: v } : x));
-                return (
-                  <tr key={i}>
-                    <td>{i + 1}</td>
-                    <td><input className={s.cellInput} style={{ minWidth: 50 }} value={r.floor} onChange={(e) => up("floor", e.target.value)} /></td>
-                    <td><input className={s.cellInput} value={r.loc} onChange={(e) => up("loc", e.target.value)} /></td>
-                    <td><input className={s.cellInput} value={r.terminal} onChange={(e) => up("terminal", e.target.value)} /></td>
-                    <td><input className={s.cellInput} style={{ minWidth: 80 }} value={r.ohm} onChange={(e) => up("ohm", e.target.value)} /></td>
-                    <td><select className={s.cellSelect} style={{ minWidth: 70 }} value={r.judge} onChange={(e) => up("judge", e.target.value)}><option value="">선택</option>{JUDGE.map((j) => <option key={j}>{j}</option>)}</select></td>
-                    <td><select className={s.cellSelect} style={{ minWidth: 70 }} value={r.improve} onChange={(e) => up("improve", e.target.value)}><option value="">선택</option><option>필요</option><option>불필요</option></select></td>
-                    <td><input className={s.cellInput} value={r.note} onChange={(e) => up("note", e.target.value)} /></td>
-                    <td><button className={s.delBtn} onClick={() => setS3((a) => a.filter((_, idx) => idx !== i))}>삭제</button></td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-        <div className={s.rowBtns}><button className={`${s.btn} ${s.btnPrimary}`} onClick={() => setS3((a) => [...a, { floor: "", loc: "", terminal: "", ohm: "", judge: "", improve: "", note: "" }])}>+ 행 추가</button></div>
-      </div>
-
-      <div className={s.panel}>
-        <h2 className={s.panelTitle}>메모</h2>
-        <textarea className={s.input} style={{ height: 100, padding: "1rem 1.2rem", resize: "vertical" }} value={memo} onChange={(e) => setMemo(e.target.value)} />
-      </div>
-    </>
+    </div>
   );
 }

@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { BackButton } from "@/components/report/BackButton";
 import { saveReport } from "@/lib/reportClient";
 import { DatePicker, Select } from "@/components/ui";
-import s from "@/components/report/report.module.css";
-
-const opt = (a: string[]) => a.map((v) => ({ value: v, label: v }));
+import { CellInput } from "@/components/report/CellInput";
+import e from "@/components/report/editor.module.css";
 
 type Row = {
   category: string;
@@ -22,28 +21,26 @@ type Row = {
 };
 
 const emptyRow = (): Row => ({
-  category: "",
-  name: "",
-  manufacturer: "",
-  model: "",
-  qty: "",
-  introDate: "",
-  location: "",
-  handler: "",
-  status: "",
-  replace: "",
+  category: "", name: "", manufacturer: "", model: "", qty: "1",
+  introDate: "", location: "", handler: "", status: "", replace: "",
 });
 
 const LOCATIONS = ["방송실", "시청각실", "특별실", "다목적실", "소강당", "기타실", "강당/체육관"];
-const CATEGORIES = ["음향", "영상", "기타"];
-const STATUSES = ["양호", "불량", "노후"];
+const STATUSES = ["정상", "불량", "노후"];
+const REPLACE = ["불필요", "필요"];
+const CATEGORIES = ["전체", "음향", "전관음향", "영상", "전원"];
+const CAT_BY_PREFIX: Record<string, string> = {
+  AU: "음향", PA: "전관음향", VI: "영상", ETC: "전원",
+};
+
+const opt = (a: string[]) => a.map((v) => ({ value: v, label: v }));
+const GRID =
+  "minmax(180px,1.4fr) minmax(150px,1.1fr) 80px 150px 150px 120px 120px 120px 40px";
+
+type CatalogItem = { name: string; code: string; maker: string };
 
 export function EquipmentForm({
-  school,
-  office,
-  district,
-  initial,
-  initialStatus,
+  school, office, district, initial, initialStatus,
 }: {
   school: string;
   office: string | null;
@@ -54,59 +51,86 @@ export function EquipmentForm({
   const [inspectDate, setInspectDate] = useState(initial?.inspectDate ?? "");
   const [handler, setHandler] = useState(initial?.handler ?? "");
   const [rows, setRows] = useState<Row[]>(initial?.items ?? []);
-  const [msg, setMsg] = useState<{ t: string; kind: string } | null>(null);
+  const [msg, setMsg] = useState<{ t: string; ok: boolean } | null>(null);
   const [busy, setBusy] = useState(false);
 
   // 장비 카탈로그 검색
-  const [eqQ, setEqQ] = useState("");
-  const [eqHits, setEqHits] = useState<{ name: string; code: string; maker: string }[]>([]);
-  const [eqOpen, setEqOpen] = useState(false);
-  const searchRef = useRef<HTMLDivElement>(null);
+  const [q, setQ] = useState("");
+  const [hits, setHits] = useState<CatalogItem[]>([]);
+  const [open, setOpen] = useState(false);
+  const [cat, setCat] = useState("전체");
+  const [nameCat, setNameCat] = useState<Record<string, string>>({});
+  const comboRef = useRef<HTMLDivElement>(null);
+
+  // 코드북으로 장비명 → 분류(음향/영상 등) 매핑
+  useEffect(() => {
+    (async () => {
+      try {
+        const r = await fetch("/api/codes?kind=EQUIPMENT");
+        if (!r.ok) return;
+        const codes: { code: string; name: string; category: string }[] = await r.json();
+        const map: Record<string, string> = {};
+        for (const c of codes) {
+          const label = CAT_BY_PREFIX[c.category];
+          if (!label) continue;
+          const key = c.name.split("—")[0].trim().toUpperCase();
+          if (key) map[key] = label;
+        }
+        setNameCat(map);
+      } catch {
+        /* noop */
+      }
+    })();
+  }, []);
 
   useEffect(() => {
-    const q = eqQ.trim();
-    if (q.length === 1) {
-      setEqHits([]);
+    const kw = q.trim();
+    if (kw.length === 1) {
+      setHits([]);
       return;
     }
     const t = setTimeout(async () => {
       try {
-        // 빈 검색어면 기본 리스트(가나다순 상위) 노출
-        const r = await fetch(`/api/equipment/search?q=${encodeURIComponent(q)}&limit=30`);
-        if (r.ok) setEqHits(await r.json());
+        const r = await fetch(`/api/equipment/search?q=${encodeURIComponent(kw)}&limit=40`);
+        if (r.ok) setHits(await r.json());
       } catch {
         /* noop */
       }
-    }, q ? 200 : 0);
+    }, kw ? 200 : 0);
     return () => clearTimeout(t);
-  }, [eqQ]);
+  }, [q]);
 
   useEffect(() => {
-    function onDoc(e: MouseEvent) {
-      if (searchRef.current && !searchRef.current.contains(e.target as Node)) setEqOpen(false);
+    function onDoc(ev: MouseEvent) {
+      if (comboRef.current && !comboRef.current.contains(ev.target as Node)) setOpen(false);
     }
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, []);
 
-  function addFromCatalog(it: { name: string; code: string; maker: string }) {
-    setRows((rs) => [
-      ...rs,
-      { ...emptyRow(), name: it.name, manufacturer: it.maker, model: it.code, qty: "1" },
-    ]);
-    setEqQ("");
-    setEqHits([]);
-    setEqOpen(false);
-  }
+  const catOf = useMemo(
+    () => (name: string) => nameCat[name.trim().toUpperCase()] ?? "",
+    [nameCat]
+  );
+  const visibleHits = useMemo(
+    () => (cat === "전체" ? hits : hits.filter((h) => catOf(h.name) === cat)),
+    [hits, cat, catOf]
+  );
+
+  const totalQty = rows.reduce((n, r) => n + (Number(r.qty) || 0), 0);
+  const replaceCount = rows.filter((r) => r.replace === "필요").length;
 
   function update(i: number, key: keyof Row, val: string) {
     setRows((rs) => rs.map((r, idx) => (idx === i ? { ...r, [key]: val } : r)));
   }
-  function addRow() {
-    setRows((rs) => [...rs, emptyRow()]);
-  }
-  function delRow(i: number) {
-    setRows((rs) => rs.filter((_, idx) => idx !== i));
+  function addFromCatalog(it: CatalogItem) {
+    setRows((rs) => [
+      ...rs,
+      { ...emptyRow(), name: it.name, manufacturer: it.maker, model: it.code, category: catOf(it.name) },
+    ]);
+    setQ("");
+    setHits([]);
+    setOpen(false);
   }
 
   async function doSave(status: "DRAFT" | "DONE") {
@@ -114,184 +138,283 @@ export function EquipmentForm({
     setMsg(null);
     try {
       await saveReport({
-        school,
-        type: "EQUIPMENT",
+        school, type: "EQUIPMENT",
         payload: { inspectDate, handler, items: rows },
         status,
       });
-      setMsg({
-        t: status === "DONE" ? "완료 처리되었습니다." : "저장(초안)되었습니다.",
-        kind: "statusOk",
-      });
-    } catch (e) {
-      setMsg({ t: (e as Error).message, kind: "statusErr" });
+      setMsg({ t: status === "DONE" ? "완료 처리되었습니다." : "저장(초안)되었습니다.", ok: true });
+    } catch (err) {
+      setMsg({ t: (err as Error).message, ok: false });
     } finally {
       setBusy(false);
     }
   }
 
+  const statusLabel =
+    initialStatus === "DONE" ? "저장 완료" : initialStatus === "DRAFT" ? "저장(초안)" : "미작성";
+
   return (
-    <>
-      <div className={s.head}>
-        <div>
-          <h1 className={s.title}>방송 장비 목록</h1>
-          <p className={s.subtitle}>학교별 장비 목록 작성/저장/완료</p>
-        </div>
-        <div className={`${s.actions} no-print`}>
-          <Link href="/docs" className={s.btn}>
-            문서관리 홈
-          </Link>
-          <a className={s.btn} href={`/api/reports/export?school=${encodeURIComponent(school)}&type=EQUIPMENT`}>CSV 출력</a>
-          <button className={s.btn} onClick={() => window.print()}>PDF 출력</button>
-          <button className={s.btn} disabled={busy} onClick={() => doSave("DRAFT")}>
-            저장(초안)
-          </button>
-          <button
-            className={`${s.btn} ${s.btnSuccess}`}
-            disabled={busy}
-            onClick={() => doSave("DONE")}
-          >
-            완료
-          </button>
-        </div>
-      </div>
-
-      {initialStatus && (
-        <div className={`${s.statusMsg} ${s.statusInfo}`}>
-          현재 상태:{" "}
-          <span className={`${s.badge} ${initialStatus === "DONE" ? s.badgeDone : s.badgeDraft}`}>
-            {initialStatus === "DONE" ? "완료" : "저장(초안)"}
-          </span>
-        </div>
-      )}
-      {msg && <div className={`${s.statusMsg} ${s[msg.kind]}`}>{msg.t}</div>}
-
-      <div className={s.panel}>
-        <h2 className={s.panelTitle}>기본 정보</h2>
-        <div className={s.grid}>
-          <div className={s.field}>
-            <label className={s.label}>점검일자</label>
-            <DatePicker value={inspectDate} onChange={setInspectDate} />
-          </div>
-          <div className={s.field}>
-            <label className={s.label}>학교명</label>
-            <input className={`${s.input} ${s.readonly}`} value={school} readOnly />
-          </div>
-          <div className={s.field}>
-            <label className={s.label}>지청</label>
-            <input className={`${s.input} ${s.readonly}`} value={office ?? ""} readOnly />
-          </div>
-          <div className={s.field}>
-            <label className={s.label}>주소</label>
-            <input className={`${s.input} ${s.readonly}`} value={district ?? ""} readOnly />
-          </div>
-          <div className={s.field}>
-            <label className={s.label}>취급자 성명</label>
-            <input
-              className={s.input}
-              value={handler}
-              onChange={(e) => setHandler(e.target.value)}
-              placeholder="성명"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className={s.panel}>
-        <h2 className={s.panelTitle}>장비 목록</h2>
-
-        <div ref={searchRef} style={{ position: "relative", maxWidth: 480, marginBottom: "1.6rem" }}>
-          <input
-            className={s.input}
-            placeholder="클릭하면 장비 목록, 입력하면 검색"
-            value={eqQ}
-            onChange={(e) => {
-              setEqQ(e.target.value);
-              setEqOpen(true);
-            }}
-            onFocus={() => setEqOpen(true)}
-          />
-          {eqOpen && eqHits.length > 0 && (
-            <div
-              style={{
-                position: "absolute", left: 0, right: 0, zIndex: 30,
-                maxHeight: 320, overflowY: "auto", background: "#fff",
-                border: "1px solid var(--krds-color-border-subtle)",
-                borderRadius: "var(--krds-radius-medium)", boxShadow: "var(--krds-shadow-modal)",
-              }}
-            >
-              {eqHits.map((it, k) => (
-                <button
-                  key={k}
-                  type="button"
-                  onClick={() => addFromCatalog(it)}
-                  style={{
-                    display: "flex", justifyContent: "space-between", gap: "1rem", width: "100%",
-                    padding: "1rem 1.2rem", border: "none", background: "transparent",
-                    cursor: "pointer", textAlign: "left", fontSize: "1.4rem",
-                    borderBottom: "1px solid var(--krds-gray-10)",
-                  }}
-                >
-                  <span style={{ fontWeight: 600 }}>{it.name}</span>
-                  <span style={{ color: "var(--krds-gray-50)" }}>{it.maker} · {it.code}</span>
-                </button>
-              ))}
+    <div className={e.page}>
+      <header className={`${e.topbar} no-print`}>
+        <div className={e.topInner}>
+          <div>
+            <div className={e.titleRow}>
+              <h1 className={e.h1}>방송 장비 목록</h1>
+              <span className={e.badge}>{statusLabel}</span>
             </div>
-          )}
-          <p style={{ fontSize: "1.3rem", color: "var(--krds-color-text-caption)", marginTop: "0.6rem" }}>
-            검색 후 항목을 클릭하면 아래 표에 자동 추가됩니다.
-          </p>
-        </div>
+            <div className={e.topMeta}>
+              {school} · {district ?? "—"} · 등록 {rows.length}건
+            </div>
+          </div>
 
-        <div className={s.tableWrap}>
-          <table className={s.table}>
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>분류</th>
-                <th>장비명</th>
-                <th>제조사</th>
-                <th>모델/규격</th>
-                <th>수량</th>
-                <th>도입일자</th>
-                <th>설치위치</th>
-                <th>취급자</th>
-                <th>상태</th>
-                <th>교체여부</th>
-                <th>삭제</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.length === 0 && (
-                <tr>
-                  <td colSpan={12} style={{ textAlign: "center", color: "#6d7882" }}>
-                    행 추가를 눌러 장비를 입력하세요.
-                  </td>
-                </tr>
-              )}
-              {rows.map((r, i) => (
-                <tr key={i}>
-                  <td>{i + 1}</td>
-                  <td style={{ minWidth: 110 }}><Select size="sm" value={r.category} options={opt(CATEGORIES)} placeholder="선택" onChange={(v) => update(i, "category", v)} /></td>
-                  <td><input className={s.cellInput} value={r.name} onChange={(e) => update(i, "name", e.target.value)} /></td>
-                  <td><input className={s.cellInput} value={r.manufacturer} onChange={(e) => update(i, "manufacturer", e.target.value)} /></td>
-                  <td><input className={s.cellInput} value={r.model} onChange={(e) => update(i, "model", e.target.value)} /></td>
-                  <td><input className={s.cellInput} style={{ minWidth: 60 }} value={r.qty} onChange={(e) => update(i, "qty", e.target.value)} /></td>
-                  <td><input type="date" className={s.cellInput} value={r.introDate} onChange={(e) => update(i, "introDate", e.target.value)} /></td>
-                  <td style={{ minWidth: 130 }}><Select size="sm" value={r.location} options={opt(LOCATIONS)} placeholder="선택" onChange={(v) => update(i, "location", v)} /></td>
-                  <td><input className={s.cellInput} style={{ minWidth: 70 }} value={r.handler} onChange={(e) => update(i, "handler", e.target.value)} /></td>
-                  <td style={{ minWidth: 100 }}><Select size="sm" value={r.status} options={opt(STATUSES)} placeholder="선택" onChange={(v) => update(i, "status", v)} /></td>
-                  <td style={{ minWidth: 100 }}><Select size="sm" value={r.replace} options={opt(["필요", "불필요"])} placeholder="선택" onChange={(v) => update(i, "replace", v)} /></td>
-                  <td><button className={s.delBtn} onClick={() => delRow(i)}>삭제</button></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className={e.topActions}>
+            <BackButton className={`${e.btn} ${e.btnMuted}`} />
+            <a
+              className={e.btn}
+              href={`/api/reports/export?school=${encodeURIComponent(school)}&type=EQUIPMENT`}
+            >
+              CSV
+            </a>
+            <button type="button" className={e.btn} onClick={() => window.print()}>
+              PDF
+            </button>
+            <span className={e.vbar} />
+            <button
+              type="button"
+              className={`${e.btn} ${e.btnOutline}`}
+              disabled={busy}
+              onClick={() => doSave("DRAFT")}
+            >
+              저장
+            </button>
+            <button
+              type="button"
+              className={`${e.btn} ${e.btnPrimary}`}
+              disabled={busy}
+              onClick={() => doSave("DONE")}
+            >
+              완료 처리
+            </button>
+          </div>
         </div>
-        <div className={s.rowBtns}>
-          <button className={`${s.btn} ${s.btnPrimary}`} onClick={addRow}>+ 행 추가</button>
+      </header>
+
+      {/* 인쇄용 표제 */}
+      <div className="print-only" style={{ textAlign: "center", marginBottom: "6mm" }}>
+        <div style={{ fontSize: "15pt", fontWeight: 700 }}>방송 장비 목록</div>
+        <div style={{ fontSize: "9pt", marginTop: "2mm" }}>
+          {school} · {office ?? ""}
         </div>
       </div>
-    </>
+
+      <div className={e.container}>
+        {msg && <div className={`${e.msg} ${msg.ok ? e.msgOk : e.msgErr}`}>{msg.t}</div>}
+
+        {/* 기본 정보 */}
+        <section className={e.card}>
+          <h2 className={e.h2}>기본 정보</h2>
+          <div className={e.infoGrid}>
+            <div className={e.field}>
+              <span className={e.label}>점검일자</span>
+              <DatePicker value={inspectDate} onChange={setInspectDate} />
+            </div>
+            <label className={e.field}>
+              <span className={e.label}>학교명</span>
+              <input readOnly value={school} className={`${e.readonly} ${e.readonlyStrong}`} />
+            </label>
+            <label className={e.field}>
+              <span className={e.label}>지청</span>
+              <input readOnly value={office ?? ""} className={e.readonly} />
+            </label>
+            <label className={e.field}>
+              <span className={e.label}>주소</span>
+              <input readOnly value={district ?? ""} className={e.readonly} />
+            </label>
+            <label className={e.field}>
+              <span className={e.label}>취급자 성명</span>
+              <input
+                className={e.input}
+                placeholder="성명"
+                value={handler}
+                onChange={(ev) => setHandler(ev.target.value)}
+              />
+            </label>
+          </div>
+        </section>
+
+        {/* 장비 목록 */}
+        <section className={e.card}>
+          <div className={e.cardHead}>
+            <h2 className={e.h2}>장비 목록</h2>
+            <div className={e.stats}>
+              <span>
+                등록 <b>{rows.length}</b>건
+              </span>
+              <span>
+                총 수량 <b>{totalQty}</b>
+              </span>
+              <span>
+                <span className={e.statDot} style={{ background: "var(--gt-amber)" }} />
+                교체 필요 {replaceCount}
+              </span>
+            </div>
+          </div>
+
+          {/* 장비 검색 */}
+          <div className={`${e.combo} no-print`} ref={comboRef}>
+            <div className={e.comboRow}>
+              <input
+                className={`${e.comboInput} ${open ? e.comboInputOn : ""}`}
+                placeholder="클릭하면 장비 목록, 입력하면 검색"
+                value={q}
+                onFocus={() => setOpen(true)}
+                onChange={(ev) => {
+                  setQ(ev.target.value);
+                  setOpen(true);
+                }}
+              />
+              <button
+                type="button"
+                className={e.comboBtn}
+                onClick={() => setRows((rs) => [...rs, emptyRow()])}
+              >
+                + 추가
+              </button>
+            </div>
+
+            {open && (
+              <div className={e.comboPanel}>
+                <div className={e.comboChips}>
+                  {CATEGORIES.map((c) => (
+                    <button
+                      key={c}
+                      type="button"
+                      className={`${e.comboChip} ${cat === c ? e.comboChipOn : ""}`}
+                      onClick={() => setCat(c)}
+                    >
+                      {c}
+                    </button>
+                  ))}
+                </div>
+                <div className={e.comboList}>
+                  {visibleHits.map((it, k) => (
+                    <button
+                      key={`${it.code}-${k}`}
+                      type="button"
+                      className={e.comboItem}
+                      onClick={() => addFromCatalog(it)}
+                    >
+                      <span className={e.comboCode}>{it.code}</span>
+                      <span className={e.comboName}>{it.name}</span>
+                      <span className={e.comboMaker}>{it.maker}</span>
+                    </button>
+                  ))}
+                  {visibleHits.length === 0 && (
+                    <div className={e.comboEmpty}>검색 결과가 없습니다</div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* 표 */}
+          <div className={e.tableBox}>
+            <div className={e.tableScroll}>
+              <div style={{ minWidth: 1180 }}>
+                <div className={`${e.gridRow} ${e.gridHead}`} style={{ gridTemplateColumns: GRID }}>
+                  <span>장비명</span>
+                  <span>모델/규격</span>
+                  <span>수량</span>
+                  <span>도입일자</span>
+                  <span>설치위치</span>
+                  <span>취급자</span>
+                  <span>상태</span>
+                  <span>교체여부</span>
+                  <span className="no-print" />
+                </div>
+
+                {rows.map((r, i) => (
+                  <div key={i} className={e.gridRow} style={{ gridTemplateColumns: GRID }}>
+                    <div className={e.nameCell}>
+                      <CellInput
+                        className={e.nameInput}
+                        placeholder="장비명"
+                        value={r.name}
+                        onChange={(ev) => update(i, "name", ev.target.value)}
+                      />
+                      <span className={e.codeText}>{r.manufacturer || "—"}</span>
+                    </div>
+                    <CellInput
+                      className={e.cell}
+                      placeholder="모델/규격"
+                      value={r.model}
+                      onChange={(ev) => update(i, "model", ev.target.value)}
+                    />
+                    <CellInput
+                      className={e.cell}
+                      type="number"
+                      min={0}
+                      value={r.qty}
+                      onChange={(ev) => update(i, "qty", ev.target.value)}
+                    />
+                    <DatePicker value={r.introDate} onChange={(v) => update(i, "introDate", v)} />
+                    <Select
+                      size="sm"
+                      value={r.location}
+                      options={opt(LOCATIONS)}
+                      placeholder="선택"
+                      onChange={(v) => update(i, "location", v)}
+                    />
+                    <CellInput
+                      className={e.cell}
+                      placeholder="취급자"
+                      value={r.handler}
+                      onChange={(ev) => update(i, "handler", ev.target.value)}
+                    />
+                    <Select
+                      size="sm"
+                      value={r.status}
+                      options={opt(STATUSES)}
+                      placeholder="선택"
+                      onChange={(v) => update(i, "status", v)}
+                    />
+                    <Select
+                      size="sm"
+                      value={r.replace}
+                      options={opt(REPLACE)}
+                      placeholder="선택"
+                      onChange={(v) => update(i, "replace", v)}
+                    />
+                    <button
+                      type="button"
+                      className={`${e.delBtn} no-print`}
+                      onClick={() => setRows((rs) => rs.filter((_, idx) => idx !== i))}
+                      aria-label="행 삭제"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {rows.length === 0 && (
+              <div className={e.tableEmpty}>
+                <div className={e.emptyTitle}>등록된 장비가 없습니다</div>
+                <div className={e.emptyDesc}>위 검색창을 클릭해 장비를 선택하세요</div>
+              </div>
+            )}
+          </div>
+
+          <button
+            type="button"
+            className={`${e.addRow} no-print`}
+            onClick={() => setRows((rs) => [...rs, emptyRow()])}
+          >
+            + 행 추가
+          </button>
+        </section>
+      </div>
+    </div>
   );
 }

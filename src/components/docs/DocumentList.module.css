@@ -1,0 +1,373 @@
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px 32px 20px;
+  flex-wrap: wrap;
+}
+.crumb {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gt-faint);
+  letter-spacing: 0.4px;
+  margin-bottom: 7px;
+}
+.h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+.sub {
+  margin: 7px 0 0;
+  font-size: 13px;
+  color: var(--gt-mute);
+}
+.headActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btnGhost {
+  border: 1px solid var(--gt-line);
+  background: #fff;
+  color: var(--gt-sub);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+.btnGhost:hover {
+  background: var(--gt-bg);
+}
+.btnPrimary {
+  border: none;
+  background: var(--gt-blue);
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+.btnPrimary:hover {
+  background: var(--gt-blue-dark);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 32px 32px;
+  min-width: 0;
+}
+
+/* 검색 + 필터 */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.searchWrap {
+  position: relative;
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  align-items: center;
+}
+.searchIcon {
+  position: absolute;
+  left: 16px;
+  color: var(--gt-faint);
+  font-size: 14px;
+  pointer-events: none;
+}
+.search {
+  width: 100%;
+  box-sizing: border-box;
+  height: 48px;
+  border: none;
+  border-radius: 14px;
+  padding: 0 16px 0 38px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--gt-text);
+  background: #fff;
+  outline: none;
+}
+.search:focus {
+  box-shadow: inset 0 0 0 1px var(--gt-blue);
+}
+.chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.chip {
+  border: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 11px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  color: var(--gt-sub);
+  background: #fff;
+}
+.chip:hover {
+  background: var(--gt-line-soft);
+}
+.chipOn {
+  color: #fff;
+  background: var(--gt-text);
+}
+.chipCount {
+  opacity: 0.6;
+  margin-left: 4px;
+}
+
+/* 목록 */
+.list {
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+.scroll {
+  overflow-x: auto;
+}
+.inner {
+  min-width: 960px;
+}
+.row {
+  display: grid;
+  grid-template-columns: minmax(200px, 1.4fr) minmax(160px, 1fr) 92px 150px 130px 120px;
+  gap: 14px;
+  align-items: center;
+  padding: 18px 24px;
+  border-top: 1px solid var(--gt-line-soft);
+}
+.row:hover {
+  background: #fafbfc;
+}
+.head {
+  padding: 14px 24px;
+  background: #fafbfc;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gt-mute);
+  letter-spacing: 0.3px;
+  border-top: none;
+}
+.head:hover {
+  background: #fafbfc;
+}
+.cellStack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.docTitle {
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.docMeta {
+  font-size: 12px;
+  color: var(--gt-faint);
+}
+
+/* 요약 펼치기 토글 */
+.metaToggle {
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.metaToggle:hover {
+  color: var(--gt-blue);
+}
+.metaToggleOn {
+  color: var(--gt-blue);
+  font-weight: 600;
+}
+
+/* 펼쳐진 요약 패널 */
+.summaryPanel {
+  border-top: 1px solid var(--gt-line-soft);
+  background: #fafbfc;
+  padding: 16px 24px 20px;
+}
+.summaryTitle {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gt-mute);
+  letter-spacing: 0.3px;
+  margin-bottom: 8px;
+}
+.summaryText {
+  margin: 0;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--gt-sub);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.school {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.district {
+  font-size: 12px;
+  color: var(--gt-faint);
+}
+.round {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gt-sub);
+}
+.savedAt {
+  font-size: 12px;
+  font-family: var(--gt-mono);
+  color: var(--gt-mute);
+}
+.status {
+  justify-self: start;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 99px;
+}
+.statusDraft {
+  color: var(--gt-blue);
+  background: var(--gt-blue-bg);
+}
+.statusDone {
+  color: var(--gt-green);
+  background: var(--gt-green-bg);
+}
+.rowActions {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.smallGhost {
+  border: 1px solid var(--gt-line);
+  background: #fff;
+  color: var(--gt-sub);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.smallGhost:hover {
+  background: var(--gt-bg);
+}
+.smallPrimary {
+  border: none;
+  background: var(--gt-blue);
+  color: #fff;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 9px 14px;
+  border-radius: 9px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.smallPrimary:hover {
+  background: var(--gt-blue-dark);
+}
+
+/* 빈 상태 */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 72px 24px;
+  border-top: 1px solid var(--gt-line-soft);
+}
+.emptyIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: #f4f5f7;
+}
+.emptyTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gt-sub);
+}
+.emptyDesc {
+  font-size: 13px;
+  color: var(--gt-faint);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 4px;
+}
+.footCount {
+  font-size: 12px;
+  color: var(--gt-faint);
+}
+.pager {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pageBtn {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--gt-line);
+  background: #fff;
+  color: var(--gt-faint);
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.pageBtn:hover:not(:disabled) {
+  background: var(--gt-bg);
+}
+.pageBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.pageOn {
+  border: none;
+  background: var(--gt-text);
+  color: #fff;
+  font-weight: 700;
+}
