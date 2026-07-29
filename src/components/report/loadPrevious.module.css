@@ -1,0 +1,84 @@
+/* 이전 회차 불러오기 배너 */
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border: 1px solid #ffe0a3;
+  background: #fffaf0;
+  border-radius: 14px;
+}
+.icon {
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: 99px;
+  background: var(--gt-amber);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+.text {
+  font-size: 13.5px;
+  color: var(--gt-sub);
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.text b {
+  color: var(--gt-text);
+  font-weight: 800;
+}
+.meta {
+  font-size: 12px;
+  color: var(--gt-faint);
+}
+.btn {
+  margin-left: auto;
+  border: none;
+  background: var(--gt-amber);
+  color: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover {
+  background: #e08e07;
+}
+.close {
+  border: none;
+  background: transparent;
+  color: var(--gt-faint);
+  font-size: 18px;
+  line-height: 1;
+  padding: 4px 6px;
+  cursor: pointer;
+}
+.close:hover {
+  color: var(--gt-sub);
+}
+
+/* 임시보관 복구 배너 (파란 계열 — 이전 회차 불러오기와 구분) */
+.barDraft {
+  border-color: #c3d9f7;
+  background: var(--gt-blue-bg);
+}
+.iconDraft {
+  background: var(--gt-blue);
+}
+.btnDraft {
+  background: var(--gt-blue);
+}
+.btnDraft:hover {
+  background: var(--gt-blue-dark);
+}

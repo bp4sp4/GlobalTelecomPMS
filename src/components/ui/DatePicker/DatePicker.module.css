@@ -34,12 +34,10 @@
   flex-shrink: 0;
 }
 
+/* body 로 띄운다 (표의 overflow 에 잘리지 않게) — 좌표는 JS 가 지정 */
 .pop {
-  position: absolute;
-  top: calc(var(--krds-size-medium) + 6px);
-  left: 0;
-  z-index: 40;
-  width: 300px;
+  position: fixed;
+  z-index: 1000;
   background: #fff;
   border: 1px solid var(--krds-color-border-subtle);
   border-radius: var(--krds-radius-large);

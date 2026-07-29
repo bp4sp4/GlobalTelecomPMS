@@ -546,3 +546,42 @@
     row-gap: 18px;
   }
 }
+
+/* 태블릿 · 모바일 */
+@media (max-width: 760px) {
+  .body {
+    padding: 0 12px 40px;
+  }
+  .card {
+    padding: 18px 16px;
+    border-radius: 16px;
+  }
+  .months {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    row-gap: 16px;
+  }
+  .faultRow {
+    grid-template-columns: 18px minmax(0, 1fr) 48px 44px;
+  }
+  .faultBar {
+    display: none;
+  }
+  .pendHead,
+  .pendRow {
+    grid-template-columns: minmax(0, 1.4fr) 48px 56px 78px;
+  }
+  .pendHead > :nth-child(2),
+  .pendRow > :nth-child(2),
+  .pendHead > :nth-child(5),
+  .pendRow > :nth-child(5) {
+    display: none;
+  }
+  .funnelRow {
+    grid-template-columns: 76px minmax(0, 1fr);
+    row-gap: 4px;
+  }
+  .funnelVal {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+}

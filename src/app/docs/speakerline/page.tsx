@@ -5,6 +5,16 @@ import { SpeakerlineForm } from "./SpeakerlineForm";
 import { NoSchool } from "@/components/report/NoSchool";
 import { ReportShell } from "@/components/report/ReportShell";
 
+/** 저장되는 PDF 파일명·브라우저 탭에 쓰인다 */
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ school?: string }>;
+}) {
+  const { school } = await searchParams;
+  return { title: school ? `스피커 선로 점검 보고서 - ${school}` : "스피커 선로 점검 보고서" };
+}
+
 export default async function SpeakerlinePage({
   searchParams,
 }: {

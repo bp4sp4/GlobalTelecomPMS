@@ -1,12 +1,16 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { BackButton } from "@/components/report/BackButton";
 import { saveReport } from "@/lib/reportClient";
 import { DatePicker, Select } from "@/components/ui";
 import { SignaturePad } from "@/components/ui/SignaturePad/SignaturePad";
 import { CellInput } from "@/components/report/CellInput";
 import { PrintInfoTable } from "@/components/report/PrintInfoTable";
+import { LoadPrevious } from "@/components/report/LoadPrevious";
+import { DraftBanner } from "@/components/report/DraftBanner";
+import { useDraft } from "@/lib/useDraft";
 import {
   buildConsultingResult,
   buildImprovement,
@@ -53,6 +57,16 @@ type Row = {
 };
 type Code = { code: string; name: string; category?: string };
 
+/**
+ * 셀렉트에 표시할 코드 라벨.
+ * 코드북 명칭이 "AUDIO MIXER — 음향믹서" 처럼 영문 — 한글로 되어 있어
+ * 앞부분(영문)만 남기고, 구분자는 하이픈으로 통일한다.
+ */
+function codeLabel(c: Code) {
+  const name = c.name.split("—")[0].trim() || c.name;
+  return `${c.code} - ${name}`;
+}
+
 const EQUIP_CAT_LABELS: Record<string, string> = {
   AU: "음향", PA: "전관음향", VI: "영상", ETC: "전원",
 };
@@ -62,8 +76,9 @@ function defaultSigns(school: string): Record<string, Sign> {
   return {
     기술지원단1: mk("서울시교육청"),
     기술지원단2: mk("서울시교육청"),
-    교직원지원단1: mk(school),
-    교직원지원단2: mk(school),
+    // 교직원지원단은 소속을 비워둔다 (해당자가 없는 경우가 많음)
+    교직원지원단1: mk(""),
+    교직원지원단2: mk(""),
     학교담당자: mk(school),
     결재: mk(school),
   };
@@ -87,6 +102,7 @@ export function ConsultingForm({
   } | null;
   initialStatus: "DRAFT" | "DONE" | null;
 }) {
+  const router = useRouter();
   const [facilities, setFacilities] = useState<Record<string, boolean>>(
     initial?.facilities ?? { 방송실: true, 시청각실: true, "강당/체육관": true }
   );
@@ -133,11 +149,11 @@ export function ConsultingForm({
   }, []);
 
   const equipOpts = useMemo(
-    () => equip.map((c) => ({ value: c.code, label: `${c.code} - ${c.name}`, category: c.category })),
+    () => equip.map((c) => ({ value: c.code, label: codeLabel(c), category: c.category })),
     [equip]
   );
-  const faultOpts = useMemo(() => faults.map((c) => ({ value: c.code, label: `${c.code} - ${c.name}` })), [faults]);
-  const actionOpts = useMemo(() => actions.map((c) => ({ value: c.code, label: `${c.code} - ${c.name}` })), [actions]);
+  const faultOpts = useMemo(() => faults.map((c) => ({ value: c.code, label: codeLabel(c) })), [faults]);
+  const actionOpts = useMemo(() => actions.map((c) => ({ value: c.code, label: codeLabel(c) })), [actions]);
   const fieldOpts = FIELDS.map((x) => ({ value: x, label: x }));
   const maintenanceOpts = MAINTENANCE.map((m) => ({ value: m, label: m }));
   const suneungOpts = [{ value: "아니오", label: "아니오" }, { value: "예", label: "예" }];
@@ -153,6 +169,32 @@ export function ConsultingForm({
       setActions(await load("ACTION"));
     })();
   }, []);
+
+  /** 아직 아무것도 입력하지 않은 상태인지 — 이전 회차 불러오기 배너 노출 조건 */
+  const isBlank = useMemo(() => {
+    if (visitDate || requirement.trim() || summary.trim()) return false;
+    return !Object.values(sections)
+      .flat()
+      .some((r) => r.equipment || r.fault || r.state?.trim() || r.action?.trim() || r.actionCode);
+  }, [visitDate, requirement, summary, sections]);
+
+  /** 이전 회차 내용을 현재 폼에 채운다 (방문일·서명은 회차마다 달라 제외) */
+  function loadPrevious(p: {
+    facilities?: Record<string, boolean>;
+    base?: { maintenance?: string; suneung?: string };
+    sections?: Record<string, Row[]>;
+    analysis?: { requirement?: string; result?: string; improvement?: string; summary?: string };
+  }) {
+    if (p.facilities) setFacilities(p.facilities);
+    if (p.base?.maintenance) setMaintenance(p.base.maintenance);
+    if (p.base?.suneung) setSuneung(p.base.suneung);
+    if (p.sections) setSections(p.sections);
+    if (p.analysis?.requirement) setRequirement(p.analysis.requirement);
+    if (p.analysis?.result) setConsultingResult(p.analysis.result);
+    if (p.analysis?.improvement) setImprovement(p.analysis.improvement);
+    if (p.analysis?.summary) setSummary(p.analysis.summary);
+    setMsg({ t: "이전 회차 내용을 불러왔습니다. 변경된 부분만 수정하세요.", ok: true });
+  }
 
   const activeFacilities = FACILITIES.filter((x) => facilities[x]);
   const allRows = useMemo(
@@ -196,10 +238,30 @@ export function ConsultingForm({
     return { equip: toMap(equip), fault: toMap(faults), action: toMap(actions) };
   }, [equip, faults, actions]);
 
+  /** 장비 코드 → 분야(음향/영상/…) — 코드북 분류를 그대로 쓴다 */
+  const fieldOfEquip = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const c of equip) {
+      const label = c.category ? EQUIP_CAT_LABELS[c.category] : "";
+      // 전관음향도 분야로는 '음향'
+      if (label) m.set(c.code, label === "전관음향" ? "음향" : label === "전원" ? "기타" : label);
+    }
+    return m;
+  }, [equip]);
+
   function upRow(fac: string, i: number, key: keyof Row, val: string) {
     setSections((prev) => ({
       ...prev,
-      [fac]: prev[fac].map((r, idx) => (idx === i ? { ...r, [key]: val } : r)),
+      [fac]: prev[fac].map((r, idx) => {
+        if (idx !== i) return r;
+        const next = { ...r, [key]: val };
+        // 장비를 고르면 분야를 자동으로 채운다 (이미 고른 분야는 건드리지 않음)
+        if (key === "equipment" && val && !r.field) {
+          const auto = fieldOfEquip.get(val);
+          if (auto) next.field = auto;
+        }
+        return next;
+      }),
     }));
   }
   function addRow(fac: string) {
@@ -210,6 +272,27 @@ export function ConsultingForm({
   }
   function delRow(fac: string, i: number) {
     setSections((prev) => ({ ...prev, [fac]: prev[fac].filter((_, idx) => idx !== i) }));
+  }
+
+  /** 한 행을 "이상없음"으로 — 대부분의 점검 결과가 이 값이라 원터치로 처리 */
+  function markOk(fac: string, i: number) {
+    setSections((prev) => ({
+      ...prev,
+      [fac]: prev[fac].map((r, idx) =>
+        idx === i ? { ...r, state: "이상없음", urgency: "하" } : r
+      ),
+    }));
+  }
+  /** 아직 손대지 않은 행만 일괄 "이상없음" — 이미 입력한 내용은 덮어쓰지 않는다 */
+  function markAllOk(fac: string) {
+    setSections((prev) => ({
+      ...prev,
+      [fac]: prev[fac].map((r) =>
+        r.fault || r.state?.trim() || r.action?.trim() || r.actionCode
+          ? r
+          : { ...r, state: "이상없음", urgency: "하" }
+      ),
+    }));
   }
   function upSign(role: string, key: keyof Sign, val: string) {
     setSigns((prev) => {
@@ -225,22 +308,66 @@ export function ConsultingForm({
     setSummary(buildSummary(sections, activeFacilities, codeMaps));
   }
 
+  /** 서버에 저장할 내용 = 임시보관할 내용 */
+  const payload = useMemo(
+    () => ({
+      facilities,
+      base: { visitDate, maintenance, suneung },
+      sections,
+      signatures: signs,
+      analysis: { requirement, result: consultingResult, improvement, summary },
+    }),
+    [facilities, visitDate, maintenance, suneung, sections, signs, requirement, consultingResult, improvement, summary]
+  );
+
+  // 저장 이후 바뀐 게 있는지 (내용 비교)
+  const savedRef = useRef(JSON.stringify(initial ?? {}));
+  const dirty = JSON.stringify(payload) !== savedRef.current;
+
+  const draft = useDraft({
+    key: `consulting:${school}:${round}`,
+    data: payload,
+    dirty,
+  });
+
+  function restoreDraft() {
+    const d = draft.found?.data;
+    if (!d) return;
+    if (d.facilities) setFacilities(d.facilities);
+    if (d.base?.visitDate !== undefined) setVisitDate(d.base.visitDate);
+    if (d.base?.maintenance) setMaintenance(d.base.maintenance);
+    if (d.base?.suneung) setSuneung(d.base.suneung);
+    if (d.sections) setSections(d.sections);
+    if (d.signatures) setSigns(d.signatures);
+    if (d.analysis) {
+      setRequirement(d.analysis.requirement ?? "");
+      setConsultingResult(d.analysis.result ?? "");
+      setImprovement(d.analysis.improvement ?? "");
+      setSummary(d.analysis.summary ?? "");
+    }
+    draft.dismiss();
+    setMsg({ t: "임시보관된 내용을 불러왔습니다.", ok: true });
+  }
+
   async function doSave(status: "DRAFT" | "DONE") {
     setBusy(true);
     setMsg(null);
     try {
       await saveReport({
         school, type: "CONSULTING", round,
-        payload: {
-          facilities,
-          base: { visitDate, maintenance, suneung },
-          sections,
-          signatures: signs,
-          analysis: { requirement, result: consultingResult, improvement, summary },
-        },
+        payload,
         status,
       });
-      setMsg({ t: status === "DONE" ? "완료 처리되었습니다." : "저장(초안)되었습니다.", ok: true });
+      savedRef.current = JSON.stringify(payload);
+      draft.clear();
+      if (status === "DONE") {
+        // 완료 처리 후에는 문서 작성 화면으로 돌아간다
+        setMsg({ t: "완료 처리되었습니다. 문서 작성으로 이동합니다…", ok: true });
+        router.push("/docs");
+        router.refresh();
+        return;
+      }
+      setMsg({ t: "저장(초안)되었습니다.", ok: true });
     } catch (e) {
       setMsg({ t: (e as Error).message, ok: false });
     } finally {
@@ -355,6 +482,23 @@ export function ConsultingForm({
 
         <div className={f.content}>
           {msg && <div className={`${f.msg} ${msg.ok ? f.msgOk : f.msgErr}`}>{msg.t}</div>}
+
+          {draft.found && (
+            <DraftBanner
+              at={draft.found.at}
+              onRestore={restoreDraft}
+              onDismiss={draft.dismiss}
+            />
+          )}
+
+          <LoadPrevious
+            school={school}
+            type="CONSULTING"
+            round={round}
+            isEmpty={isBlank && !draft.found}
+            onLoad={loadPrevious}
+          />
+
 
           {/* 학교 기본 정보 */}
           <section id="sec-basic" className={f.section}>
@@ -551,12 +695,130 @@ export function ConsultingForm({
                     </div>
                   </div>
                 </div>
+
+                {/* 좁은 화면(태블릿·모바일)에서는 표 대신 카드로 입력 */}
+                <div className={`${f.cards} no-print`}>
+                  {(sections[fac] ?? []).map((r, i) => {
+                    const ok = r.state?.trim() === "이상없음";
+                    return (
+                      <div key={i} className={`${f.card} ${ok ? f.cardOk : ""}`}>
+                        <div className={f.cardHead}>
+                          <span className={f.cardNo}>{i + 1}</span>
+                          <input
+                            className={f.cardTitle}
+                            value={r.item}
+                            placeholder="점검항목"
+                            onChange={(e) => upRow(fac, i, "item", e.target.value)}
+                          />
+                          <button
+                            type="button"
+                            className={f.cardDel}
+                            onClick={() => delRow(fac, i)}
+                            aria-label="삭제"
+                          >
+                            ×
+                          </button>
+                        </div>
+
+                        <button
+                          type="button"
+                          className={`${f.okBtn} ${ok ? f.okBtnOn : ""}`}
+                          onClick={() => markOk(fac, i)}
+                        >
+                          {ok ? "✓ 이상없음" : "이상없음으로 표시"}
+                        </button>
+
+                        <label className={f.cardField}>
+                          <span className={f.cardLabel}>장비</span>
+                          <Select
+                            value={r.equipment}
+                            options={equipOpts}
+                            categoryLabels={EQUIP_CAT_LABELS}
+                            placeholder="장비 검색"
+                            onChange={(v) => upRow(fac, i, "equipment", v)}
+                          />
+                        </label>
+                        <label className={f.cardField}>
+                          <span className={f.cardLabel}>장애</span>
+                          <Select
+                            value={r.fault}
+                            options={faultOpts}
+                            placeholder="선택"
+                            onChange={(v) => upRow(fac, i, "fault", v)}
+                          />
+                        </label>
+                        <label className={f.cardField}>
+                          <span className={f.cardLabel}>동작상태</span>
+                          <input
+                            className={f.cardInput}
+                            placeholder="동작상태"
+                            value={r.state}
+                            onChange={(e) => upRow(fac, i, "state", e.target.value)}
+                          />
+                        </label>
+                        <label className={f.cardField}>
+                          <span className={f.cardLabel}>조치내용</span>
+                          <input
+                            className={f.cardInput}
+                            placeholder="조치내용"
+                            value={r.action}
+                            onChange={(e) => upRow(fac, i, "action", e.target.value)}
+                          />
+                        </label>
+                        <label className={f.cardField}>
+                          <span className={f.cardLabel}>조치</span>
+                          <Select
+                            value={r.actionCode}
+                            options={actionOpts}
+                            placeholder="선택"
+                            onChange={(v) => upRow(fac, i, "actionCode", v)}
+                          />
+                        </label>
+                        <label className={f.cardField}>
+                          <span className={f.cardLabel}>분야</span>
+                          <Select
+                            value={r.field}
+                            options={fieldOpts}
+                            placeholder="선택"
+                            onChange={(v) => upRow(fac, i, "field", v)}
+                          />
+                        </label>
+                        <div className={f.cardField}>
+                          <span className={f.cardLabel}>시급성</span>
+                          <div className={f.sev}>
+                            {SEVERITIES.map((sv) => {
+                              const on = r.urgency === sv.key;
+                              return (
+                                <button
+                                  key={sv.key}
+                                  type="button"
+                                  className={f.sevBtn}
+                                  style={
+                                    on ? { color: sv.fg, background: sv.bg, borderColor: sv.line } : undefined
+                                  }
+                                  onClick={() => upRow(fac, i, "urgency", on ? "" : sv.key)}
+                                >
+                                  {sv.key}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             ))}
 
-            <button type="button" className={`${f.addRow} no-print`} onClick={() => addRow(tab)}>
-              + 행 추가
-            </button>
+            <div className={`${f.rowActions} no-print`}>
+              <button type="button" className={f.addRow} onClick={() => addRow(tab)}>
+                + 행 추가
+              </button>
+              <button type="button" className={f.allOkBtn} onClick={() => markAllOk(tab)}>
+                남은 항목 전부 이상없음
+              </button>
+            </div>
           </section>
 
           {/* 현황 분석 */}

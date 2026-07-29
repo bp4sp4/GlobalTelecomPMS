@@ -10,6 +10,16 @@ import { ReportShell } from "@/components/report/ReportShell";
 type Row = { fault?: string; urgency?: string };
 type ConsultingPayload = { sections?: Record<string, Row[]> };
 
+/** 저장되는 PDF 파일명·브라우저 탭에 쓰인다 */
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ school?: string }>;
+}) {
+  const { school } = await searchParams;
+  return { title: school ? `개선보고서 - ${school}` : "개선보고서" };
+}
+
 export default async function ImprovementPage({
   searchParams,
 }: {

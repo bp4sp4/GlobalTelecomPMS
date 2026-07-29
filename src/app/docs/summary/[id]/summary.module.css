@@ -224,3 +224,28 @@
     min-width: 0;
   }
 }
+
+/* 태블릿 · 모바일 */
+@media (max-width: 760px) {
+  .page {
+    padding: 14px 12px 40px;
+  }
+  .section {
+    padding: 18px 16px 4px;
+  }
+  .bandTitle {
+    font-size: 18px;
+  }
+  .info th {
+    width: 82px;
+    font-size: 11.5px;
+  }
+  .info th,
+  .info td {
+    padding: 8px 9px;
+    font-size: 12.5px;
+  }
+  .actions {
+    flex-wrap: wrap;
+  }
+}

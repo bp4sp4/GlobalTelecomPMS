@@ -389,13 +389,14 @@
   overflow-x: auto;
 }
 .grid {
-  min-width: 1210px;
+  min-width: 1380px;
 }
 .gridRow {
   display: grid;
+  /* 장비·장애·조치는 "코드 - 명칭" 이라 길다 — 잘리지 않게 넓게 잡는다 */
   grid-template-columns:
-    minmax(180px, 1.5fr) 150px 150px minmax(140px, 1fr)
-    minmax(160px, 1.2fr) 150px 110px 118px 40px;
+    minmax(170px, 1.3fr) minmax(190px, 1.5fr) minmax(190px, 1.5fr) minmax(130px, 1fr)
+    minmax(150px, 1.1fr) minmax(190px, 1.5fr) 100px 118px 40px;
   gap: 10px;
   align-items: center;
   padding: 9px 16px;
@@ -430,7 +431,7 @@
   border-radius: 9px;
   padding: 0 10px;
   font-family: inherit;
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--gt-text);
   background: #fff;
   outline: none;
@@ -637,14 +638,194 @@
 @media (max-width: 1100px) {
   .layout {
     grid-template-columns: 1fr;
+    padding: 16px 16px 48px;
+    gap: 16px;
   }
   .toc {
     position: static;
+    max-height: none;
   }
   .infoGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .signGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* 태블릿 · 모바일 */
+@media (max-width: 760px) {
+  .topInner {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+  .topActions {
+    margin-left: 0;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .vbar {
+    display: none;
+  }
+  .layout {
+    padding: 14px 12px 40px;
+  }
+  .section {
+    padding: 18px 16px;
+    border-radius: 16px;
+  }
+  .infoGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* 서명은 태블릿에서 한 칸씩 크게 — 손가락/펜으로 서명하기 좋게 */
+  .signGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sectionHead {
+    align-items: flex-start;
+  }
+  .tableScroll {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ── 점검 행 하단 액션 ───────────────────────────── */
+.rowActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.allOkBtn {
+  border: 1px solid var(--gt-green-dot);
+  background: #fff;
+  color: var(--gt-green);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 11px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.allOkBtn:hover {
+  background: var(--gt-green-bg);
+}
+
+/* ── 좁은 화면용 카드 입력 (기본은 숨김) ─────────── */
+.cards {
+  display: none;
+}
+
+/* screen 한정 — 인쇄(A4 ≈ 794px)에서 카드가 튀어나오지 않게 한다 */
+@media screen and (max-width: 860px) {
+  .tableBox {
+    display: none;
+  }
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .card {
+    border: 1px solid var(--gt-line);
+    border-radius: 16px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #fff;
+  }
+  .cardOk {
+    border-color: var(--gt-green-dot);
+    background: #f7fcf9;
+  }
+  .cardHead {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .cardNo {
+    width: 22px;
+    height: 22px;
+    flex: none;
+    border-radius: 99px;
+    background: var(--gt-line-soft);
+    color: var(--gt-sub);
+    font-size: 11px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cardTitle {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gt-text);
+    outline: none;
+    padding: 4px 0;
+  }
+  .cardDel {
+    width: 32px;
+    height: 32px;
+    flex: none;
+    border: none;
+    background: transparent;
+    color: var(--gt-faint);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .okBtn {
+    width: 100%;
+    border: 1px solid var(--gt-line);
+    background: #fff;
+    color: var(--gt-sub);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+  .okBtnOn {
+    border-color: var(--gt-green-dot);
+    background: var(--gt-green-bg);
+    color: var(--gt-green);
+  }
+  .cardField {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .cardLabel {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gt-mute);
+  }
+  .cardInput {
+    height: 46px;
+    box-sizing: border-box;
+    border: 1px solid var(--gt-line);
+    border-radius: 12px;
+    padding: 0 14px;
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--gt-text);
+    background: #fff;
+    outline: none;
+    width: 100%;
+  }
+  .cardInput:focus {
+    border-color: var(--gt-blue);
+  }
+  /* 시급성 버튼은 터치용으로 크게 */
+  .card .sevBtn {
+    height: 46px;
+    font-size: 14px;
   }
 }

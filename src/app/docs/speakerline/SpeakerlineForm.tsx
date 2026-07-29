@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { BackButton } from "@/components/report/BackButton";
 import { saveReport } from "@/lib/reportClient";
 import { DatePicker, Select } from "@/components/ui";
 import { CellInput } from "@/components/report/CellInput";
 import { PrintInfoTable } from "@/components/report/PrintInfoTable";
+import { LoadPrevious } from "@/components/report/LoadPrevious";
 import e from "@/components/report/editor.module.css";
 
 const IMPROVE_OPTS = [
@@ -73,6 +75,7 @@ export function SpeakerlineForm({
   initial: { inspectDate?: string; handler?: string; section1?: S1[]; section2?: OutRow[]; section3?: ImpRow[]; memo?: string } | null;
   initialStatus: "DRAFT" | "DONE" | null;
 }) {
+  const router = useRouter();
   const [inspectDate, setInspectDate] = useState(initial?.inspectDate ?? "");
   const [handler, setHandler] = useState(initial?.handler ?? "");
   const [s1, setS1] = useState<S1[]>(initial?.section1 ?? FIXED.map(() => ({ judge: "", note: "" })));
@@ -124,7 +127,14 @@ export function SpeakerlineForm({
         payload: { inspectDate, handler, section1: s1, section2: s2, section3: s3, memo },
         status,
       });
-      setMsg({ t: status === "DONE" ? "완료 처리되었습니다." : "저장(초안)되었습니다.", ok: true });
+      if (status === "DONE") {
+        // 완료 처리 후에는 문서 작성 화면으로 돌아간다
+        setMsg({ t: "완료 처리되었습니다. 문서 작성으로 이동합니다…", ok: true });
+        router.push("/docs");
+        router.refresh();
+        return;
+      }
+      setMsg({ t: "저장(초안)되었습니다.", ok: true });
     } catch (err) {
       setMsg({ t: (err as Error).message, ok: false });
     } finally {
@@ -205,6 +215,21 @@ export function SpeakerlineForm({
         <div className={e.content}>
           {msg && <div className={`${e.msg} ${msg.ok ? e.msgOk : e.msgErr}`}>{msg.t}</div>}
 
+          <LoadPrevious
+            school={school}
+            type="SPEAKERLINE"
+            isEmpty={s2.length === 0 && s3.length === 0 && !s1.some((x) => x.judge || x.note)}
+            label="지난 선로 점검"
+            onLoad={(p: { section1?: S1[]; section2?: OutRow[]; section3?: ImpRow[]; handler?: string }) => {
+              if (p.section1?.length) setS1(p.section1);
+              if (p.section2?.length) setS2(p.section2);
+              if (p.section3?.length) setS3(p.section3);
+              if (p.handler) setHandler(p.handler);
+              setMsg({ t: "지난 선로 점검 내용을 불러왔습니다. 재측정 값만 수정하세요.", ok: true });
+            }}
+          />
+
+
           {/* 기본 정보 */}
           <section id="s0" className={e.card}>
             <h2 className={e.h2}>기본 정보</h2>
@@ -257,7 +282,7 @@ export function SpeakerlineForm({
               <div className={e.tableScroll}>
                 <div style={{ minWidth: 1010 }}>
                   <div className={`${e.gridRow} ${e.gridHead}`} style={{ gridTemplateColumns: SEND_GRID }}>
-                    <span>No</span>
+                    <span className={e.rowNo}>No</span>
                     <span>점검항목</span>
                     <span>목적</span>
                     <span>방법</span>
@@ -268,8 +293,8 @@ export function SpeakerlineForm({
                     <div key={item.item} className={e.gridRow} style={{ gridTemplateColumns: SEND_GRID }}>
                       <span className={e.rowNo}>{i + 1}</span>
                       <span style={{ fontSize: 13, fontWeight: 700 }}>{item.item}</span>
-                      <span style={{ fontSize: 12, color: "var(--gt-mute)" }}>{item.purpose}</span>
-                      <span style={{ fontSize: 12, color: "var(--gt-mute)" }}>{item.method}</span>
+                      <span className={e.cellText}>{item.purpose}</span>
+                      <span className={e.cellText}>{item.method}</span>
                       <Verdict
                         value={s1[i]?.judge ?? ""}
                         onChange={(v) => setS1((a) => a.map((r, idx) => (idx === i ? { ...r, judge: v } : r)))}
@@ -303,7 +328,7 @@ export function SpeakerlineForm({
               <div className={e.tableScroll}>
                 <div style={{ minWidth: 1180 }}>
                   <div className={`${e.gridRow} ${e.gridHead}`} style={{ gridTemplateColumns: OUT_GRID }}>
-                    <span>No</span><span>층</span><span>위치</span><span>음압(dB)</span><span>출력상태</span>
+                    <span className={e.rowNo}>No</span><span>층</span><span>위치</span><span>음압(dB)</span><span>출력상태</span>
                     <span>정격출력(W)</span><span>수량</span><span>판정</span><span>개선여부</span><span>비고</span>
                     <span className="no-print" />
                   </div>
@@ -361,7 +386,7 @@ export function SpeakerlineForm({
               <div className={e.tableScroll}>
                 <div style={{ minWidth: 1060 }}>
                   <div className={`${e.gridRow} ${e.gridHead}`} style={{ gridTemplateColumns: IMP_GRID }}>
-                    <span>No</span><span>층</span><span>위치</span><span>방송실 출력단자</span><span>측정저항(Ω)</span>
+                    <span className={e.rowNo}>No</span><span>층</span><span>위치</span><span>방송실 출력단자</span><span>측정저항(Ω)</span>
                     <span>판정</span><span>개선여부</span><span>비고</span>
                     <span className="no-print" />
                   </div>

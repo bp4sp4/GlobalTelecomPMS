@@ -35,6 +35,8 @@ export function AppShell({ brand, sections, user, children }: AppShellProps) {
   const pathname = usePathname();
   const activeHref = resolveActive(pathname, sections);
   const [collapsed, setCollapsed] = useState(false);
+  // 좁은 화면(태블릿/모바일)에서는 사이드바를 서랍처럼 열고 닫는다
+  const [drawer, setDrawer] = useState(false);
 
   useEffect(() => {
     try {
@@ -43,6 +45,21 @@ export function AppShell({ brand, sections, user, children }: AppShellProps) {
       /* noop */
     }
   }, []);
+
+  // 페이지를 옮기면 서랍은 닫는다
+  useEffect(() => {
+    setDrawer(false);
+  }, [pathname]);
+
+  // 서랍이 열려 있는 동안 뒤 화면이 스크롤되지 않게
+  useEffect(() => {
+    if (!drawer) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [drawer]);
 
   function toggle() {
     setCollapsed((c) => {
@@ -58,7 +75,32 @@ export function AppShell({ brand, sections, user, children }: AppShellProps) {
 
   return (
     <div className={`${styles.shell} ${collapsed ? styles.collapsed : ""}`}>
-      <aside className={`${styles.sidebar} no-print`}>
+      {/* 좁은 화면 전용 상단 바 */}
+      <div className={`${styles.mobileBar} no-print`}>
+        <button
+          type="button"
+          className={styles.hamburger}
+          onClick={() => setDrawer(true)}
+          aria-label="메뉴 열기"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+        <Link href="/dashboard" className={styles.mobileBrand}>
+          Global<em>Telecom</em>
+        </Link>
+      </div>
+
+      {drawer && (
+        <div
+          className={`${styles.backdrop} no-print`}
+          onClick={() => setDrawer(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      <aside className={`${styles.sidebar} ${drawer ? styles.drawerOpen : ""} no-print`}>
         <div className={styles.brandBox}>
           <div className={styles.brandText}>
             <Link href="/dashboard" className={styles.wordmark}>

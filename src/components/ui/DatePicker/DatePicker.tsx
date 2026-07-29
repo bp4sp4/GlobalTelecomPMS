@@ -1,7 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import styles from "./DatePicker.module.css";
+
+const POP_W = 292;
+const POP_H = 340;
 
 const DOW = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -23,6 +27,9 @@ export function DatePicker({
 }) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
+  const popRef = useRef<HTMLDivElement>(null);
+  /** 표 안(overflow 컨테이너)에서 잘리지 않도록 달력을 body 로 띄운다 */
+  const [pos, setPos] = useState<{ top: number; left: number } | null>(null);
 
   const today = useMemo(() => new Date(), []);
   const parsed = useMemo(() => {
@@ -45,11 +52,34 @@ export function DatePicker({
 
   useEffect(() => {
     function onDoc(e: MouseEvent) {
-      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setOpen(false);
+      const t = e.target as Node;
+      if (wrapRef.current?.contains(t) || popRef.current?.contains(t)) return;
+      setOpen(false);
     }
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, []);
+
+  /** 트리거 위치를 기준으로 달력 좌표 계산 — 아래 공간이 좁으면 위로 편다 */
+  useLayoutEffect(() => {
+    if (!open) return;
+    const place = () => {
+      const el = wrapRef.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const below = window.innerHeight - r.bottom;
+      const top = below < POP_H + 12 && r.top > POP_H + 12 ? r.top - POP_H - 6 : r.bottom + 6;
+      const left = Math.min(Math.max(8, r.left), window.innerWidth - POP_W - 8);
+      setPos({ top, left });
+    };
+    place();
+    window.addEventListener("scroll", place, true);
+    window.addEventListener("resize", place);
+    return () => {
+      window.removeEventListener("scroll", place, true);
+      window.removeEventListener("resize", place);
+    };
+  }, [open]);
 
   const firstDow = new Date(viewY, viewM, 1).getDay();
   const daysInMonth = new Date(viewY, viewM + 1, 0).getDate();
@@ -95,8 +125,12 @@ export function DatePicker({
         </svg>
       </button>
 
-      {open && (
-        <div className={styles.pop}>
+      {open && pos && createPortal(
+        <div
+          ref={popRef}
+          className={styles.pop}
+          style={{ top: pos.top, left: pos.left, width: POP_W }}
+        >
           <div className={styles.head}>
             <button type="button" className={styles.navBtn} onClick={prevMonth} aria-label="이전 달">‹</button>
             <span className={styles.headLabel}>{viewY}년 {viewM + 1}월</span>
@@ -137,7 +171,8 @@ export function DatePicker({
               오늘
             </button>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

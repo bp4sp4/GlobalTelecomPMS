@@ -363,3 +363,42 @@
   color: #fff;
   font-weight: 700;
 }
+
+/* 태블릿 · 모바일 */
+@media (max-width: 760px) {
+  .header {
+    padding: 14px 16px 16px;
+    gap: 14px;
+  }
+  .h1 {
+    font-size: 24px;
+  }
+  .headActions {
+    width: 100%;
+  }
+  .headActions > * {
+    flex: 1;
+    justify-content: center;
+  }
+  .body {
+    padding: 0 12px 32px;
+  }
+  .toolbar {
+    gap: 10px;
+  }
+  .searchWrap {
+    min-width: 0;
+  }
+  .chips {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 2px;
+  }
+  .chip {
+    white-space: nowrap;
+  }
+  .footer {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}

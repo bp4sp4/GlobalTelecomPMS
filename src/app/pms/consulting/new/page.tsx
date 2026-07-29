@@ -4,6 +4,17 @@ import { loadReportContext } from "@/lib/reportServer";
 import { ConsultingForm } from "./ConsultingForm";
 import { NoSchool } from "@/components/report/NoSchool";
 
+/** 저장되는 PDF 파일명·브라우저 탭에 쓰인다 */
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ school?: string; round?: string }>;
+}) {
+  const { school, round } = await searchParams;
+  const base = `방송장비 컨설팅 보고서${round ? ` ${round}차` : ""}`;
+  return { title: school ? `${base} - ${school}` : base };
+}
+
 export default async function ConsultingNewPage({
   searchParams,
 }: {

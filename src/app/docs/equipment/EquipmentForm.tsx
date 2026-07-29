@@ -1,11 +1,15 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { BackButton } from "@/components/report/BackButton";
 import { saveReport } from "@/lib/reportClient";
 import { DatePicker, Select } from "@/components/ui";
 import { CellInput } from "@/components/report/CellInput";
 import { PrintInfoTable } from "@/components/report/PrintInfoTable";
+import { LoadPrevious } from "@/components/report/LoadPrevious";
+import { DraftBanner } from "@/components/report/DraftBanner";
+import { useDraft } from "@/lib/useDraft";
 import e from "@/components/report/editor.module.css";
 
 type Row = {
@@ -35,8 +39,9 @@ const CAT_BY_PREFIX: Record<string, string> = {
 };
 
 const opt = (a: string[]) => a.map((v) => ({ value: v, label: v }));
+/* 맨 앞 28px = 선택 체크박스 */
 const GRID =
-  "minmax(180px,1.4fr) minmax(150px,1.1fr) 80px 150px 150px 120px 120px 120px 40px";
+  "28px minmax(180px,1.4fr) minmax(150px,1.1fr) 80px 150px 150px 120px 120px 120px 62px";
 
 type CatalogItem = { name: string; code: string; maker: string };
 
@@ -49,6 +54,7 @@ export function EquipmentForm({
   initial: { inspectDate?: string; handler?: string; items?: Row[] } | null;
   initialStatus: "DRAFT" | "DONE" | null;
 }) {
+  const router = useRouter();
   const [inspectDate, setInspectDate] = useState(initial?.inspectDate ?? "");
   const [handler, setHandler] = useState(initial?.handler ?? "");
   const [rows, setRows] = useState<Row[]>(initial?.items ?? []);
@@ -121,6 +127,56 @@ export function EquipmentForm({
   const totalQty = rows.reduce((n, r) => n + (Number(r.qty) || 0), 0);
   const replaceCount = rows.filter((r) => r.replace === "필요").length;
 
+  // 일괄 등록: 체크한 행에만 값을 적용한다
+  const [picked, setPicked] = useState<Set<number>>(new Set());
+  const allPicked = rows.length > 0 && picked.size === rows.length;
+
+  function togglePick(i: number) {
+    setPicked((p) => {
+      const next = new Set(p);
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
+      return next;
+    });
+  }
+  function toggleAll() {
+    setPicked(allPicked ? new Set() : new Set(rows.map((_, i) => i)));
+  }
+  /** 체크한 행의 한 항목을 같은 값으로 채운다 */
+  function applyToPicked(key: keyof Row, val: string) {
+    if (!picked.size) return;
+    setRows((rs) => rs.map((r, i) => (picked.has(i) ? { ...r, [key]: val } : r)));
+  }
+  function deletePicked() {
+    if (!picked.size) return;
+    if (!confirm(`선택한 ${picked.size}개 행을 삭제할까요?`)) return;
+    setRows((rs) => rs.filter((_, i) => !picked.has(i)));
+    setPicked(new Set());
+  }
+
+  /** 바로 아래에 같은 내용의 행을 하나 더 — 비슷한 장비를 연속 등록할 때 */
+  function copyRow(i: number) {
+    setRows((rs) => [...rs.slice(0, i + 1), { ...rs[i] }, ...rs.slice(i + 1)]);
+    setPicked((p) => {
+      const next = new Set<number>();
+      for (const idx of p) next.add(idx > i ? idx + 1 : idx);
+      return next;
+    });
+  }
+
+  /** 행 삭제 — 뒤 행들의 인덱스가 당겨지므로 선택 상태도 함께 옮긴다 */
+  function removeRow(i: number) {
+    setRows((rs) => rs.filter((_, idx) => idx !== i));
+    setPicked((p) => {
+      const next = new Set<number>();
+      for (const idx of p) {
+        if (idx < i) next.add(idx);
+        else if (idx > i) next.add(idx - 1);
+      }
+      return next;
+    });
+  }
+
   function update(i: number, key: keyof Row, val: string) {
     setRows((rs) => rs.map((r, idx) => (idx === i ? { ...r, [key]: val } : r)));
   }
@@ -134,16 +190,39 @@ export function EquipmentForm({
     setOpen(false);
   }
 
+  const payload = useMemo(
+    () => ({ inspectDate, handler, items: rows }),
+    [inspectDate, handler, rows]
+  );
+  const savedRef = useRef(JSON.stringify(initial ?? {}));
+  const dirty = JSON.stringify(payload) !== savedRef.current;
+  const draft = useDraft({ key: `equipment:${school}`, data: payload, dirty });
+
+  function restoreDraft() {
+    const d = draft.found?.data;
+    if (!d) return;
+    if (d.inspectDate !== undefined) setInspectDate(d.inspectDate);
+    if (d.handler !== undefined) setHandler(d.handler);
+    if (d.items) setRows(d.items);
+    draft.dismiss();
+    setMsg({ t: "임시보관된 내용을 불러왔습니다.", ok: true });
+  }
+
   async function doSave(status: "DRAFT" | "DONE") {
     setBusy(true);
     setMsg(null);
     try {
-      await saveReport({
-        school, type: "EQUIPMENT",
-        payload: { inspectDate, handler, items: rows },
-        status,
-      });
-      setMsg({ t: status === "DONE" ? "완료 처리되었습니다." : "저장(초안)되었습니다.", ok: true });
+      await saveReport({ school, type: "EQUIPMENT", payload, status });
+      savedRef.current = JSON.stringify(payload);
+      draft.clear();
+      if (status === "DONE") {
+        // 완료 처리 후에는 문서 작성 화면으로 돌아간다
+        setMsg({ t: "완료 처리되었습니다. 문서 작성으로 이동합니다…", ok: true });
+        router.push("/docs");
+        router.refresh();
+        return;
+      }
+      setMsg({ t: "저장(초안)되었습니다.", ok: true });
     } catch (err) {
       setMsg({ t: (err as Error).message, ok: false });
     } finally {
@@ -210,6 +289,23 @@ export function EquipmentForm({
 
       <div className={e.container}>
         {msg && <div className={`${e.msg} ${msg.ok ? e.msgOk : e.msgErr}`}>{msg.t}</div>}
+
+        {draft.found && (
+          <DraftBanner at={draft.found.at} onRestore={restoreDraft} onDismiss={draft.dismiss} />
+        )}
+
+        <LoadPrevious
+          school={school}
+          type="EQUIPMENT"
+          isEmpty={rows.length === 0 && !draft.found}
+          label="지난 장비 목록"
+          onLoad={(p: { items?: Row[]; handler?: string }) => {
+            if (p.items?.length) setRows(p.items);
+            if (p.handler) setHandler(p.handler);
+            setMsg({ t: `지난 장비 목록 ${p.items?.length ?? 0}건을 불러왔습니다.`, ok: true });
+          }}
+        />
+
 
         {/* 기본 정보 */}
         <section className={e.card}>
@@ -327,11 +423,76 @@ export function EquipmentForm({
             )}
           </div>
 
+          {/* 선택한 행 일괄 등록 */}
+          {picked.size > 0 && (
+            <div className={`${e.bulkBar} no-print`}>
+              <span className={e.bulkCount}>{picked.size}개 선택</span>
+
+              <span className={e.bulkLabel}>상태</span>
+              {STATUSES.map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  className={e.bulkBtn}
+                  onClick={() => applyToPicked("status", v)}
+                >
+                  {v}
+                </button>
+              ))}
+
+              <span className={e.bulkDivider} />
+
+              <span className={e.bulkLabel}>교체</span>
+              {REPLACE.map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  className={e.bulkBtn}
+                  onClick={() => applyToPicked("replace", v)}
+                >
+                  {v}
+                </button>
+              ))}
+
+              <span className={e.bulkDivider} />
+
+              <div className={e.bulkSelect}>
+                <Select
+                  size="sm"
+                  value=""
+                  options={opt(LOCATIONS)}
+                  placeholder="설치위치 일괄"
+                  onChange={(v) => applyToPicked("location", v)}
+                />
+              </div>
+
+              <button type="button" className={e.bulkDel} onClick={deletePicked}>
+                선택 삭제
+              </button>
+              <button
+                type="button"
+                className={e.bulkClear}
+                onClick={() => setPicked(new Set())}
+              >
+                선택 해제
+              </button>
+            </div>
+          )}
+
           {/* 표 */}
           <div className={e.tableBox}>
             <div className={e.tableScroll}>
-              <div style={{ minWidth: 1180 }}>
+              <div style={{ minWidth: 1210 }}>
                 <div className={`${e.gridRow} ${e.gridHead}`} style={{ gridTemplateColumns: GRID }}>
+                  <span className="no-print">
+                    <input
+                      type="checkbox"
+                      className={e.checkbox}
+                      checked={allPicked}
+                      onChange={toggleAll}
+                      aria-label="전체 선택"
+                    />
+                  </span>
                   <span>장비명</span>
                   <span>모델/규격</span>
                   <span>수량</span>
@@ -344,7 +505,20 @@ export function EquipmentForm({
                 </div>
 
                 {rows.map((r, i) => (
-                  <div key={i} className={e.gridRow} style={{ gridTemplateColumns: GRID }}>
+                  <div
+                    key={i}
+                    className={`${e.gridRow} ${picked.has(i) ? e.gridRowOn : ""}`}
+                    style={{ gridTemplateColumns: GRID }}
+                  >
+                    <span className="no-print">
+                      <input
+                        type="checkbox"
+                        className={e.checkbox}
+                        checked={picked.has(i)}
+                        onChange={() => togglePick(i)}
+                        aria-label={`${i + 1}행 선택`}
+                      />
+                    </span>
                     <div className={e.nameCell}>
                       <CellInput
                         className={e.nameInput}
@@ -395,14 +569,25 @@ export function EquipmentForm({
                       placeholder="선택"
                       onChange={(v) => update(i, "replace", v)}
                     />
-                    <button
-                      type="button"
-                      className={`${e.delBtn} no-print`}
-                      onClick={() => setRows((rs) => rs.filter((_, idx) => idx !== i))}
-                      aria-label="행 삭제"
-                    >
-                      ×
-                    </button>
+                    <div className={`${e.rowBtns} no-print`}>
+                      <button
+                        type="button"
+                        className={e.copyBtn}
+                        onClick={() => copyRow(i)}
+                        title="이 행 복사"
+                        aria-label="행 복사"
+                      >
+                        ⧉
+                      </button>
+                      <button
+                        type="button"
+                        className={e.delBtn}
+                        onClick={() => removeRow(i)}
+                        aria-label="행 삭제"
+                      >
+                        ×
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>

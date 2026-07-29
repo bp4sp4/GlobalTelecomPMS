@@ -542,3 +542,48 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* 태블릿 · 모바일 */
+@media (max-width: 760px) {
+  .header {
+    padding: 16px 16px 14px;
+  }
+  .h1 {
+    font-size: 24px;
+  }
+  .headActions {
+    width: 100%;
+  }
+  .select,
+  .input {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+  }
+  .body {
+    padding: 0 12px 40px;
+  }
+  .viewTabs {
+    margin: 0 12px 14px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    max-width: calc(100% - 24px);
+  }
+  .kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .kpiValue {
+    font-size: 24px;
+  }
+  .card {
+    padding: 18px 16px;
+    border-radius: 16px;
+  }
+  .cardHead {
+    gap: 12px;
+  }
+  .tabs {
+    width: 100%;
+    overflow-x: auto;
+  }
+}

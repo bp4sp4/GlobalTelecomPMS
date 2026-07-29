@@ -1,11 +1,15 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { BackButton } from "@/components/report/BackButton";
 import { saveReport } from "@/lib/reportClient";
 import { DatePicker, Select } from "@/components/ui";
 import { CellInput } from "@/components/report/CellInput";
 import { PrintInfoTable } from "@/components/report/PrintInfoTable";
+import { LoadPrevious } from "@/components/report/LoadPrevious";
+import { DraftBanner } from "@/components/report/DraftBanner";
+import { useDraft } from "@/lib/useDraft";
 import e from "@/components/report/editor.module.css";
 
 type Row = {
@@ -30,7 +34,7 @@ const CONTENTS = [
 const opt = (a: string[]) => a.map((v) => ({ value: v, label: v }));
 
 const GRID =
-  "34px 108px minmax(150px,1.2fr) 120px minmax(130px,1fr) 70px 140px 120px minmax(160px,1.2fr) 36px";
+  "34px 108px minmax(150px,1.2fr) 120px minmax(130px,1fr) 70px 140px 120px minmax(160px,1.2fr) 62px";
 
 const emptyRow = (name = ""): Row => ({
   category: "", name, manufacturer: "", model: "",
@@ -49,6 +53,7 @@ export function ImprovementForm({
   initialStatus: "DRAFT" | "DONE" | null;
   issues: string[];
 }) {
+  const router = useRouter();
   const [improveDate, setImproveDate] = useState(initial?.improveDate ?? "");
   const [handler, setHandler] = useState(initial?.handler ?? "");
   const [rows, setRows] = useState<Row[]>(initial?.items ?? []);
@@ -96,6 +101,10 @@ export function ImprovementForm({
   function addRow(name = "") {
     setRows((rs) => [...rs, emptyRow(name)]);
   }
+  /** 바로 아래에 같은 내용의 행을 하나 더 */
+  function copyRow(i: number) {
+    setRows((rs) => [...rs.slice(0, i + 1), { ...rs[i] }, ...rs.slice(i + 1)]);
+  }
   function addFromCode(c: Code) {
     const [en, ko] = c.name.split("—").map((x) => x.trim());
     setRows((rs) => [...rs, { ...emptyRow(en || c.name), model: c.code, manufacturer: ko ?? "" }]);
@@ -112,17 +121,40 @@ export function ImprovementForm({
     [hits]
   );
 
+  const payload = useMemo(
+    () => ({ improveDate, handler, items: rows, memo, total }),
+    [improveDate, handler, rows, memo, total]
+  );
+  const savedRef = useRef(JSON.stringify(initial ?? {}));
+  const dirty = JSON.stringify(payload) !== savedRef.current;
+  const draft = useDraft({ key: `improvement:${school}`, data: payload, dirty });
+
+  function restoreDraft() {
+    const d = draft.found?.data;
+    if (!d) return;
+    if (d.improveDate !== undefined) setImproveDate(d.improveDate);
+    if (d.handler !== undefined) setHandler(d.handler);
+    if (d.items) setRows(d.items);
+    if (d.memo !== undefined) setMemo(d.memo);
+    draft.dismiss();
+    setMsg({ t: "임시보관된 내용을 불러왔습니다.", ok: true });
+  }
+
   async function doSave(status: "DRAFT" | "DONE") {
     setBusy(true);
     setMsg(null);
     try {
-      await saveReport({
-        school,
-        type: "IMPROVEMENT",
-        payload: { improveDate, handler, items: rows, memo, total },
-        status,
-      });
-      setMsg({ t: status === "DONE" ? "완료 처리되었습니다." : "저장(초안)되었습니다.", ok: true });
+      await saveReport({ school, type: "IMPROVEMENT", payload, status });
+      savedRef.current = JSON.stringify(payload);
+      draft.clear();
+      if (status === "DONE") {
+        // 완료 처리 후에는 문서 작성 화면으로 돌아간다
+        setMsg({ t: "완료 처리되었습니다. 문서 작성으로 이동합니다…", ok: true });
+        router.push("/docs");
+        router.refresh();
+        return;
+      }
+      setMsg({ t: "저장(초안)되었습니다.", ok: true });
     } catch (err) {
       setMsg({ t: (err as Error).message, ok: false });
     } finally {
@@ -179,6 +211,24 @@ export function ImprovementForm({
       <div className={e.layout} style={{ gridTemplateColumns: "minmax(0,1fr) 280px" }}>
         <div className={e.content}>
           {msg && <div className={`${e.msg} ${msg.ok ? e.msgOk : e.msgErr}`}>{msg.t}</div>}
+
+          {draft.found && (
+            <DraftBanner at={draft.found.at} onRestore={restoreDraft} onDismiss={draft.dismiss} />
+          )}
+
+          <LoadPrevious
+            school={school}
+            type="IMPROVEMENT"
+            isEmpty={rows.length === 0 && !draft.found}
+            label="지난 개선보고서"
+            onLoad={(p: { items?: Row[]; handler?: string; memo?: string }) => {
+              if (p.items?.length) setRows(p.items);
+              if (p.handler) setHandler(p.handler);
+              if (p.memo) setMemo(p.memo);
+              setMsg({ t: `지난 개선 항목 ${p.items?.length ?? 0}건을 불러왔습니다.`, ok: true });
+            }}
+          />
+
 
           {/* 기본 정보 */}
           <section className={e.card}>
@@ -267,7 +317,7 @@ export function ImprovementForm({
               <div className={e.tableScroll}>
                 <div className={e.gridMin}>
                   <div className={`${e.gridRow} ${e.gridHead}`} style={{ gridTemplateColumns: GRID }}>
-                    <span>No</span>
+                    <span className={e.rowNo}>No</span>
                     <span>분류</span>
                     <span>장비명</span>
                     <span>제조사</span>
@@ -325,6 +375,7 @@ export function ImprovementForm({
                         style={{ fontWeight: 700, textAlign: "right" }}
                         placeholder="0"
                         value={r.amount}
+                        printValue={num(r.amount) ? `${won(num(r.amount))} 원` : ""}
                         onChange={(ev) => update(i, "amount", ev.target.value)}
                       />
                       <Select
@@ -334,14 +385,25 @@ export function ImprovementForm({
                         placeholder="선택"
                         onChange={(v) => update(i, "content", v)}
                       />
-                      <button
-                        type="button"
-                        className={`${e.delBtn} no-print`}
-                        onClick={() => setRows((rs) => rs.filter((_, idx) => idx !== i))}
-                        aria-label="행 삭제"
-                      >
-                        ×
-                      </button>
+                      <div className={`${e.rowBtns} no-print`}>
+                        <button
+                          type="button"
+                          className={e.copyBtn}
+                          onClick={() => copyRow(i)}
+                          title="이 행 복사"
+                          aria-label="행 복사"
+                        >
+                          ⧉
+                        </button>
+                        <button
+                          type="button"
+                          className={e.delBtn}
+                          onClick={() => setRows((rs) => rs.filter((_, idx) => idx !== i))}
+                          aria-label="행 삭제"
+                        >
+                          ×
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>

@@ -299,7 +299,7 @@
 .rowNo {
   font-size: 12px;
   font-weight: 800;
-  color: #c3c9d0;
+  color: var(--gt-mute);
 }
 
 /* 판정 세그먼트 (양호/불량) */
@@ -312,7 +312,7 @@
   height: 40px;
   border: 1px solid var(--gt-line);
   background: #fff;
-  color: var(--gt-faint);
+  color: var(--gt-sub);
   font-family: inherit;
   font-size: 12px;
   font-weight: 700;
@@ -565,6 +565,98 @@
   letter-spacing: 0.3px;
   border-top: none;
 }
+/* 일괄 등록으로 선택된 행 */
+.gridRowOn {
+  background: var(--gt-blue-bg);
+}
+.checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--gt-blue);
+  cursor: pointer;
+  margin: 0;
+}
+
+/* 선택 행 일괄 적용 바 */
+.bulkBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  border: 1px solid #c3d9f7;
+  background: var(--gt-blue-bg);
+  border-radius: 14px;
+  position: sticky;
+  top: 84px;
+  z-index: 5;
+}
+.bulkCount {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--gt-blue-dark);
+}
+.bulkLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gt-sub);
+  margin-left: 4px;
+}
+.bulkBtn {
+  border: 1px solid var(--gt-line);
+  background: #fff;
+  color: var(--gt-sub);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 13px;
+  border-radius: 9px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.bulkBtn:hover {
+  border-color: var(--gt-blue);
+  color: var(--gt-blue);
+}
+.bulkDivider {
+  width: 1px;
+  height: 18px;
+  background: #c3d9f7;
+  margin: 0 2px;
+}
+.bulkSelect {
+  min-width: 150px;
+}
+.bulkDel {
+  margin-left: auto;
+  border: 1px solid #f8c9ce;
+  background: #fff;
+  color: #f04452;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 13px;
+  border-radius: 9px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.bulkDel:hover {
+  background: #fff0f0;
+}
+.bulkClear {
+  border: none;
+  background: transparent;
+  color: var(--gt-mute);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 6px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.bulkClear:hover {
+  color: var(--gt-sub);
+}
 .cell {
   height: 40px;
   box-sizing: border-box;
@@ -573,7 +665,7 @@
   border-radius: 9px;
   padding: 0 10px;
   font-family: inherit;
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--gt-text);
   background: #fff;
   outline: none;
@@ -603,9 +695,16 @@
   min-width: 0;
 }
 .codeText {
-  font-size: 11px;
+  font-size: 11.5px;
   font-family: var(--gt-mono);
-  color: var(--gt-faint);
+  color: var(--gt-mute);
+}
+/* 표 안의 읽기 전용 설명 텍스트 (목적·방법 등) */
+.cellText {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--gt-sub);
+  word-break: keep-all;
 }
 .delBtn {
   width: 32px;
@@ -693,4 +792,74 @@
   .infoGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  /* 목차/요약 사이드 컬럼을 본문 위아래로 풀어준다 (인라인 지정도 덮어씀) */
+  .layout {
+    grid-template-columns: minmax(0, 1fr) !important;
+    padding: 16px 16px 48px;
+    gap: 16px;
+  }
+  .toc {
+    position: static;
+    max-height: none;
+  }
+}
+
+/* 태블릿 · 모바일 */
+@media (max-width: 760px) {
+  .topInner {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+  .topActions {
+    margin-left: 0;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 10px 14px;
+  }
+  .vbar {
+    display: none;
+  }
+  .infoGrid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .card {
+    padding: 18px 16px;
+    border-radius: 16px;
+  }
+  .layout {
+    padding: 14px 12px 40px;
+  }
+  /* 터치로 표를 가로 스크롤 */
+  .tableScroll {
+    -webkit-overflow-scrolling: touch;
+  }
+  .bulkBar {
+    top: 0;
+  }
+}
+
+/* 행 우측 버튼 묶음 (복사 · 삭제) */
+.rowBtns {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  justify-self: center;
+}
+.copyBtn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #c3c9d0;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+.copyBtn:hover {
+  background: var(--gt-blue-bg);
+  color: var(--gt-blue);
 }

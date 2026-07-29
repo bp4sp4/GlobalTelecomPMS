@@ -531,3 +531,33 @@
     position: static;
   }
 }
+
+/* 태블릿 · 모바일 */
+@media (max-width: 760px) {
+  .header {
+    padding: 16px 16px 14px;
+  }
+  .h1 {
+    font-size: 24px;
+  }
+  .headActions {
+    width: 100%;
+  }
+  .headActions > * {
+    flex: 1;
+  }
+  .layout {
+    padding: 0 12px 40px;
+  }
+  .searchWrap {
+    min-width: 0;
+  }
+  .chips {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 2px;
+  }
+  .chip {
+    white-space: nowrap;
+  }
+}

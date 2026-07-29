@@ -448,3 +448,16 @@
     grid-template-columns: minmax(0, 1fr) 100px;
   }
 }
+
+/* 태블릿 · 모바일 */
+@media (max-width: 760px) {
+  .header {
+    padding: 14px 16px 16px;
+  }
+  .h1 {
+    font-size: 24px;
+  }
+  .searchIcon {
+    left: 14px;
+  }
+}

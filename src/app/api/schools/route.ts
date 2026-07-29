@@ -17,5 +17,9 @@ export async function GET(req: Request) {
     orderBy: { name: "asc" },
     take: 30,
   });
-  return NextResponse.json(schools);
+
+  // 학교 마스터는 거의 바뀌지 않는다 — 같은 검색어는 브라우저 캐시에서 즉시 응답
+  return NextResponse.json(schools, {
+    headers: { "Cache-Control": "private, max-age=300" },
+  });
 }

@@ -47,6 +47,8 @@ export function DocsClient() {
   const [recent, setRecent] = useState<RecentItem[]>([]);
   const boxRef = useRef<HTMLDivElement>(null);
   const userTyped = useRef(false);
+  /** 검색어 → 결과 캐시 (같은 세션 안에서 재조회를 없앤다) */
+  const cache = useRef(new Map<string, SchoolHit[]>());
 
   // 이전 선택 복원
   useEffect(() => {
@@ -64,22 +66,51 @@ export function DocsClient() {
 
   // 자동완성
   useEffect(() => {
-    if (q.trim().length < 1) {
+    const kw = q.trim();
+    if (kw.length < 1) {
       setHits([]);
       return;
     }
+
+    // 1) 같은 검색어를 이미 받아온 적 있으면 즉시 표시 (지우고 다시 칠 때 특히 빠름)
+    const cached = cache.current.get(kw);
+    if (cached) {
+      setHits(cached);
+      if (userTyped.current) setOpen(true);
+      return;
+    }
+
+    // 2) 앞 글자 결과가 서버 상한(30개)에 못 미치면 그 안에 답이 다 있다 —
+    //    네트워크 없이 걸러서 먼저 보여주고, 아래에서 정확한 결과로 갱신한다
+    for (let i = kw.length - 1; i > 0; i--) {
+      const prev = cache.current.get(kw.slice(0, i));
+      if (prev && prev.length < 30) {
+        setHits(prev.filter((s) => s.name.includes(kw)));
+        if (userTyped.current) setOpen(true);
+        break;
+      }
+    }
+
+    const ctrl = new AbortController();
     const t = setTimeout(async () => {
       try {
-        const res = await fetch(`/api/schools?q=${encodeURIComponent(q.trim())}`);
+        const res = await fetch(`/api/schools?q=${encodeURIComponent(kw)}`, {
+          signal: ctrl.signal,
+        });
         if (res.ok) {
-          setHits(await res.json());
+          const data: SchoolHit[] = await res.json();
+          cache.current.set(kw, data);
+          setHits(data);
           if (userTyped.current) setOpen(true);
         }
       } catch {
-        /* noop */
+        /* 취소되었거나 실패 — 기존 결과 유지 */
       }
-    }, 200);
-    return () => clearTimeout(t);
+    }, 90);
+    return () => {
+      clearTimeout(t);
+      ctrl.abort();
+    };
   }, [q]);
 
   useEffect(() => {

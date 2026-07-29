@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-07-28T07:35:56.215Z",
+  "lastUpdated": "2026-07-29T06:36:37.060Z",
   "activeFeatures": [
     "CRM",
     "prisma",
@@ -40,7 +40,9 @@
     "search",
     "school-status",
     "complete",
-    "logs"
+    "logs",
+    "previous",
+    "zip"
   ],
   "primaryFeature": "CRM",
   "features": {
@@ -53,9 +55,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-27T06:54:35.124Z",
-        "lastUpdated": "2026-07-28T05:52:41.191Z"
+        "lastUpdated": "2026-07-29T05:52:52.609Z"
       },
-      "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\lib\\nav.ts"
+      "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\lib\\useDraft.ts"
     },
     "prisma": {
       "phase": "do",
@@ -144,9 +146,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-27T07:26:59.266Z",
-        "lastUpdated": "2026-07-28T05:52:51.128Z"
+        "lastUpdated": "2026-07-29T05:14:59.515Z"
       },
-      "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\layout\\NavIcon.tsx"
+      "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\layout\\AppShell.tsx"
     },
     "Card": {
       "phase": "do",
@@ -196,7 +198,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-27T07:30:26.223Z",
-        "lastUpdated": "2026-07-27T07:30:26.223Z"
+        "lastUpdated": "2026-07-29T05:35:55.384Z"
       },
       "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\schools\\route.ts"
     },
@@ -222,9 +224,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-27T07:31:18.979Z",
-        "lastUpdated": "2026-07-28T07:35:56.215Z"
+        "lastUpdated": "2026-07-29T05:35:37.298Z"
       },
-      "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\docs\\DocumentList.tsx"
+      "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\docs\\DocsClient.tsx"
     },
     "reports": {
       "phase": "do",
@@ -274,7 +276,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-27T07:36:56.098Z",
-        "lastUpdated": "2026-07-28T07:02:52.022Z"
+        "lastUpdated": "2026-07-29T06:00:52.900Z"
       },
       "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\docs\\equipment\\EquipmentForm.tsx"
     },
@@ -287,9 +289,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-27T07:37:11.898Z",
-        "lastUpdated": "2026-07-28T07:01:52.224Z"
+        "lastUpdated": "2026-07-29T06:11:37.605Z"
       },
-      "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\report\\PrintInfoTable.tsx"
+      "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\report\\CellInput.tsx"
     },
     "speakerline": {
       "phase": "do",
@@ -300,7 +302,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-27T07:38:29.762Z",
-        "lastUpdated": "2026-07-28T07:03:07.838Z"
+        "lastUpdated": "2026-07-29T05:11:16.463Z"
       },
       "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\docs\\speakerline\\SpeakerlineForm.tsx"
     },
@@ -313,7 +315,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-27T07:39:23.003Z",
-        "lastUpdated": "2026-07-28T07:03:19.201Z"
+        "lastUpdated": "2026-07-29T06:11:59.434Z"
       },
       "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\docs\\improvement\\ImprovementForm.tsx"
     },
@@ -326,7 +328,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-27T07:40:03.446Z",
-        "lastUpdated": "2026-07-28T05:51:31.917Z"
+        "lastUpdated": "2026-07-29T06:15:36.039Z"
       },
       "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\upload\\route.ts"
     },
@@ -339,7 +341,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-27T07:40:35.590Z",
-        "lastUpdated": "2026-07-28T05:39:57.659Z"
+        "lastUpdated": "2026-07-29T06:36:37.060Z"
       },
       "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\docs\\photos\\PhotosForm.tsx"
     },
@@ -365,7 +367,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-27T07:42:16.174Z",
-        "lastUpdated": "2026-07-28T07:02:40.842Z"
+        "lastUpdated": "2026-07-29T05:56:00.788Z"
       },
       "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\pms\\consulting\\new\\ConsultingForm.tsx"
     },
@@ -469,7 +471,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-27T07:54:35.156Z",
-        "lastUpdated": "2026-07-27T08:56:40.262Z"
+        "lastUpdated": "2026-07-29T05:16:58.016Z"
       },
       "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\ui\\SignaturePad\\SignaturePad.tsx"
     },
@@ -482,7 +484,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-27T08:35:59.654Z",
-        "lastUpdated": "2026-07-27T08:35:59.654Z"
+        "lastUpdated": "2026-07-29T06:17:37.152Z"
       },
       "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\ui\\DatePicker\\DatePicker.tsx"
     },
@@ -550,6 +552,32 @@
         "lastUpdated": "2026-07-28T06:48:18.184Z"
       },
       "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\system\\logs\\LogView.tsx"
+    },
+    "previous": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-07-29T05:06:54.001Z",
+        "lastUpdated": "2026-07-29T05:06:54.001Z"
+      },
+      "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\reports\\previous\\route.ts"
+    },
+    "zip": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-07-29T06:20:07.985Z",
+        "lastUpdated": "2026-07-29T06:20:07.985Z"
+      },
+      "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\photos\\zip\\route.ts"
     }
   },
   "pipeline": {
@@ -560,7 +588,7 @@
   "session": {
     "startedAt": "2026-07-27T05:53:43.220Z",
     "onboardingCompleted": false,
-    "lastActivity": "2026-07-28T07:35:56.215Z"
+    "lastActivity": "2026-07-29T06:36:37.060Z"
   },
   "history": [
     {
@@ -2462,6 +2490,432 @@
     {
       "timestamp": "2026-07-28T07:35:56.215Z",
       "feature": "docs",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T04:55:45.003Z",
+      "feature": "equipment",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T04:55:56.560Z",
+      "feature": "equipment",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T04:56:04.633Z",
+      "feature": "equipment",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T04:56:10.499Z",
+      "feature": "equipment",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T04:56:21.842Z",
+      "feature": "equipment",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T04:56:30.892Z",
+      "feature": "equipment",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:04:01.622Z",
+      "feature": "new",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:04:12.201Z",
+      "feature": "new",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:04:16.510Z",
+      "feature": "new",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:04:50.354Z",
+      "feature": "equipment",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:04:55.350Z",
+      "feature": "speakerline",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:06:29.839Z",
+      "feature": "improvement",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:06:36.316Z",
+      "feature": "photos",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:06:54.001Z",
+      "feature": "previous",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:07:07.390Z",
+      "feature": "report",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:07:26.390Z",
+      "feature": "new",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:07:36.364Z",
+      "feature": "new",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:07:40.648Z",
+      "feature": "new",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:07:50.996Z",
+      "feature": "equipment",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:07:56.143Z",
+      "feature": "equipment",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:08:08.104Z",
+      "feature": "speakerline",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:08:22.731Z",
+      "feature": "improvement",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:11:16.463Z",
+      "feature": "speakerline",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:14:30.825Z",
+      "feature": "new",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:14:38.285Z",
+      "feature": "new",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:14:51.339Z",
+      "feature": "layout",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:14:59.515Z",
+      "feature": "layout",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:16:41.842Z",
+      "feature": "SignaturePad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:16:58.016Z",
+      "feature": "SignaturePad",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:17:51.574Z",
+      "feature": "CRM",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:20:43.457Z",
+      "feature": "new",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:21:00.443Z",
+      "feature": "new",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:21:06.790Z",
+      "feature": "new",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:35:26.974Z",
+      "feature": "docs",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:35:37.298Z",
+      "feature": "docs",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:35:55.384Z",
+      "feature": "schools",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:36:57.246Z",
+      "feature": "new",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:47:44.881Z",
+      "feature": "new",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:52:52.609Z",
+      "feature": "CRM",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:53:00.380Z",
+      "feature": "report",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:53:36.583Z",
+      "feature": "new",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:55:54.277Z",
+      "feature": "new",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:56:00.788Z",
+      "feature": "new",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:59:18.644Z",
+      "feature": "equipment",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:59:25.641Z",
+      "feature": "equipment",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T05:59:52.554Z",
+      "feature": "improvement",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:00:00.221Z",
+      "feature": "improvement",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:00:47.109Z",
+      "feature": "equipment",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:00:52.900Z",
+      "feature": "equipment",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:01:02.892Z",
+      "feature": "improvement",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:01:10.041Z",
+      "feature": "improvement",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:11:37.605Z",
+      "feature": "report",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:11:59.434Z",
+      "feature": "improvement",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:15:36.039Z",
+      "feature": "upload",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:16:36.534Z",
+      "feature": "DatePicker",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:16:44.263Z",
+      "feature": "DatePicker",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:16:55.071Z",
+      "feature": "DatePicker",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:17:10.874Z",
+      "feature": "DatePicker",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:17:37.152Z",
+      "feature": "DatePicker",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:20:07.985Z",
+      "feature": "zip",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:25:55.495Z",
+      "feature": "photos",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:26:16.095Z",
+      "feature": "photos",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:26:26.045Z",
+      "feature": "photos",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:26:34.490Z",
+      "feature": "photos",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:27:06.995Z",
+      "feature": "photos",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:27:25.423Z",
+      "feature": "photos",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:35:48.790Z",
+      "feature": "photos",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:35:54.802Z",
+      "feature": "photos",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:36:00.724Z",
+      "feature": "photos",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:36:15.087Z",
+      "feature": "photos",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-29T06:36:37.060Z",
+      "feature": "photos",
       "phase": "do",
       "action": "updated"
     }

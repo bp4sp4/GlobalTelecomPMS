@@ -8,9 +8,15 @@
  */
 export function CellInput({
   className,
+  printValue,
   ...rest
-}: React.InputHTMLAttributes<HTMLInputElement>) {
-  const text = typeof rest.value === "string" ? rest.value : String(rest.value ?? "");
+}: React.InputHTMLAttributes<HTMLInputElement> & {
+  /** 인쇄에만 쓸 표시값 (예: 금액을 천단위로) */
+  printValue?: string;
+}) {
+  const text =
+    printValue ??
+    (typeof rest.value === "string" ? rest.value : String(rest.value ?? ""));
   return (
     <>
       <input className={`${className ?? ""} no-print`} {...rest} />

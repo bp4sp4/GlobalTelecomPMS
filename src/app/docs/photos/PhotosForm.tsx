@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { BackButton } from "@/components/report/BackButton";
 import { saveReport } from "@/lib/reportClient";
 import { DatePicker } from "@/components/ui";
@@ -27,6 +28,7 @@ export function PhotosForm({
   initial: { shootDate?: string; handler?: string; memo?: string; photos?: Store } | null;
   initialStatus: "DRAFT" | "DONE" | null;
 }) {
+  const router = useRouter();
   const [shootDate, setShootDate] = useState(initial?.shootDate ?? "");
   const [handler, setHandler] = useState(initial?.handler ?? "");
   const [memo, setMemo] = useState(initial?.memo ?? "");
@@ -37,6 +39,8 @@ export function PhotosForm({
   const [uploading, setUploading] = useState<string | null>(null);
   const [dragOver, setDragOver] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  /** 크게 보기 — 어느 실의 몇 번째 사진인지 */
+  const [viewer, setViewer] = useState<{ room: string; index: number } | null>(null);
   const inputs = useRef<Record<string, HTMLInputElement | null>>({});
 
   const get = (room: string): Photo[] => store[cat]?.[room] ?? [];
@@ -76,6 +80,28 @@ export function PhotosForm({
       return next;
     });
   }
+  /** 크게 보기 좌우 이동 (같은 실 안에서 순환) */
+  function moveViewer(step: number) {
+    setViewer((v) => {
+      if (!v) return v;
+      const list = store[cat]?.[v.room] ?? [];
+      if (!list.length) return null;
+      return { ...v, index: (v.index + step + list.length) % list.length };
+    });
+  }
+
+  useEffect(() => {
+    if (!viewer) return;
+    const onKey = (ev: KeyboardEvent) => {
+      if (ev.key === "Escape") setViewer(null);
+      if (ev.key === "ArrowRight") moveViewer(1);
+      if (ev.key === "ArrowLeft") moveViewer(-1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [viewer]);
+
   function clearRoom(room: string) {
     if (!get(room).length) return;
     if (!confirm(`${cat} · ${room}의 사진을 모두 목록에서 제거할까요?`)) return;
@@ -113,7 +139,14 @@ export function PhotosForm({
         payload: { shootDate, handler, memo, photos: store },
         status,
       });
-      setMsg({ t: status === "DONE" ? "완료 처리되었습니다." : "저장(초안)되었습니다.", ok: true });
+      if (status === "DONE") {
+        // 완료 처리 후에는 문서 작성 화면으로 돌아간다
+        setMsg({ t: "완료 처리되었습니다. 문서 작성으로 이동합니다…", ok: true });
+        router.push("/docs");
+        router.refresh();
+        return;
+      }
+      setMsg({ t: "저장(초안)되었습니다.", ok: true });
     } catch (err) {
       setMsg({ t: (err as Error).message, ok: false });
     } finally {
@@ -146,6 +179,13 @@ export function PhotosForm({
             >
               CSV
             </a>
+            <a
+              className={e.btn}
+              href={`/api/photos/zip?school=${encodeURIComponent(school)}`}
+              title="저장된 사진을 구분/실 폴더 그대로 묶어 내려받습니다"
+            >
+              ZIP 내려받기
+            </a>
             <span className={e.vbar} />
             <button type="button" className={`${e.btn} ${e.btnOutline}`} disabled={busy} onClick={() => doSave("DRAFT")}>
               저장
@@ -157,7 +197,8 @@ export function PhotosForm({
         </div>
       </header>
 
-      <div className={e.layout} style={{ gridTemplateColumns: "minmax(0,1fr) 280px" }}>
+      {/* 사진을 최대한 넓게 — 요약 패널은 240px 로 줄인다 */}
+      <div className={e.layout} style={{ gridTemplateColumns: "minmax(0,1fr) 240px" }}>
         <div className={e.content}>
           {msg && <div className={`${e.msg} ${msg.ok ? e.msgOk : e.msgErr}`}>{msg.t}</div>}
 
@@ -217,7 +258,7 @@ export function PhotosForm({
                 const isUp = uploading === room;
                 const over = dragOver === room;
                 const open = expanded[`${cat}|${room}`];
-                const shown = open ? photos : photos.slice(0, 4);
+                const shown = open ? photos : photos.slice(0, 12);
 
                 return (
                   <div key={room} className={p.folder}>
@@ -228,7 +269,27 @@ export function PhotosForm({
                           {has ? `${photos.length}장 업로드됨` : "업로드된 사진 없음"}
                         </div>
                       </div>
-                      <span className={`${p.pill} ${has ? p.pillOn : ""}`}>{has ? "완료" : "대기"}</span>
+                      <div className={p.headRight}>
+                        <span className={`${p.pill} ${has ? p.pillOn : ""}`}>
+                          {has ? "완료" : "대기"}
+                        </span>
+                        <button
+                          type="button"
+                          className={p.findBtn}
+                          disabled={isUp}
+                          onClick={() => inputs.current[room]?.click()}
+                        >
+                          {isUp ? "업로드 중..." : "사진 찾기"}
+                        </button>
+                        <button
+                          type="button"
+                          className={p.clearBtn}
+                          disabled={!has}
+                          onClick={() => clearRoom(room)}
+                        >
+                          전체 삭제
+                        </button>
+                      </div>
                     </div>
 
                     <div
@@ -266,55 +327,47 @@ export function PhotosForm({
                     />
 
                     {has && (
-                      <div className={p.thumbs}>
-                        {shown.map((ph, i) => (
-                          <div key={`${ph.url}-${i}`} className={p.thumbBox}>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={ph.url} alt={ph.name} className={p.thumb} />
-                            <button
-                              type="button"
-                              className={p.thumbDel}
-                              aria-label="사진 제거"
-                              onClick={() => removePhoto(room, i)}
-                            >
-                              ×
-                            </button>
-                          </div>
-                        ))}
-                        {!open && photos.length > 4 && (
+                      <>
+                        <div className={p.thumbs}>
+                          {shown.map((ph, i) => (
+                            <figure key={`${ph.url}-${i}`} className={p.thumbBox}>
+                              <button
+                                type="button"
+                                className={p.thumbBtn}
+                                onClick={() => setViewer({ room, index: i })}
+                                title="크게 보기"
+                              >
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img src={ph.url} alt={ph.name} className={p.thumb} loading="lazy" />
+                              </button>
+                              <button
+                                type="button"
+                                className={p.thumbDel}
+                                aria-label="사진 제거"
+                                onClick={() => removePhoto(room, i)}
+                              >
+                                ×
+                              </button>
+                              <figcaption className={p.thumbName} title={ph.name}>
+                                {ph.name}
+                              </figcaption>
+                            </figure>
+                          ))}
+                        </div>
+                        {photos.length > 12 && (
                           <button
                             type="button"
-                            className={p.more}
-                            onClick={() => setExpanded((s) => ({ ...s, [`${cat}|${room}`]: true }))}
+                            className={p.moreBtn}
+                            onClick={() =>
+                              setExpanded((s) => ({ ...s, [`${cat}|${room}`]: !open }))
+                            }
                           >
-                            +{photos.length - 4}
+                            {open ? "접기" : `+ ${photos.length - 12}장 더 보기`}
                           </button>
                         )}
-                        {open && photos.length > 4 && (
-                          <button
-                            type="button"
-                            className={p.more}
-                            onClick={() => setExpanded((s) => ({ ...s, [`${cat}|${room}`]: false }))}
-                          >
-                            접기
-                          </button>
-                        )}
-                      </div>
+                      </>
                     )}
 
-                    <div className={p.folderFoot}>
-                      <button
-                        type="button"
-                        className={p.findBtn}
-                        disabled={isUp}
-                        onClick={() => inputs.current[room]?.click()}
-                      >
-                        {isUp ? "업로드 중..." : "사진 찾기"}
-                      </button>
-                      <button type="button" className={p.clearBtn} disabled={!has} onClick={() => clearRoom(room)}>
-                        전체 삭제
-                      </button>
-                    </div>
                   </div>
                 );
               })}
@@ -361,6 +414,60 @@ export function PhotosForm({
           </section>
         </div>
       </div>
+
+      {/* 크게 보기 */}
+      {viewer && (() => {
+        const list = store[cat]?.[viewer.room] ?? [];
+        const ph = list[viewer.index];
+        if (!ph) return null;
+        return (
+          <div className={`${p.viewer} no-print`} onClick={() => setViewer(null)}>
+            <div className={p.viewerBar} onClick={(ev) => ev.stopPropagation()}>
+              <span className={p.viewerTitle}>
+                {cat} · {viewer.room}
+                <span className={p.viewerCount}>
+                  {viewer.index + 1} / {list.length}
+                </span>
+              </span>
+              <a className={p.viewerBtn} href={ph.url} target="_blank" rel="noreferrer">
+                원본 열기
+              </a>
+              <button type="button" className={p.viewerBtn} onClick={() => setViewer(null)}>
+                닫기 ✕
+              </button>
+            </div>
+
+            <div className={p.viewerStage} onClick={(ev) => ev.stopPropagation()}>
+              {list.length > 1 && (
+                <button
+                  type="button"
+                  className={`${p.viewerNav} ${p.viewerPrev}`}
+                  onClick={() => moveViewer(-1)}
+                  aria-label="이전 사진"
+                >
+                  ‹
+                </button>
+              )}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={ph.url} alt={ph.name} className={p.viewerImg} />
+              {list.length > 1 && (
+                <button
+                  type="button"
+                  className={`${p.viewerNav} ${p.viewerNext}`}
+                  onClick={() => moveViewer(1)}
+                  aria-label="다음 사진"
+                >
+                  ›
+                </button>
+              )}
+            </div>
+
+            <div className={p.viewerCaption} onClick={(ev) => ev.stopPropagation()}>
+              {ph.name}
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }

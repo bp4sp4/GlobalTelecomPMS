@@ -19,15 +19,30 @@ export function SignaturePad({
   useEffect(() => {
     const cv = ref.current;
     if (!cv) return;
-    // 고정 내부 해상도
-    cv.width = cv.offsetWidth;
-    cv.height = cv.offsetHeight;
-    const ctx = cv.getContext("2d");
-    if (ctx && value) {
-      const img = new Image();
-      img.onload = () => ctx.drawImage(img, 0, 0, cv.width, cv.height);
-      img.src = value;
-    }
+
+    /** 표시 크기에 맞춰 캔버스 내부 해상도를 잡고 기존 서명을 다시 그린다.
+     *  (태블릿 회전·창 크기 변경 시 좌표가 어긋나거나 흐려지는 것을 막는다) */
+    const fit = () => {
+      const dpr = window.devicePixelRatio || 1;
+      const w = cv.offsetWidth;
+      const h = cv.offsetHeight;
+      if (!w || !h) return;
+      cv.width = Math.round(w * dpr);
+      cv.height = Math.round(h * dpr);
+      const c = cv.getContext("2d");
+      if (!c) return;
+      c.setTransform(dpr, 0, 0, dpr, 0, 0); // 이후 좌표는 CSS 픽셀 기준
+      if (value) {
+        const img = new Image();
+        img.onload = () => c.drawImage(img, 0, 0, w, h);
+        img.src = value;
+      }
+    };
+
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(cv);
+    return () => ro.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -61,7 +76,8 @@ export function SignaturePad({
   }
   function clear() {
     const cv = ref.current!;
-    cv.getContext("2d")!.clearRect(0, 0, cv.width, cv.height);
+    // 컨텍스트가 dpr 로 스케일되어 있으므로 CSS 픽셀 기준으로 지운다
+    cv.getContext("2d")!.clearRect(0, 0, cv.offsetWidth, cv.offsetHeight);
     onChange("");
   }
 
