@@ -263,7 +263,7 @@ export function PhotosForm({
                 const isUp = uploading === room;
                 const over = dragOver === room;
                 const open = expanded[`${cat}|${room}`];
-                const shown = open ? photos : photos.slice(0, 12);
+                const shown = open ? photos : photos.slice(0, 30);
 
                 return (
                   <div key={room} className={p.folder}>
@@ -359,7 +359,7 @@ export function PhotosForm({
                             </figure>
                           ))}
                         </div>
-                        {photos.length > 12 && (
+                        {photos.length > 30 && (
                           <button
                             type="button"
                             className={p.moreBtn}
@@ -367,7 +367,7 @@ export function PhotosForm({
                               setExpanded((s) => ({ ...s, [`${cat}|${room}`]: !open }))
                             }
                           >
-                            {open ? "접기" : `+ ${photos.length - 12}장 더 보기`}
+                            {open ? "접기" : `+ ${photos.length - 30}장 더 보기`}
                           </button>
                         )}
                       </>
