@@ -36,7 +36,6 @@ export default function LoginPage() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(false);
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -52,7 +51,7 @@ export default function LoginPage() {
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: username.trim(), password, remember }),
+        body: JSON.stringify({ username: username.trim(), password }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -71,13 +70,13 @@ export default function LoginPage() {
   return (
     <main className={styles.wrap}>
       <form className={styles.card} onSubmit={onSubmit}>
+        {/* 로고 + 설명을 한 덩어리로 (사이 간격은 .title 의 margin-top) */}
         <div>
           <div className={styles.brand}>
             <Image src="/logo.png" alt="GlobalTelecom" width={209} height={27} priority />
           </div>
+          <h1 className={styles.title}>방송장비 컨설팅 문서 자동화 시스템</h1>
         </div>
-
-        <h1 className={styles.title}>로그인</h1>
 
         <div className={styles.fields}>
           <div className={styles.field}>
@@ -117,20 +116,6 @@ export default function LoginPage() {
               <EyeIcon off={show} />
             </button>
           </div>
-        </div>
-
-        <div className={styles.row}>
-          <label className={styles.checkbox}>
-            <input
-              type="checkbox"
-              checked={remember}
-              onChange={(e) => setRemember(e.target.checked)}
-            />
-            로그인 상태 유지
-          </label>
-          <a className={styles.link} href="#">
-            비밀번호 찾기
-          </a>
         </div>
 
         {error && <p className={styles.error}>{error}</p>}
