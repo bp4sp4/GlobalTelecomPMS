@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { LogoutButton } from "./LogoutButton";
 import { NavIcon } from "./NavIcon";
+import { ThemeToggle } from "./ThemeToggle";
+import { Logo } from "./Logo";
 import styles from "./AppShell.module.css";
 
 export type NavItem = { label: string; href: string; icon?: string };
@@ -89,7 +90,7 @@ export function AppShell({ brand, sections, user, children }: AppShellProps) {
           </svg>
         </button>
         <Link href="/dashboard" className={styles.mobileBrand} aria-label="GlobalTelecom 홈">
-          <Image src="/logo.png" alt="GlobalTelecom" width={209} height={27} priority />
+          <Logo height={20} />
         </Link>
       </div>
 
@@ -105,7 +106,7 @@ export function AppShell({ brand, sections, user, children }: AppShellProps) {
         <div className={styles.brandBox}>
           <div className={styles.brandText}>
             <Link href="/dashboard" className={styles.wordmark} aria-label="GlobalTelecom 홈">
-              <Image src="/logo.png" alt="GlobalTelecom" width={209} height={27} priority />
+              <Logo height={22} />
             </Link>
       
           </div>
@@ -160,7 +161,10 @@ export function AppShell({ brand, sections, user, children }: AppShellProps) {
           ))}
         </nav>
 
-
+        <ThemeToggle
+          className={`${styles.navItem} ${styles.themeBtn}`}
+          labelClassName={styles.navLabel}
+        />
       </aside>
 
       <main className={styles.main}>

@@ -1,0 +1,34 @@
+/* 테마별 로고 — 두 장 중 하나만 보여준다 */
+
+.logo {
+  display: block;
+  line-height: 0;
+}
+.logo img {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+}
+
+/* 기본(라이트): 검정 글자 로고 */
+.dark {
+  display: none;
+}
+
+/* 다크: 흰 글자 로고 */
+:global(:root[data-theme="dark"]) .light {
+  display: none;
+}
+:global(:root[data-theme="dark"]) .dark {
+  display: block;
+}
+
+/* 인쇄는 항상 밝은 종이 — 검정 글자 로고로 */
+@media print {
+  .light {
+    display: block !important;
+  }
+  .dark {
+    display: none !important;
+  }
+}

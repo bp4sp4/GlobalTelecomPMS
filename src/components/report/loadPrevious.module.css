@@ -6,7 +6,7 @@
   gap: 12px;
   padding: 14px 18px;
   border: 1px solid #ffe0a3;
-  background: #fffaf0;
+  background: var(--gt-amber-bg);
   border-radius: 14px;
 }
 .icon {
@@ -70,7 +70,7 @@
 
 /* 임시보관 복구 배너 (파란 계열 — 이전 회차 불러오기와 구분) */
 .barDraft {
-  border-color: #c3d9f7;
+  border-color: var(--gt-border-blue);
   background: var(--gt-blue-bg);
 }
 .iconDraft {

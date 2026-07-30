@@ -33,7 +33,7 @@
   font-family: inherit;
   font-size: var(--krds-fs-body-small);
   text-align: center;
-  background: #fff;
+  background: var(--gt-surface);
 }
 .cellInput:focus {
   outline: none;

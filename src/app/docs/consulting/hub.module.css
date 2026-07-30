@@ -114,7 +114,7 @@
   padding: 0;
 }
 .btn:disabled {
-  background: #d1d6db;
+  background: var(--gt-line-strong);
   color: var(--gt-mute);
   cursor: not-allowed;
 }
@@ -213,7 +213,7 @@
   overflow: hidden;
 }
 .metric {
-  background: #fff;
+  background: var(--gt-surface);
   padding: 18px 20px;
   display: flex;
   flex-direction: column;
@@ -245,7 +245,7 @@
   overflow: hidden;
 }
 .issue {
-  background: #f9fafb;
+  background: var(--gt-surface-2);
   display: flex;
   align-items: center;
   gap: 12px;

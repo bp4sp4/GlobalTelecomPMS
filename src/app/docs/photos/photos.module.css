@@ -4,7 +4,7 @@
   display: flex;
   gap: 4px;
   padding: 4px;
-  background: #f4f5f7;
+  background: var(--gt-surface-3);
   border-radius: 12px;
   flex-wrap: wrap;
 }
@@ -25,7 +25,7 @@
 }
 .tabActive {
   color: var(--gt-text);
-  background: #fff;
+  background: var(--gt-surface);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
@@ -45,7 +45,7 @@
   transition: border-color 0.15s;
 }
 .folder:hover {
-  border-color: #c3d9f7;
+  border-color: var(--gt-border-blue);
 }
 .folderHead {
   display: flex;
@@ -89,8 +89,8 @@
 
 /* 드롭존 */
 .drop {
-  border: 1px dashed #d7dbe0;
-  background: #fafbfc;
+  border: 1px dashed var(--gt-line-strong);
+  background: var(--gt-surface-2);
   border-radius: 12px;
   min-height: 96px;
   display: flex;
@@ -104,7 +104,7 @@
 }
 .dropFilled {
   border-color: var(--gt-line);
-  background: #fff;
+  background: var(--gt-surface);
   min-height: 0;
   padding: 10px 12px;
   flex-direction: row;
@@ -112,7 +112,7 @@
 }
 .dropOver {
   border-color: var(--gt-blue);
-  background: #f8fbff;
+  background: var(--gt-tint-blue);
 }
 .dropTitle {
   font-size: 13px;
@@ -145,7 +145,7 @@
   border: 1px solid var(--gt-line);
   border-radius: 10px;
   overflow: hidden;
-  background: #f4f5f7;
+  background: var(--gt-surface-3);
   padding: 0;
   cursor: zoom-in;
 }
@@ -192,7 +192,7 @@
 .moreBtn {
   align-self: flex-start;
   border: 1px solid var(--gt-line);
-  background: #fff;
+  background: var(--gt-surface);
   color: var(--gt-sub);
   font-family: inherit;
   font-size: 12px;
@@ -232,7 +232,7 @@
 .clearBtn {
   border: none;
   background: transparent;
-  color: #c3c9d0;
+  color: var(--gt-faint);
   font-family: inherit;
   font-size: 12px;
   font-weight: 600;
@@ -240,7 +240,7 @@
   cursor: pointer;
 }
 .clearBtn:hover {
-  color: #f04452;
+  color: var(--gt-red);
 }
 .clearBtn:disabled {
   color: var(--gt-line);

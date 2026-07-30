@@ -18,6 +18,12 @@ body {
   max-width: 100%;
 }
 
+/* 셀렉트·달력 팝업은 body 로 띄우므로(portal) 화면 색을 여기서 물려준다 */
+body {
+  background: var(--gt-bg);
+  color: var(--gt-text);
+}
+
 img,
 picture,
 svg {
@@ -38,8 +44,10 @@ ol {
   padding: 0;
 }
 
-/* GlobalTelecom 관제 콘솔 팔레트 */
+/* GlobalTelecom 관제 콘솔 팔레트 (라이트) */
 :root {
+  color-scheme: light;
+
   --gt-bg: #f2f4f6;
   --gt-card: #fff;
   --gt-line: #e5e8eb;
@@ -57,6 +65,62 @@ ol {
   --gt-amber: #f59e0b;
   --gt-amber-bg: #fff8e6;
   --gt-mono: ui-monospace, Menlo, monospace;
+
+  /* 면(surface) 단계 — 다크모드에서 함께 뒤바뀐다 */
+  --gt-surface: #fff; /* 카드·표 바탕 */
+  --gt-surface-2: #fafbfc; /* 표 머리글, 옅은 영역 */
+  --gt-surface-3: #f4f5f7; /* 칩·읽기전용 입력 */
+  --gt-hover: #f0f2f4;
+  --gt-active: #ebeef1;
+  --gt-line-strong: #d7dbe0; /* 점선·구분선 */
+  --gt-tint-blue: #f8fbff; /* 선택 행 배경 */
+  --gt-border-blue: #c3d9f7;
+  --gt-glass: rgba(255, 255, 255, 0.92); /* 상단 고정바 */
+
+  /* 상태색 */
+  --gt-red: #f04452;
+  --gt-red-bg: #fff0f0;
+  --gt-purple: #6b46c1;
+  --gt-purple-bg: #f1ecfd;
+  --gt-amber-text: #a8802a;
+}
+
+/* 다크 팔레트 — html[data-theme="dark"] */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --gt-bg: #14181d;
+  --gt-card: #1b2027;
+  --gt-line: #2c333c;
+  --gt-line-soft: #232a32;
+  --gt-text: #e8ecf1;
+  --gt-sub: #b9c2cd;
+  --gt-mute: #8b95a1;
+  --gt-faint: #6f7a86;
+  --gt-blue: #4d9bff;
+  --gt-blue-dark: #3182f6;
+  --gt-blue-bg: rgba(77, 155, 255, 0.16);
+  --gt-green: #34d17a;
+  --gt-green-dot: #2fc46f;
+  --gt-green-bg: rgba(47, 196, 111, 0.16);
+  --gt-amber: #f5b544;
+  --gt-amber-bg: rgba(245, 181, 68, 0.16);
+
+  --gt-surface: #1b2027;
+  --gt-surface-2: #20262e;
+  --gt-surface-3: #262d36;
+  --gt-hover: #2a323c;
+  --gt-active: #313a45;
+  --gt-line-strong: #3a434e;
+  --gt-tint-blue: rgba(77, 155, 255, 0.1);
+  --gt-border-blue: #3d5878;
+  --gt-glass: rgba(20, 24, 29, 0.9);
+
+  --gt-red: #ff6b76;
+  --gt-red-bg: rgba(255, 107, 118, 0.16);
+  --gt-purple: #b39bff;
+  --gt-purple-bg: rgba(179, 155, 255, 0.16);
+  --gt-amber-text: #e0b155;
 }
 
 @keyframes gtPulse {
@@ -92,6 +156,28 @@ textarea::placeholder {
 }
 
 @media print {
+  /* 다크모드로 보고 있어도 종이에는 항상 밝게 나가야 한다 */
+  :root,
+  :root[data-theme="dark"] {
+    color-scheme: light;
+    --gt-bg: #fff;
+    --gt-card: #fff;
+    --gt-surface: #fff;
+    --gt-surface-2: #fff;
+    --gt-surface-3: #fff;
+    --gt-hover: #fff;
+    --gt-active: #fff;
+    --gt-glass: #fff;
+    --gt-text: #000;
+    --gt-sub: #000;
+    --gt-mute: #333;
+    --gt-faint: #555;
+    --gt-line: #444;
+    --gt-line-soft: #888;
+    --gt-line-strong: #444;
+    --gt-tint-blue: #fff;
+  }
+
   /* 종이에서는 둥근 모서리를 쓰지 않는다 (표·입력칸·카드 전부 각지게) */
   * {
     border-radius: 0 !important;

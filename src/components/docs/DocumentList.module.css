@@ -31,7 +31,7 @@
 }
 .btnGhost {
   border: 1px solid var(--gt-line);
-  background: #fff;
+  background: var(--gt-surface);
   color: var(--gt-sub);
   font-family: inherit;
   font-size: 14px;
@@ -106,7 +106,7 @@
   font-family: inherit;
   font-size: 14px;
   color: var(--gt-text);
-  background: #fff;
+  background: var(--gt-surface);
   outline: none;
 }
 .search:focus {
@@ -126,14 +126,14 @@
   border-radius: 12px;
   cursor: pointer;
   color: var(--gt-sub);
-  background: #fff;
+  background: var(--gt-surface);
 }
 .chip:hover {
   background: var(--gt-line-soft);
 }
 .chipOn {
   color: #fff;
-  background: var(--gt-text);
+  background: var(--gt-blue);
 }
 .chipCount {
   opacity: 0.6;
@@ -142,7 +142,7 @@
 
 /* 목록 */
 .list {
-  background: #fff;
+  background: var(--gt-surface);
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
@@ -162,11 +162,11 @@
   border-top: 1px solid var(--gt-line-soft);
 }
 .row:hover {
-  background: #fafbfc;
+  background: var(--gt-surface-2);
 }
 .head {
   padding: 14px 24px;
-  background: #fafbfc;
+  background: var(--gt-surface-2);
   font-size: 11px;
   font-weight: 700;
   color: var(--gt-mute);
@@ -174,7 +174,7 @@
   border-top: none;
 }
 .head:hover {
-  background: #fafbfc;
+  background: var(--gt-surface-2);
 }
 .cellStack {
   display: flex;
@@ -204,7 +204,7 @@
 /* 펼쳐진 요약 패널 */
 .summaryPanel {
   border-top: 1px solid var(--gt-line-soft);
-  background: #fafbfc;
+  background: var(--gt-surface-2);
   padding: 16px 24px 20px;
 }
 .summaryTitle {
@@ -267,7 +267,7 @@
 }
 .smallGhost {
   border: 1px solid var(--gt-line);
-  background: #fff;
+  background: var(--gt-surface);
   color: var(--gt-sub);
   font-family: inherit;
   font-size: 12px;
@@ -311,7 +311,7 @@
   width: 44px;
   height: 44px;
   border-radius: 14px;
-  background: #f4f5f7;
+  background: var(--gt-surface-3);
 }
 .emptyTitle {
   font-size: 14px;
@@ -343,7 +343,7 @@
   width: 34px;
   height: 34px;
   border: 1px solid var(--gt-line);
-  background: #fff;
+  background: var(--gt-surface);
   color: var(--gt-faint);
   border-radius: 9px;
   font-family: inherit;
@@ -359,7 +359,7 @@
 }
 .pageOn {
   border: none;
-  background: var(--gt-text);
+  background: var(--gt-blue);
   color: #fff;
   font-weight: 700;
 }

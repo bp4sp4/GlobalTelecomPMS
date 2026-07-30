@@ -42,7 +42,7 @@
   font-family: inherit;
   font-size: 13px;
   color: var(--gt-text);
-  background: #fff;
+  background: var(--gt-surface);
   outline: none;
 }
 .input {
@@ -74,7 +74,7 @@
   display: flex;
   gap: 4px;
   padding: 4px;
-  background: #e9ecef;
+  background: var(--gt-surface-3);
   border-radius: 12px;
   width: fit-content;
   margin: 0 28px 18px;
@@ -93,7 +93,7 @@
   color: var(--gt-sub);
 }
 .viewTabOn {
-  background: #fff;
+  background: var(--gt-surface);
   color: var(--gt-text);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 }
@@ -120,7 +120,7 @@
   gap: 12px;
 }
 .kpi {
-  background: #fff;
+  background: var(--gt-surface);
   border-radius: 16px;
   padding: 18px 20px;
   display: flex;
@@ -146,7 +146,7 @@
 
 /* 카드 공통 */
 .card {
-  background: #fff;
+  background: var(--gt-surface);
   border-radius: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   padding: 24px 26px;
@@ -178,7 +178,7 @@
   display: flex;
   gap: 4px;
   padding: 4px;
-  background: #f4f5f7;
+  background: var(--gt-surface-3);
   border-radius: 12px;
 }
 .tab {
@@ -195,7 +195,7 @@
 }
 .tabOn {
   color: var(--gt-text);
-  background: #fff;
+  background: var(--gt-surface);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
@@ -244,7 +244,7 @@
   cursor: pointer;
 }
 .barCol:hover {
-  background: #f8fbff;
+  background: var(--gt-tint-blue);
 }
 .barColOn {
   background: var(--gt-blue-bg);
@@ -298,10 +298,10 @@
   text-align: left;
 }
 .heatRowBtn:hover {
-  background: #f8fbff;
+  background: var(--gt-tint-blue);
 }
 .heatRowOn {
-  background: #f8fbff;
+  background: var(--gt-tint-blue);
 }
 .heatHeadCell {
   font-size: 11px;
@@ -384,7 +384,7 @@
 }
 .rowHead {
   padding: 12px 24px;
-  background: #fafbfc;
+  background: var(--gt-surface-2);
   font-size: 11px;
   font-weight: 700;
   color: var(--gt-mute);
@@ -394,16 +394,16 @@
 .rowBtn {
   width: 100%;
   border: none;
-  background: #fff;
+  background: var(--gt-surface);
   font-family: inherit;
   cursor: pointer;
   text-align: left;
 }
 .rowBtn:hover {
-  background: #fafbfc;
+  background: var(--gt-surface-2);
 }
 .rowOn {
-  background: #f8fbff;
+  background: var(--gt-tint-blue);
   box-shadow: inset 3px 0 0 var(--gt-blue);
 }
 .officeName {
@@ -461,7 +461,7 @@
   gap: 8px;
   padding: 16px 18px;
   border-radius: 14px;
-  background: #f9fafb;
+  background: var(--gt-surface-2);
 }
 .bigNum {
   font-size: 32px;
@@ -488,7 +488,7 @@
   overflow: hidden;
 }
 .metric {
-  background: #fff;
+  background: var(--gt-surface);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -506,7 +506,7 @@
 }
 .btnGhost {
   border: 1px solid var(--gt-line);
-  background: #fff;
+  background: var(--gt-surface);
   color: var(--gt-sub);
   font-family: inherit;
   font-size: 13px;

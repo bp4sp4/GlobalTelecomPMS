@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import { Logo } from "@/components/layout/Logo";
 import styles from "./page.module.css";
 
 function EyeIcon({ off }: { off?: boolean }) {
@@ -73,7 +73,7 @@ export default function LoginPage() {
         {/* 로고 + 설명을 한 덩어리로 (사이 간격은 .title 의 margin-top) */}
         <div>
           <div className={styles.brand}>
-            <Image src="/logo.png" alt="GlobalTelecom" width={209} height={27} priority />
+            <Logo height={34} />
           </div>
           <h1 className={styles.title}>방송장비 컨설팅 문서 자동화 시스템</h1>
         </div>

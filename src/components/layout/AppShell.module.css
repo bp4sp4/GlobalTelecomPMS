@@ -9,7 +9,7 @@
 .sidebar {
   width: 236px;
   flex: none;
-  background: #fafbfc;
+  background: var(--gt-surface-2);
   display: flex;
   flex-direction: column;
   padding: 26px 18px;
@@ -78,11 +78,7 @@
   text-decoration: none;
   line-height: 0;
 }
-.wordmark img {
-  width: auto;
-  max-width: 100%;
-  height: 22px;
-}
+
 .brandSub {
   font-size: 11px;
   font-weight: 600;
@@ -118,7 +114,7 @@
   border-radius: 12px;
   font-size: 14px;
   font-weight: 500;
-  color: #6b7684;
+  color: var(--gt-sub);
   text-decoration: none;
   cursor: pointer;
   border: none;
@@ -130,11 +126,11 @@
   transition: background 0.15s ease, color 0.15s ease;
 }
 .navItem:hover {
-  background: #f0f2f4;
+  background: var(--gt-hover);
   color: var(--gt-text);
 }
 .navItem.active {
-  background: #ebeef1;
+  background: var(--gt-active);
   color: var(--gt-text);
   font-weight: 700;
 }
@@ -142,7 +138,7 @@
   width: 5px;
   height: 5px;
   border-radius: 99px;
-  background: #d7dbe0;
+  background: var(--gt-line-strong);
   flex: none;
 }
 .navItem.active .dot {
@@ -156,7 +152,7 @@
   gap: 10px;
   padding: 12px;
   border-radius: 14px;
-  background: #f0f2f4;
+  background: var(--gt-hover);
 }
 .avatar {
   width: 32px;
@@ -207,7 +203,7 @@
   height: 30px;
   flex: none;
   border: 1px solid var(--gt-line);
-  background: #fff;
+  background: var(--gt-surface);
   border-radius: 9px;
   display: flex;
   align-items: center;
@@ -241,7 +237,7 @@
     position: sticky;
     top: 0;
     z-index: 60;
-    background: rgba(255, 255, 255, 0.94);
+    background: var(--gt-glass);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--gt-line);
     padding: 10px 14px;
@@ -254,7 +250,7 @@
     justify-content: center;
     border: 1px solid var(--gt-line);
     border-radius: 10px;
-    background: #fff;
+    background: var(--gt-surface);
     color: var(--gt-sub);
     cursor: pointer;
     flex: none;
@@ -263,10 +259,6 @@
     display: block;
     line-height: 0;
     text-decoration: none;
-  }
-  .mobileBrand img {
-    width: auto;
-    height: 20px;
   }
 
   /* 사이드바는 화면 밖에 두고 필요할 때 밀어 넣는다 */
@@ -277,7 +269,7 @@
     z-index: 70;
     width: 260px;
     height: 100dvh;
-    background: #fff;
+    background: var(--gt-surface);
     border-right: 1px solid var(--gt-line);
     transform: translateX(-100%);
     transition: transform 0.24s ease;
@@ -322,4 +314,9 @@
     padding: 13px 12px;
     font-size: 15px;
   }
+}
+
+/* 테마 전환 버튼 — 사이드바 맨 아래 */
+.themeBtn {
+  margin-top: auto;
 }

@@ -21,7 +21,7 @@
 }
 
 .card {
-  background: #fff;
+  background: var(--gt-surface);
   border-radius: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   padding: 24px 26px;
@@ -192,7 +192,7 @@
   border-radius: 99px;
 }
 .dotHigh {
-  background: #f04452;
+  background: var(--gt-red);
 }
 .dotMid {
   background: var(--gt-amber);
@@ -209,7 +209,7 @@
   font-weight: 800;
 }
 .urgHigh {
-  color: #f04452;
+  color: var(--gt-red);
 }
 .urgMid {
   color: var(--gt-amber);
@@ -225,7 +225,7 @@
   background: var(--gt-line-soft);
 }
 .segHigh {
-  background: #f04452;
+  background: var(--gt-red);
   display: block;
 }
 .segMid {
@@ -285,7 +285,7 @@
   display: block;
 }
 .hbarFillBad {
-  background: #f04452;
+  background: var(--gt-red);
   border-radius: 99px;
   display: block;
 }
@@ -340,7 +340,7 @@
   font-size: 24px;
   font-weight: 800;
   letter-spacing: -1px;
-  color: #f04452;
+  color: var(--gt-red);
 }
 .spkRate span {
   font-size: 13px;
@@ -356,7 +356,7 @@
   font-weight: 800;
 }
 .badVal {
-  color: #f04452;
+  color: var(--gt-red);
   font-weight: 800;
 }
 
@@ -364,8 +364,8 @@
 .warnPill {
   font-size: 12px;
   font-weight: 700;
-  color: #a8802a;
-  background: #fff8e6;
+  color: var(--gt-amber-text);
+  background: var(--gt-amber-bg);
   border-radius: 99px;
   padding: 6px 12px;
 }
@@ -436,8 +436,8 @@
 .dangerPill {
   font-size: 12px;
   font-weight: 700;
-  color: #f04452;
-  background: #fff0f0;
+  color: var(--gt-red);
+  background: var(--gt-red-bg);
   border-radius: 99px;
   padding: 6px 12px;
 }
@@ -526,7 +526,7 @@
   background: var(--gt-green-dot);
 }
 .snDotNo {
-  background: #f04452;
+  background: var(--gt-red);
 }
 .snSchool {
   font-size: 13px;

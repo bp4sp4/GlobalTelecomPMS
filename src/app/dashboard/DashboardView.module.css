@@ -407,7 +407,7 @@
   font-size: 14px;
   line-height: 1.55;
   color: #333d4b;
-  background: #f9fafb;
+  background: var(--gt-surface-2);
   border-radius: 14px;
   padding: 12px 14px;
   white-space: pre-wrap;
@@ -433,7 +433,7 @@
   line-height: 1.5;
   color: var(--gt-text);
   outline: none;
-  background: #f9fafb;
+  background: var(--gt-surface-2);
 }
 .textarea:focus {
   border-color: var(--gt-blue);

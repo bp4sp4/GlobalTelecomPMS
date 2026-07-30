@@ -28,7 +28,7 @@
   padding: 0 var(--krds-space-6);
   border-radius: var(--krds-radius-medium);
   border: 1px solid var(--krds-gray-60);
-  background: #fff;
+  background: var(--gt-surface);
   color: var(--krds-gray-90);
   font-size: var(--krds-fs-body-medium);
   text-decoration: none;
@@ -50,7 +50,7 @@
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .panel {
-  background: #fff;
+  background: var(--gt-surface);
   border: 1px solid var(--krds-color-border-subtle);
   border-radius: var(--krds-radius-xlarge);
   padding: var(--krds-space-8);
@@ -86,7 +86,7 @@
   border-radius: var(--krds-radius-medium);
   font-size: var(--krds-fs-body-medium);
   font-family: inherit;
-  background: #fff;
+  background: var(--gt-surface);
   width: 100%;
   color: var(--krds-gray-90);
 }
@@ -142,7 +142,7 @@
   border-radius: var(--krds-radius-small);
   font-size: var(--krds-fs-body-small);
   font-family: inherit;
-  background: #fff;
+  background: var(--gt-surface);
 }
 .cellInput:focus,
 .cellSelect:focus {
@@ -171,7 +171,7 @@
 .delBtn {
   border: 1px solid var(--krds-danger-50);
   color: var(--krds-danger-50);
-  background: #fff;
+  background: var(--gt-surface);
   border-radius: var(--krds-radius-small);
   padding: var(--krds-space-2) var(--krds-space-4);
   cursor: pointer;

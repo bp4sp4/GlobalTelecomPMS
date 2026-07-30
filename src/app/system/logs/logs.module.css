@@ -41,7 +41,7 @@
   font-family: inherit;
   font-size: 13px;
   color: var(--gt-text);
-  background: #fff;
+  background: var(--gt-surface);
   outline: none;
   cursor: pointer;
 }
@@ -51,7 +51,7 @@
 .btnGhost {
   height: 42px;
   border: 1px solid var(--gt-line);
-  background: #fff;
+  background: var(--gt-surface);
   color: var(--gt-sub);
   font-family: inherit;
   font-size: 13px;
@@ -84,7 +84,7 @@
   display: flex;
   gap: 4px;
   padding: 4px;
-  background: #e9ecef;
+  background: var(--gt-surface-3);
   border-radius: 12px;
   width: fit-content;
 }
@@ -101,7 +101,7 @@
   white-space: nowrap;
 }
 .tabOn {
-  background: #fff;
+  background: var(--gt-surface);
   color: var(--gt-text);
 }
 .tabCount {
@@ -143,7 +143,7 @@
   font-family: inherit;
   font-size: 14px;
   color: var(--gt-text);
-  background: #fff;
+  background: var(--gt-surface);
   outline: none;
 }
 .search:focus {
@@ -156,7 +156,7 @@
 }
 .chip {
   border: 1px solid var(--gt-line);
-  background: #fff;
+  background: var(--gt-surface);
   font-family: inherit;
   font-size: 13px;
   font-weight: 700;
@@ -166,7 +166,7 @@
   cursor: pointer;
 }
 .chip:hover {
-  border-color: #c3d9f7;
+  border-color: var(--gt-border-blue);
 }
 .chipOn {
   border-color: var(--gt-blue);
@@ -180,7 +180,7 @@
 
 /* 목록 */
 .list {
-  background: #fff;
+  background: var(--gt-surface);
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
@@ -212,11 +212,11 @@
 }
 .rowActivity:hover,
 .rowAccess:hover {
-  background: #fafbfc;
+  background: var(--gt-surface-2);
 }
 .head {
   padding: 13px 22px;
-  background: #fafbfc;
+  background: var(--gt-surface-2);
   font-size: 11px;
   font-weight: 700;
   color: var(--gt-mute);
@@ -224,7 +224,7 @@
   border-top: none;
 }
 .head:hover {
-  background: #fafbfc;
+  background: var(--gt-surface-2);
 }
 
 /* 접속 기록 — 날짜 그룹 */
@@ -236,7 +236,7 @@
   align-items: center;
   gap: 10px;
   padding: 10px 22px;
-  background: #fafbfc;
+  background: var(--gt-surface-2);
 }
 .groupDate {
   font-size: 12px;
@@ -311,24 +311,24 @@
   background: var(--gt-line-soft);
 }
 .aCreate {
-  color: #00a83c;
-  background: #e8f8ee;
+  color: var(--gt-green);
+  background: var(--gt-green-bg);
 }
 .aUpdate {
-  color: #a8802a;
-  background: #fff8e6;
+  color: var(--gt-amber-text);
+  background: var(--gt-amber-bg);
 }
 .aDelete {
-  color: #f04452;
-  background: #fff0f0;
+  color: var(--gt-red);
+  background: var(--gt-red-bg);
 }
 .aComplete {
   color: var(--gt-blue);
   background: var(--gt-blue-bg);
 }
 .aUpload {
-  color: #6b46c1;
-  background: #f1ecfd;
+  color: var(--gt-purple);
+  background: var(--gt-purple-bg);
 }
 .sInternal {
   color: var(--gt-sub);
@@ -336,8 +336,8 @@
   padding: 4px 9px;
 }
 .sExternal {
-  color: #a8802a;
-  background: #fff8e6;
+  color: var(--gt-amber-text);
+  background: var(--gt-amber-bg);
   padding: 4px 9px;
 }
 
@@ -381,7 +381,7 @@
   min-width: 34px;
   height: 34px;
   border: 1px solid var(--gt-line);
-  background: #fff;
+  background: var(--gt-surface);
   color: var(--gt-sub);
   font-family: inherit;
   font-size: 13px;
@@ -390,7 +390,7 @@
   padding: 0 8px;
 }
 .pageBtn:hover:not(:disabled) {
-  border-color: #c3d9f7;
+  border-color: var(--gt-border-blue);
   color: var(--gt-blue);
 }
 .pageBtn:disabled {
@@ -421,7 +421,7 @@
   gap: 16px;
 }
 .sideCard {
-  background: #fff;
+  background: var(--gt-surface);
   border-radius: 18px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   padding: 22px;
@@ -469,7 +469,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 10px;
-  color: #c3c9d0;
+  color: var(--gt-faint);
 }
 
 .ipRow {
@@ -520,7 +520,7 @@
   font-weight: 800;
 }
 .typeZero {
-  color: #c3c9d0;
+  color: var(--gt-faint);
 }
 
 @media (max-width: 1100px) {

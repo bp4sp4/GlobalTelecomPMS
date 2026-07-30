@@ -100,7 +100,7 @@
   display: flex;
   gap: 4px;
   padding: 4px;
-  background: #f4f5f7;
+  background: var(--gt-surface-3);
   border-radius: 11px;
 }
 .modeTab {
@@ -117,18 +117,18 @@
   white-space: nowrap;
 }
 .modeOn {
-  background: #fff;
+  background: var(--gt-surface);
   color: var(--gt-blue);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 .modeOnRisk {
-  background: #fff;
-  color: #f04452;
+  background: var(--gt-surface);
+  color: var(--gt-red);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
 .selCard {
-  background: #f8fbff;
+  background: var(--gt-tint-blue);
   border: 1px solid #d8e8fd;
   border-radius: 14px;
   padding: 16px;
@@ -137,7 +137,7 @@
   gap: 4px;
 }
 .selCardRisk {
-  background: #fff8f8;
+  background: var(--gt-red-bg);
   border-color: #fad7da;
 }
 .selName {
@@ -180,10 +180,10 @@
   color: var(--gt-green) !important;
 }
 .riskNum {
-  color: #f04452 !important;
+  color: var(--gt-red) !important;
 }
 .riskVal {
-  color: #f04452 !important;
+  color: var(--gt-red) !important;
 }
 
 /* 지청 순위 리스트 */
@@ -219,14 +219,14 @@
   background: var(--gt-blue-bg);
 }
 .rankOnRisk {
-  background: #fff0f0;
+  background: var(--gt-red-bg);
 }
 .rankOnRisk .rankName {
   font-weight: 800;
   color: var(--gt-text);
 }
 .rankOnRisk .rankVal {
-  color: #f04452;
+  color: var(--gt-red);
 }
 .rankNo {
   font-size: 11px;
@@ -258,7 +258,7 @@
   display: block;
 }
 .rankFillRisk {
-  background: #f04452;
+  background: var(--gt-red);
 }
 .rankVal {
   font-size: 11px;
