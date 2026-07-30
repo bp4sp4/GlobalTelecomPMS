@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import styles from "./page.module.css";
 
 function EyeIcon({ off }: { off?: boolean }) {
@@ -72,9 +73,8 @@ export default function LoginPage() {
       <form className={styles.card} onSubmit={onSubmit}>
         <div>
           <div className={styles.brand}>
-            Global<em>Telecom</em>
+            <Image src="/logo.png" alt="GlobalTelecom" width={209} height={27} priority />
           </div>
-          <div className={styles.brandSub}>BROADCAST CONSOLE</div>
         </div>
 
         <h1 className={styles.title}>로그인</h1>

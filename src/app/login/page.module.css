@@ -23,14 +23,12 @@
 }
 
 .brand {
-  text-align: center;
-  font-size: 19px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
+  display: flex;
+  justify-content: center;
 }
-.brand em {
-  font-style: normal;
-  color: var(--gt-blue);
+.brand img {
+  width: auto;
+  height: 26px;
 }
 .brandSub {
   text-align: center;

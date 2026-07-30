@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { BackButton } from "@/components/report/BackButton";
 import { saveReport } from "@/lib/reportClient";
 import { DatePicker } from "@/components/ui";
+import { uploadPhotos } from "@/lib/uploadPhotos";
 import e from "@/components/report/editor.module.css";
 import p from "./photos.module.css";
 
@@ -37,6 +38,8 @@ export function PhotosForm({
   const [msg, setMsg] = useState<{ t: string; ok: boolean } | null>(null);
   const [busy, setBusy] = useState(false);
   const [uploading, setUploading] = useState<string | null>(null);
+  /** 업로드 진행률 (완료 / 전체) */
+  const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
   const [dragOver, setDragOver] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   /** 크게 보기 — 어느 실의 몇 번째 사진인지 */
@@ -49,26 +52,28 @@ export function PhotosForm({
     const list = files ? Array.from(files).filter((f) => f.type.startsWith("image/")) : [];
     if (!list.length) return;
     setUploading(room);
+    setProgress({ done: 0, total: list.length });
     setMsg(null);
     try {
-      const fd = new FormData();
-      list.forEach((f) => fd.append("files", f));
-      fd.append("school", school);
-      fd.append("category", cat);
-      fd.append("room", room);
-      const res = await fetch("/api/upload", { method: "POST", body: fd });
-      const d = await res.json();
-      if (!res.ok) throw new Error(d.message ?? "업로드 실패");
+      const uploaded = await uploadPhotos({
+        school,
+        category: cat,
+        room,
+        files: list,
+        onProgress: (done, total) => setProgress({ done, total }),
+      });
       setStore((prev) => {
         const next = { ...prev };
         next[cat] = { ...(next[cat] ?? {}) };
-        next[cat][room] = [...(next[cat][room] ?? []), ...d.files];
+        next[cat][room] = [...(next[cat][room] ?? []), ...uploaded];
         return next;
       });
+      setMsg({ t: `사진 ${uploaded.length}장을 올렸습니다. 저장을 눌러 반영하세요.`, ok: true });
     } catch (err) {
       setMsg({ t: (err as Error).message, ok: false });
     } finally {
       setUploading(null);
+      setProgress(null);
     }
   }
 
@@ -279,7 +284,7 @@ export function PhotosForm({
                           disabled={isUp}
                           onClick={() => inputs.current[room]?.click()}
                         >
-                          {isUp ? "업로드 중..." : "사진 찾기"}
+                          {isUp && progress ? `업로드 ${progress.done}/${progress.total}` : isUp ? "업로드 중..." : "사진 찾기"}
                         </button>
                         <button
                           type="button"
@@ -307,7 +312,7 @@ export function PhotosForm({
                       }}
                     >
                       <span className={p.dropTitle}>
-                        {isUp ? "업로드 중..." : has ? "사진 추가" : "사진을 업로드하세요"}
+                        {isUp && progress ? `업로드 중 ${progress.done} / ${progress.total}장` : isUp ? "업로드 중..." : has ? "사진 추가" : "사진을 업로드하세요"}
                       </span>
                       <span className={p.dropHint}>클릭하거나 파일을 끌어다 놓으세요 · JPG/PNG</span>
                     </div>

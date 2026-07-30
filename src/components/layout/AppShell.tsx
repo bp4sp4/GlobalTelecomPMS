@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { LogoutButton } from "./LogoutButton";
 import { NavIcon } from "./NavIcon";
@@ -87,8 +88,8 @@ export function AppShell({ brand, sections, user, children }: AppShellProps) {
             <path d="M4 7h16M4 12h16M4 17h16" />
           </svg>
         </button>
-        <Link href="/dashboard" className={styles.mobileBrand}>
-          Global<em>Telecom</em>
+        <Link href="/dashboard" className={styles.mobileBrand} aria-label="GlobalTelecom 홈">
+          <Image src="/logo.png" alt="GlobalTelecom" width={209} height={27} priority />
         </Link>
       </div>
 
@@ -103,12 +104,10 @@ export function AppShell({ brand, sections, user, children }: AppShellProps) {
       <aside className={`${styles.sidebar} ${drawer ? styles.drawerOpen : ""} no-print`}>
         <div className={styles.brandBox}>
           <div className={styles.brandText}>
-            <Link href="/dashboard" className={styles.wordmark}>
-              Global<em>Telecom</em>
+            <Link href="/dashboard" className={styles.wordmark} aria-label="GlobalTelecom 홈">
+              <Image src="/logo.png" alt="GlobalTelecom" width={209} height={27} priority />
             </Link>
-            <div className={styles.brandSub}>
-              {brand?.subtitle ?? "BROADCAST CONSOLE"}
-            </div>
+      
           </div>
           <button
             type="button"
@@ -161,15 +160,7 @@ export function AppShell({ brand, sections, user, children }: AppShellProps) {
           ))}
         </nav>
 
-        {user && (
-          <div className={styles.userCard}>
-            <div className={styles.avatar}>{user.name.slice(0, 1).toUpperCase()}</div>
-            <div className={styles.userMeta}>
-              <div className={styles.userName}>{user.name}</div>
-              {user.org && <div className={styles.userOrg}>{user.org}</div>}
-            </div>
-          </div>
-        )}
+
       </aside>
 
       <main className={styles.main}>

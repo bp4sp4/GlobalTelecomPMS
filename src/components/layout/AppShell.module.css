@@ -72,17 +72,16 @@
   gap: 8px;
   padding: 0 8px;
 }
+/* 로고 이미지 — 사이드바 폭에 맞춰 축소 */
 .wordmark {
-  font-size: 19px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  color: var(--gt-text);
+  display: block;
   text-decoration: none;
-  white-space: nowrap;
+  line-height: 0;
 }
-.wordmark em {
-  font-style: normal;
-  color: var(--gt-blue);
+.wordmark img {
+  width: auto;
+  max-width: 100%;
+  height: 22px;
 }
 .brandSub {
   font-size: 11px;
@@ -261,15 +260,13 @@
     flex: none;
   }
   .mobileBrand {
-    font-size: 16px;
-    font-weight: 800;
-    letter-spacing: -0.4px;
-    color: var(--gt-text);
+    display: block;
+    line-height: 0;
     text-decoration: none;
   }
-  .mobileBrand em {
-    font-style: normal;
-    color: var(--gt-blue);
+  .mobileBrand img {
+    width: auto;
+    height: 20px;
   }
 
   /* 사이드바는 화면 밖에 두고 필요할 때 밀어 넣는다 */

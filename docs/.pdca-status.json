@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-07-29T06:36:37.060Z",
+  "lastUpdated": "2026-07-30T11:51:53.949Z",
   "activeFeatures": [
     "CRM",
     "prisma",
@@ -42,7 +42,8 @@
     "complete",
     "logs",
     "previous",
-    "zip"
+    "zip",
+    "sign"
   ],
   "primaryFeature": "CRM",
   "features": {
@@ -55,9 +56,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-27T06:54:35.124Z",
-        "lastUpdated": "2026-07-29T05:52:52.609Z"
+        "lastUpdated": "2026-07-30T11:47:07.893Z"
       },
-      "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\lib\\useDraft.ts"
+      "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\lib\\uploadPhotos.ts"
     },
     "prisma": {
       "phase": "do",
@@ -120,7 +121,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-27T07:16:42.230Z",
-        "lastUpdated": "2026-07-28T04:23:09.769Z"
+        "lastUpdated": "2026-07-30T11:51:53.949Z"
       },
       "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\login\\page.tsx"
     },
@@ -146,7 +147,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-27T07:26:59.266Z",
-        "lastUpdated": "2026-07-29T05:14:59.515Z"
+        "lastUpdated": "2026-07-30T11:51:05.392Z"
       },
       "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\components\\layout\\AppShell.tsx"
     },
@@ -341,7 +342,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-07-27T07:40:35.590Z",
-        "lastUpdated": "2026-07-29T06:36:37.060Z"
+        "lastUpdated": "2026-07-30T11:47:42.124Z"
       },
       "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\docs\\photos\\PhotosForm.tsx"
     },
@@ -578,6 +579,19 @@
         "lastUpdated": "2026-07-29T06:20:07.985Z"
       },
       "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\photos\\zip\\route.ts"
+    },
+    "sign": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-07-30T11:46:45.593Z",
+        "lastUpdated": "2026-07-30T11:46:45.593Z"
+      },
+      "lastFile": "C:\\Users\\bp4sp\\Downloads\\port\\CRM\\src\\app\\api\\upload\\sign\\route.ts"
     }
   },
   "pipeline": {
@@ -588,7 +602,7 @@
   "session": {
     "startedAt": "2026-07-27T05:53:43.220Z",
     "onboardingCompleted": false,
-    "lastActivity": "2026-07-29T06:36:37.060Z"
+    "lastActivity": "2026-07-30T11:51:53.949Z"
   },
   "history": [
     {
@@ -2916,6 +2930,48 @@
     {
       "timestamp": "2026-07-29T06:36:37.060Z",
       "feature": "photos",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-30T11:46:45.593Z",
+      "feature": "sign",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-30T11:47:07.893Z",
+      "feature": "CRM",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-30T11:47:19.709Z",
+      "feature": "photos",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-30T11:47:42.124Z",
+      "feature": "photos",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-30T11:50:58.117Z",
+      "feature": "layout",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-30T11:51:05.392Z",
+      "feature": "layout",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-07-30T11:51:53.949Z",
+      "feature": "login",
       "phase": "do",
       "action": "updated"
     }
