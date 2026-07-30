@@ -106,7 +106,7 @@
   padding: 11px 16px;
 }
 .btnGhost:hover {
-  background: var(--gt-bg);
+  background: var(--gt-hover);
 }
 .btnFull {
   width: 100%;

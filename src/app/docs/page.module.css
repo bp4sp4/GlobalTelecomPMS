@@ -31,7 +31,7 @@
   cursor: pointer;
 }
 .logout:hover {
-  background: var(--gt-bg);
+  background: var(--gt-hover);
 }
 
 .grid {
@@ -251,7 +251,7 @@
   cursor: pointer;
 }
 .resetBtn:hover {
-  background: var(--gt-bg);
+  background: var(--gt-hover);
 }
 
 /* 보고서 목록 */

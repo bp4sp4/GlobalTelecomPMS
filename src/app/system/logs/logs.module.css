@@ -61,7 +61,7 @@
   cursor: pointer;
 }
 .btnGhost:hover {
-  background: var(--gt-bg);
+  background: var(--gt-hover);
 }
 
 /* 본문 + 우측 요약 */
@@ -390,11 +390,13 @@
   padding: 0 8px;
 }
 .pageBtn:hover:not(:disabled) {
+  background: var(--gt-hover);
   border-color: var(--gt-border-blue);
   color: var(--gt-blue);
 }
 .pageBtn:disabled {
-  color: var(--gt-line);
+  color: var(--gt-faint);
+  opacity: 0.45;
   cursor: not-allowed;
 }
 .pageOn {

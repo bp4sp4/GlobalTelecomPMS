@@ -44,7 +44,7 @@
   align-items: center;
 }
 .btnGhost:hover {
-  background: var(--gt-bg);
+  background: var(--gt-hover);
 }
 .btnPrimary {
   border: none;
@@ -279,7 +279,7 @@
   white-space: nowrap;
 }
 .smallGhost:hover {
-  background: var(--gt-bg);
+  background: var(--gt-hover);
 }
 .smallPrimary {
   border: none;
@@ -344,17 +344,20 @@
   height: 34px;
   border: 1px solid var(--gt-line);
   background: var(--gt-surface);
-  color: var(--gt-faint);
+  color: var(--gt-sub);
   border-radius: 9px;
   font-family: inherit;
   font-size: 13px;
   cursor: pointer;
 }
 .pageBtn:hover:not(:disabled) {
-  background: var(--gt-bg);
+  background: var(--gt-hover);
+  border-color: var(--gt-border-blue);
+  color: var(--gt-blue);
 }
 .pageBtn:disabled {
-  opacity: 0.5;
+  color: var(--gt-faint);
+  opacity: 0.45;
   cursor: not-allowed;
 }
 .pageOn {

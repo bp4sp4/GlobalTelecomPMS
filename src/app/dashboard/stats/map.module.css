@@ -213,7 +213,7 @@
   text-align: left;
 }
 .rankRow:hover {
-  background: var(--gt-bg);
+  background: var(--gt-hover);
 }
 .rankOn {
   background: var(--gt-blue-bg);

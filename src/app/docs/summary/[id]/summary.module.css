@@ -38,7 +38,7 @@
   white-space: nowrap;
 }
 .btn:hover {
-  background: var(--gt-bg);
+  background: var(--gt-hover);
 }
 .btnPrimary {
   border: none;

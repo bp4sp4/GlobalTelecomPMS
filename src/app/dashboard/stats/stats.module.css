@@ -516,7 +516,7 @@
   cursor: pointer;
 }
 .btnGhost:hover {
-  background: var(--gt-bg);
+  background: var(--gt-hover);
 }
 
 .emptyPage {

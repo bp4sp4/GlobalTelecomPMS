@@ -212,7 +212,7 @@
   cursor: pointer;
 }
 .collapseBtn:hover {
-  background: var(--gt-bg);
+  background: var(--gt-hover);
   color: var(--gt-text);
 }
 .container {

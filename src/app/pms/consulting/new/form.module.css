@@ -75,7 +75,7 @@
   align-items: center;
 }
 .btn:hover {
-  background: var(--gt-bg);
+  background: var(--gt-hover);
 }
 .btnMuted {
   color: var(--gt-mute);
@@ -154,7 +154,7 @@
   transition: background 0.15s, color 0.15s;
 }
 .tocItem:hover {
-  background: var(--gt-bg);
+  background: var(--gt-hover);
 }
 .tocItemOn {
   background: var(--gt-blue-bg);
@@ -471,7 +471,7 @@
   cursor: pointer;
 }
 .addRow:hover {
-  background: var(--gt-bg);
+  background: var(--gt-hover);
 }
 
 /* 시급성 세그먼트 */
